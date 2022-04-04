@@ -16,6 +16,7 @@ import java.util.Date;
 @Setter
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Conta {
 
     @Id

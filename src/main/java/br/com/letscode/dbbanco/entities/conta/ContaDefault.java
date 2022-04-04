@@ -12,10 +12,14 @@ import java.time.LocalDateTime;
 @ToString
 @Setter
 @Getter
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ContaDefault {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OneToOne(optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
     private BigDecimal saldo = BigDecimal.valueOf(0);
