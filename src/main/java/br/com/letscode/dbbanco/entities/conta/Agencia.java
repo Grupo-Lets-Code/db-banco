@@ -4,11 +4,13 @@ import lombok.*;
 
 import javax.persistence.*;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @Setter
 @Getter
+@ToString
 @Entity
 public class Agencia {
 
