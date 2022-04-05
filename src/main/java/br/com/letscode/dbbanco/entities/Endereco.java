@@ -25,6 +25,7 @@ public class Endereco{
     protected int cep;
     @JoinColumn(name="Cliente_ID", nullable = false)
     protected int cliente_id;
+    //teste
 
 
 }
