@@ -1,10 +1,8 @@
 package br.com.letscode.dbbanco.controller;
 
+import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,24 +12,39 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Contas")
 public class Conta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int conta_id;
-    public int cliente_id;
-    public int agencia_id;
-    public int numero;
-    public char senha;
-    public Date data_abertura;
+    @Column(nullable = false)
+    protected int conta_id;
 
+    @OneToOne
+    @Column(nullable = false)
+    protected Cliente cliente_id;
+
+    @Column(nullable = false)
+    protected int agencia_id;
+
+    @Column(nullable = false)
+    protected int numero;
+
+    @Column(nullable = false)
+    protected char senha;
+
+    @Column(nullable = false)
+    protected Date data_abertura;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TipoConta tipoconta;
+    protected TipoConta tipoconta;
 
-    public BigDecimal saldo;
+    @Column(nullable = false)
+    protected BigDecimal saldo;
 
 
 }
