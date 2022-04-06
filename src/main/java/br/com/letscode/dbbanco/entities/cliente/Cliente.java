@@ -1,37 +1,42 @@
 package br.com.letscode.dbbanco.entities.cliente;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import javax.persistence.*;
 
-@MappedSuperclass
+@NoArgsConstructor
+@Getter
+@Setter
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
+
+    @Column(name = "NOME", length = 100, nullable = false)
     protected String nome;
 
-    public Cliente() {
-    }
+    @Column(name = "EMAIL", length = 100, nullable = false)
+    protected String email;
 
-    public Cliente(String nome) {
+    @Column(name = "TELEFONE", length = 14, nullable = false)
+    protected String telefone;
+
+    public Cliente(String nome, String email, String telefone) {
         this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
     }
 
     @Override
     public String toString() {
-        return "\nPessoa" +
-                "\nNome: " + this.getNome();
+        return "\nCliente ID: " + id +
+                "\nNome: " + nome +
+                "\nEmail: " + email +
+                "\nTelefone: " + telefone;
     }
-
 }
