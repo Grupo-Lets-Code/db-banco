@@ -1,5 +1,6 @@
 package br.com.letscode.dbbanco.entities;
 
+import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,9 +41,19 @@ public class Endereco{
     @Column(nullable = false)
     protected int cep;
 
+    @OneToOne
     @JoinColumn(name="Cliente_ID", nullable = false)
-    protected int cliente_id;
+    protected Cliente cliente_id;
 
+    public Endereco(String logradouro, String numero, String cidade, String bairro, String uf, String pais, int cep, Cliente cliente_id) {
 
-
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.uf = uf;
+        this.pais = pais;
+        this.cep = cep;
+        this.cliente_id = cliente_id;
+    }
 }
