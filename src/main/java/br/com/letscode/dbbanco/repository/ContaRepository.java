@@ -1,19 +1,13 @@
 package br.com.letscode.dbbanco.repository;
 
-import br.com.letscode.dbbanco.entities.conta.ContaDefault;
+import br.com.letscode.dbbanco.controller.Conta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;
 
-public interface ContaRepository extends JpaRepository<ContaDefault, Integer> {
+public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
-    // MARCOS
-
-    // Sacar
-    // Depositar
-    // Transferir
-    // Consultar Saldo
-
+/*
     BigDecimal sacar(BigDecimal valor);
 
     BigDecimal depositar(BigDecimal valor);
@@ -21,5 +15,5 @@ public interface ContaRepository extends JpaRepository<ContaDefault, Integer> {
     BigDecimal transferir(BigDecimal valor, ContaRepository recebedora);
 
     String consultarSaldo();
-
+*/
 }
