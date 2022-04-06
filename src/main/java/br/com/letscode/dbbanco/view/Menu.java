@@ -1,10 +1,12 @@
 package br.com.letscode.dbbanco.view;
 
 import java.util.Scanner;
+import br.com.letscode.dbbanco.entities.Endereco;
 
 public class Menu {
 
     static Scanner input = new Scanner(System.in);
+    //private final EnderecoRepository enderecoRepository;
 
     public static void menu() {
         System.out.println(" ----------------------------------------------------- ");

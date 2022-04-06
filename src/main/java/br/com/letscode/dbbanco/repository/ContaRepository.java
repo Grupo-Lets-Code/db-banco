@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;
 
-public interface ContaRepository extends JpaRepository<ContaDefault, Integer> {
+public interface ContaRepository {
 
     // MARCOS
 
