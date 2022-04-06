@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Setter
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
 
     @Id
@@ -39,4 +38,6 @@ public class Cliente {
                 "\nEmail: " + email +
                 "\nTelefone: " + telefone;
     }
+    // TESTE
+    // TESTE 2
 }
