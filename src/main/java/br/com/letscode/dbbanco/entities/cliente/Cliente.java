@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Setter
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
 
     @Id
