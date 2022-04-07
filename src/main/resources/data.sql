@@ -1,5 +1,14 @@
+-- Inserindo 5 agencias
 INSERT INTO AGENCIA (ID, NOME, NUMERO_AGENCIA) VALUES (1,'Agencia Sul', 101);
 INSERT INTO AGENCIA (ID, NOME, NUMERO_AGENCIA) VALUES (2,'Agencia Sudeste', 202);
 INSERT INTO AGENCIA (ID, NOME, NUMERO_AGENCIA) VALUES (3,'Agencia Centro-Oeste', 303);
 INSERT INTO AGENCIA (ID, NOME, NUMERO_AGENCIA) VALUES (5,'Agencia Nordeste', 404);
 INSERT INTO AGENCIA (ID, NOME, NUMERO_AGENCIA) VALUES (4,'Agencia Norte', 505);
+
+-- Inserindo 6 clientes
+INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Allan Lopreti', 'lopreti@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Allan Felintro', 'felintro@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Caio Paiva', 'paiva@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Marcos Nofre', 'nofre@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Rafael Dorta', 'dorta@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Wendel Henrique', 'henrique@email.com', '(11)99999-9999');
