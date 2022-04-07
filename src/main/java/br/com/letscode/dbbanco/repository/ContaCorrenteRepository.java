@@ -2,7 +2,7 @@ package br.com.letscode.dbbanco.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ContaCorrenteRepository extends JpaRepository<CorrentePF, Integer> {
+public interface ContaCorrenteRepository {
 
     // Sacar
     // Depositar
