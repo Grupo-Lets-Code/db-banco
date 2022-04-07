@@ -38,6 +38,4 @@ public class Cliente {
                 "\nEmail: " + email +
                 "\nTelefone: " + telefone;
     }
-    // TESTE
-    // TESTE 2
 }
