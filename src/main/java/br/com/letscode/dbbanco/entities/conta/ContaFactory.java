@@ -1,4 +1,4 @@
-package br.com.letscode.dbbanco.entities.conta;
+/*package br.com.letscode.dbbanco.entities.conta;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.repository.ContaPoupancaRepository;
@@ -6,7 +6,7 @@ import br.com.letscode.dbbanco.repository.ContaRepository;
 
 public class ContaFactory {
 
-    /*private static final ContaRepository contaRepository;
+    private static final ContaRepository contaRepository;
     private static final ContaPoupancaRepository contaPoupancaRepository;
 
     private ContaFactory(ContaRepository contaRepository) {
@@ -57,5 +57,5 @@ public class ContaFactory {
             }
 
         }
-    }*/
     }
+    }*/

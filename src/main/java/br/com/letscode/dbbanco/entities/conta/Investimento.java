@@ -14,8 +14,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "conta_id")
-public class Investimento extends ContaDefault {
-    public Investimento(Cliente cliente, String agencia, String senha) {
+public class Investimento extends Conta {
+    public Investimento(Cliente cliente, Integer agencia, int senha) {
         super(cliente, TipoConta.CONTA_INVESTIMENTO, agencia, senha);
     }
 
