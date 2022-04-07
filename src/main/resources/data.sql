@@ -6,9 +6,9 @@ INSERT INTO AGENCIA (ID, NOME, NUMERO_AGENCIA) VALUES (5,'Agencia Nordeste', 404
 INSERT INTO AGENCIA (ID, NOME, NUMERO_AGENCIA) VALUES (4,'Agencia Norte', 505);
 
 -- Inserindo 6 clientes
-INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Allan Lopreti', 'lopreti@email.com', '(11)99999-9999');
-INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Allan Felintro', 'felintro@email.com', '(11)99999-9999');
-INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Caio Paiva', 'paiva@email.com', '(11)99999-9999');
-INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Marcos Nofre', 'nofre@email.com', '(11)99999-9999');
-INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Rafael Dorta', 'dorta@email.com', '(11)99999-9999');
-INSERT INTO CLIENTE (EMAIL, NOME, TELEFONE) VALUES ('Wendel Henrique', 'henrique@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Allan Lopreti', 'lopreti@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Allan Felintro', 'felintro@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Caio Paiva', 'paiva@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Marcos Nofre', 'nofre@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Rafael Dorta', 'dorta@email.com', '(11)99999-9999');
+INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Wendel Henrique', 'henrique@email.com', '(11)99999-9999');
