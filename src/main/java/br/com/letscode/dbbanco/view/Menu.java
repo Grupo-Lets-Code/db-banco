@@ -1,19 +1,10 @@
 package br.com.letscode.dbbanco.view;
 
 import java.util.Scanner;
-import br.com.letscode.dbbanco.entities.Endereco;
-import br.com.letscode.dbbanco.entities.cliente.Cliente;
-import br.com.letscode.dbbanco.repository.EnderecoRepository;
 
 public class Menu {
 
     static Scanner input = new Scanner(System.in);
-    private final EnderecoRepository enderecoRepository;
-
-    public Menu(EnderecoRepository enderecoRepository) {
-        this.enderecoRepository = enderecoRepository;
-    }
-
 
     public static void menu() {
         System.out.println(" ----------------------------------------------------- ");
@@ -59,37 +50,6 @@ public class Menu {
                 menu();
                 break;
         }
-
-    }
-
-    public static void MapearEndereco(){
-
-
-
-        System.out.println("Digite o logradouro:");
-        String lagradouro = input.next();
-
-        System.out.println("Digite o numero:");
-        String numero = input.next();
-
-        System.out.println("Digite a cidade:");
-        String cidade = input.nextLine();
-
-        System.out.println("Digite o bairro:");
-        String bairro = input.nextLine();
-
-        System.out.println("Digite o estado:");
-        String estado = input.nextLine();
-
-        System.out.println("Digite o pais:");
-        String pais = input.nextLine();
-
-        System.out.println("Digite o cep (Só os números):");
-        int cep = input.nextInt();
-
-        var criarCliente = new Cliente("Rafael","rafael@gmail.com","11977507307");
-        var criarEndereco = new Endereco(lagradouro,numero,cidade,bairro,estado,pais,cep, criarCliente);
-
 
     }
 
