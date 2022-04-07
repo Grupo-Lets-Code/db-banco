@@ -26,14 +26,12 @@ public class Agencia {
         this.nome = nome;
     }
 
-    // Agencia escolhida pelo usuário opções:
-
-    // 0001 = Norte
-    // 0005 = Nordeste
-    // 0010 = Sul
-    // 0020 = Sudeste
-    // 0030 = Centro-Oeste
-
+    // Agencias que podem ser escolhidas pelo usuário nas opções:
+    // 505 = Norte
+    // 404 = Nordeste
+    // 101 = Sul
+    // 202 = Sudeste
+    // 303 = Centro-Oeste
     // Salvar no data.sql
 
 }
