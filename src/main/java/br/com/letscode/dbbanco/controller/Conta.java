@@ -7,56 +7,39 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @ToString
 @NoArgsConstructor
 @Getter
 @Setter
 
-
-
 @Entity
-@Table(name = "Contas")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Conta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    protected int conta_id;
+    private Integer numeroConta;
 
     @OneToOne
-    @JoinColumn(name = "cliente_id",nullable = false)
-    protected Cliente cliente_id;
+    private Cliente cliente;
 
-    @OneToOne
-    @JoinColumn(name = "agencia_numeroAgencia", nullable = false)
-    protected Agencia agencia;
+    private BigDecimal saldo = BigDecimal.valueOf(0);
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    protected int numero;
-
-    @Column(nullable = false)
-    protected String senha;
-
-    @Column(nullable = false)
-    protected String data_abertura;
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    protected TipoConta tipoConta;
+    private TipoConta tipoConta;
 
-    @Column(nullable = false)
-    protected BigDecimal saldo = BigDecimal.valueOf(0);
+    private Integer agencia;
 
-    public Conta(Cliente cliente_id, Agencia agencia, int numero, String senha, String data_abertura, TipoConta tipoConta, BigDecimal saldo) {
-        this.cliente_id = cliente_id;
-        this.agencia = agencia;
-        this.numero = numero;
-        this.senha = senha;
-        this.data_abertura = data_abertura;
+    private String senha;
+
+    private LocalDateTime dataAbertura = LocalDateTime.now();
+
+    public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, String senha) {
+        this.cliente = cliente;
         this.tipoConta = tipoConta;
-        this.saldo = saldo;
+        this.agencia = agencia;
+        this.senha = senha;
     }
-
 }
