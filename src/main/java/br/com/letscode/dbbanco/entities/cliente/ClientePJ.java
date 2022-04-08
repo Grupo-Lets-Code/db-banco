@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "PESSOA JURIDICA")
+@Table(name = "PESSOA_JURIDICA")
 public class ClientePJ{
 
     @Id
@@ -23,7 +23,7 @@ public class ClientePJ{
     @Column(name = "CNPJ", nullable = false)
     protected String CNPJ;
 
-    @Column(name = "Data de Abertura", nullable = false)
+    @Column(name = "Data_Abertura", nullable = false)
     protected LocalDate dataDeAbertura;
 
     @OneToOne
