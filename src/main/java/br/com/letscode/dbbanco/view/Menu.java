@@ -5,6 +5,7 @@ import br.com.letscode.dbbanco.controller.ContaController;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 @Component
@@ -125,14 +126,24 @@ public class Menu {
         System.out.println("\nDigite seu telefone: ");
         String telefone = input.nextLine();
 
-        System.out.println("\nDigite seu CNPJ: ");
+        System.out.println("\nDigite seu CNPJ, somente números: ");
         String cnpj = input.nextLine();
 
-        System.out.println("\nDigite a data de abertura da empresa: ");
-        String data_abertura = input.nextLine();
+        while(cnpj.length() != 14) {
+            System.out.println("Formato Inválido");
+            System.out.println("\nDigite seu CNPJ, somente números: ");
+            cnpj = input.nextLine();
+        }
+
+        System.out.println("\nDigite a data de abertura da empresa, com barras: ");
+        String data = input.nextLine();
+
+        String[] fields = data.split("/");
+
+        var data_abertura = LocalDate.of(Integer.parseInt(fields[2]),
+                Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
 
         clienteController.createPJ(nome, email, telefone, cnpj, data_abertura);
-        painelContasPJ();
     }
 
     protected void painelContasPF() {
