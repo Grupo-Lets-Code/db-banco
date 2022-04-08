@@ -1,25 +1,26 @@
 package br.com.letscode.dbbanco.controller;
 
+import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.repository.ContaRepository;
-import br.com.letscode.dbbanco.view.Menu;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Component
 public class ContaController {
-
+    private final ContaFactory contaFactory;
     private final ContaRepository contaRepository;
-    public ContaController(ContaRepository contaRepository) {
+
+    public ContaController(ContaFactory contaFactory, ContaRepository contaRepository) {
+        this.contaFactory = contaFactory;
         this.contaRepository = contaRepository;
     }
 
     public boolean sacar(Integer numeroConta, BigDecimal valor) {
         var catConta = contaRepository.findByNumeroConta(numeroConta);
         var saldo = catConta.get().getSaldo();
-        //TODO Método recebe o valor e objeto retornado
-        //TODO recebe o valor com taxa
-        var saldo_atual = saldo.subtract(valor);
+        var valorCorrigido = contaFactory.valorTipoConta(catConta.get(),valor);
+        var saldo_atual = saldo.subtract(valorCorrigido);
 
         if(saldo.compareTo(valor) == 1){
             catConta.get().setSaldo(saldo_atual);

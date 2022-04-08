@@ -1,8 +1,7 @@
 package br.com.letscode.dbbanco.entities.conta;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
-import br.com.letscode.dbbanco.entities.conta.Agencia;
-import br.com.letscode.dbbanco.entities.conta.TipoConta;
+import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,10 +40,16 @@ public class Conta {
     @Column(name = "data_abertura", nullable = false)
     private LocalDateTime dataAbertura = LocalDateTime.now();
 
-    public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha) {
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_cliente", nullable = false)
+    private TipoCliente tipoCliente;
+
+    public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente) {
         this.cliente = cliente;
         this.tipoConta = tipoConta;
         this.agencia = agencia;
         this.senha = senha;
+        this.tipoCliente = tipoCliente;
     }
 }
