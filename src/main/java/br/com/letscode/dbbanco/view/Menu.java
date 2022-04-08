@@ -104,8 +104,14 @@ public class Menu {
         System.out.println("\nDigite seu telefone: ");
         String telefone = input.nextLine();
 
-        System.out.println("\nDigite seu CPF: ");
+        System.out.println("\nDigite seu CPF, somente números: ");
         String cpf = input.nextLine();
+
+        while(cpf.length() != 11) {
+            System.out.println("Formato Inválido");
+            System.out.println("\nDigite seu CPF, somente números: ");
+            cpf = input.nextLine();
+        }
 
         System.out.println("\nDigite sua data de nascimento: ");
         String data_nascimento = input.nextLine();
