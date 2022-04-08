@@ -198,7 +198,16 @@ public class Menu {
         }
     }
 
-    protected void painelSacar() {
+    protected Boolean acessarConta(Integer numeroConta, int senha){
+        var valida = contaController.validarLogin(numeroConta, senha);
+        if(valida){
+            return true;
+        }
+        return false;
+    }
+
+
+    public void painelSacar() {
         Scanner input = new Scanner(System.in);
 
         System.out.println("\nDigite o número da conta: ");
@@ -207,34 +216,19 @@ public class Menu {
         System.out.println("\nDigite a senha da conta: ");
         int senha = input.nextInt();
 
-
-        //FIXME Validar se a conta existe antes de passar para a senha
-        //Exemplo: contaExists(); para verificar se a conta existe
-
-        //FIXME SE CONTA NÃO EXISTE:
-        System.out.println("\nConta inválida!");
-        painelSacar();
-
-
-
-
-        //FIXME SE SENHA CORRETA, então
-        System.out.println("\nDigite o valor do saque: ");
-        BigDecimal valor = input.nextBigDecimal();
-
-        contaController.sacar(numeroConta, senha, valor);
-        painelSacar();
-
-
-        //FIXME SE SENHA INCORRETA, então
-        System.out.println("\nSenha inválida!");
-        painelSacar();
-
-        //FIXME SE SALDO POSITIVO, então
-        System.out.println("\nSaque no valor de " + valor + "R$ realizado com sucesso! Saldo atual: " /*saldo*/);
-
-        //FIXME SE NÃO:
-        System.out.println("\nSaldo insuficiente para realizar essa transação! Saldo atual: " /*saldo*/);
+        if(acessarConta(numeroConta, senha)){
+            System.out.println("\nDigite o valor do saque: ");
+            BigDecimal valor = input.nextBigDecimal();
+            var verifica = contaController.sacar(numeroConta, valor);
+            if(verifica){
+                painelInicio();
+            } else{
+                painelSacar();
+            }
+        } else {
+            System.out.println("\nDados inválidos!");
+            painelInicio();
+        }
     }
 
     protected void painelDepositar() {
@@ -242,21 +236,16 @@ public class Menu {
 
         System.out.println("\nDigite o número da conta que deseja realizar o depósito: ");
         Integer numeroConta = Integer.valueOf(input.next());
-
-        //FIXME Validar se a conta existe
-        //Exemplo: contaExists(); para verificar se a conta existe
-
-        //FIXME SE CONTA NÃO EXISTE:
-        System.out.println("\nConta inválida!");
-        painelDepositar();
-
-
-        System.out.println("\nDigite o valor do depósito: ");
-        BigDecimal valor = input.nextBigDecimal();
-
-        contaController.depositar(numeroConta, valor);
-
-        System.out.println("\nDepósito no valor de " + valor + "R$ realizado com sucesso! Saldo atual: " /*saldo*/);
+        var verificaConta = contaController.validarConta(numeroConta);
+        if(verificaConta){
+            System.out.println("\nDigite o valor do depósito: ");
+            BigDecimal valor = input.nextBigDecimal();
+            contaController.depositar(numeroConta, valor);
+            painelInicio();
+        }else{
+            System.out.println("\nConta não encontrada!");
+            painelDepositar();
+        }
     }
 
     protected void painelInvestir() {
@@ -314,7 +303,7 @@ public class Menu {
         System.out.println("\nDigite o valor da transferência: ");
         BigDecimal valor = input.nextBigDecimal();
 
-        contaController.transferir(contaRemetente,contaDestinataria,senha,valor);
+        contaController.transferir(contaRemetente, contaDestinataria, senha, valor);
 
         System.out.println("\nTransferência no valor de " + valor + "R$ realizada com sucesso! Saldo atual: " /*saldo*/);
 

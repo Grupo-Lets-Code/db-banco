@@ -1,33 +1,29 @@
-/*package br.com.letscode.dbbanco.entities.conta;
+package br.com.letscode.dbbanco.entities.conta;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.repository.ContaPoupancaRepository;
 import br.com.letscode.dbbanco.repository.ContaRepository;
 
+import java.math.BigDecimal;
+
 public class ContaFactory {
 
-    private static final ContaRepository contaRepository;
-    private static final ContaPoupancaRepository contaPoupancaRepository;
+    public BigDecimal valorTipoConta(Conta conta, BigDecimal valor/*, TODO*/) {
+        var tipoConta = conta.getTipoConta();
 
-    private ContaFactory(ContaRepository contaRepository) {
-        super();
-        this.contaRepository = contaRepository;
-    }
-
-    public static ContaDefault create(Cliente cliente, TipoConta tipoConta) {
         switch (tipoConta) {
             case CONTA_POUPANCA:
-                return createContaPoupanca(cliente);
-                        //this.contaRepository.save(cliente);
+
             case CONTA_CORRENTE:
-                return createContaCorrente(cliente);
+                var valorComTaxa = valor.multiply(BigDecimal.valueOf(0.02));
+                return valorComTaxa;
             case CONTA_INVESTIMENTO:
-                return createContaInvestimento(cliente);
+
             default:
                 throw new IllegalArgumentException("Opção inválida!");
         }
     }
-
+    /*
     public static ContaDefault create(Cliente cliente, TipoConta tipoConta, String agencia,
                                       String senha) {
         var clientePF =  new ContaDefault(Cliente cliente, TipoConta tipoConta,
@@ -58,4 +54,6 @@ public class ContaFactory {
 
         }
     }
-    }*/
+
+     */
+    }
