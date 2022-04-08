@@ -2,6 +2,8 @@ package br.com.letscode.dbbanco.entities.conta;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
+import br.com.letscode.dbbanco.entities.conta.Agencia;
+import br.com.letscode.dbbanco.entities.conta.TipoConta;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 
 @Entity
+@Table(name = "CONTA")
 public class Conta {
 
     @Id
@@ -39,7 +42,6 @@ public class Conta {
 
     @Column(name = "data_abertura", nullable = false)
     private LocalDateTime dataAbertura = LocalDateTime.now();
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cliente", nullable = false)
