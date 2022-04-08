@@ -13,16 +13,16 @@ public class ContaFactory {
         if(conta.getTipoCliente() == TipoCliente.PESSOA_JURIDICA){
             switch (tipoConta) {
                 case CONTA_POUPANCA:
-
+                    break;
                 case CONTA_CORRENTE:
-                    return valor.multiply(BigDecimal.valueOf(0.02));
+                    return valor.multiply(BigDecimal.valueOf(1.1));
                 case CONTA_INVESTIMENTO:
-
+                    break;
                 default:
                    throw new IllegalArgumentException("Opção inválida!");
             }
         }
-        return null;
+        return valor;
     }
     /*
     public static ContaDefault create(Cliente cliente, TipoConta tipoConta, String agencia,
