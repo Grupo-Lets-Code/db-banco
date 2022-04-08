@@ -40,6 +40,9 @@ public class Conta {
     @Column(name = "data_abertura", nullable = false)
     private LocalDateTime dataAbertura = LocalDateTime.now();
 
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_cliente", nullable = false)
     private TipoCliente tipoCliente;
 
     public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente) {
