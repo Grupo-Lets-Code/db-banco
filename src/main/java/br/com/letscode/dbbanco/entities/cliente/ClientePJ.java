@@ -1,33 +1,38 @@
 package br.com.letscode.dbbanco.entities.cliente;
 
-public class ClientePJ extends Cliente {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@ToString
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "PESSOA JURIDICA")
+public class ClientePJ{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected int id;
+
+    @Column(name = "CNPJ", nullable = false)
     protected String CNPJ;
 
-    public ClientePJ(String nome, String CNPJ) {
-        super();
-    }
+    @Column(name = "Data de Abertura", nullable = false)
+    protected LocalDate dataDeAbertura;
 
-    public String getNome() {
-        return nome;
-    }
+    @OneToOne
+    @JoinColumn(name = "Cliente_ID", nullable = false)
+    protected Cliente cliente;
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCNPJ() {
-        return CNPJ;
-    }
-
-    public void setCNPJ(String CNPJ) {
+    public ClientePJ(String CNPJ, LocalDate dataDeAbertura, Cliente cliente) {
         this.CNPJ = CNPJ;
-    }
-
-    @Override
-    public String toString() {
-        return "\nPessoa Jurídica" +
-                "\nNome: " + this.getNome() +
-                "\nCNPJ: " + this.getCNPJ();
+        this.dataDeAbertura = dataDeAbertura;
+        this.cliente = cliente;
     }
 }
