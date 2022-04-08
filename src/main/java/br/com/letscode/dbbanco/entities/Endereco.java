@@ -40,13 +40,13 @@ public class Endereco{
     protected String pais;
 
     @Column(nullable = false)
-    protected int cep;
+    protected String cep;
 
     @OneToOne
     @JoinColumn(name="Cliente_ID", nullable = false)
     protected Cliente cliente;
 
-    public Endereco(String logradouro, String numero, String cidade, String bairro, String uf, String pais, int cep, Cliente cliente) {
+    public Endereco(String logradouro, String numero, String cidade, String bairro, String uf, String pais, String cep, Cliente cliente) {
 
         this.logradouro = logradouro;
         this.numero = numero;
