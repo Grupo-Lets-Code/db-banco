@@ -1,27 +1,28 @@
 package br.com.letscode.dbbanco.entities.conta;
 
-import br.com.letscode.dbbanco.entities.cliente.Cliente;
-import br.com.letscode.dbbanco.repository.ContaPoupancaRepository;
-import br.com.letscode.dbbanco.repository.ContaRepository;
+import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class ContaFactory {
 
-    public BigDecimal valorTipoConta(Conta conta, BigDecimal valor/*, TODO*/) {
+    public BigDecimal valorTipoConta(Conta conta, BigDecimal valor) {
         var tipoConta = conta.getTipoConta();
+        if(conta.getTipoCliente() == TipoCliente.PESSOA_JURIDICA){
+            switch (tipoConta) {
+                case CONTA_POUPANCA:
 
-        switch (tipoConta) {
-            case CONTA_POUPANCA:
+                case CONTA_CORRENTE:
+                    return valor.multiply(BigDecimal.valueOf(0.02));
+                case CONTA_INVESTIMENTO:
 
-            case CONTA_CORRENTE:
-                var valorComTaxa = valor.multiply(BigDecimal.valueOf(0.02));
-                return valorComTaxa;
-            case CONTA_INVESTIMENTO:
-
-            default:
-                throw new IllegalArgumentException("Opção inválida!");
+                default:
+                   throw new IllegalArgumentException("Opção inválida!");
+            }
         }
+        return null;
     }
     /*
     public static ContaDefault create(Cliente cliente, TipoConta tipoConta, String agencia,
