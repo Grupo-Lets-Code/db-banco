@@ -29,13 +29,15 @@ public class ClienteController {
         this.clientePJRepository = clientePJRepository;
     } */
 
-    public void createPF(String nome, String email, String telefone, String cpf, String data_nascimento) {
+    public Cliente createPF(String nome, String email, String telefone, String cpf, String data_nascimento) {
         var createCliente = new Cliente(nome, email, telefone);
-        clienteRepository.save(createCliente);
+        var cliente = clienteRepository.save(createCliente);
 
         //var createClientePF = new ClientePF(cpf, data_nascimento, createCliente);
         //clientePFRepository.save(createClientePF);
         System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
+        return cliente;
+
     }
 
     public Cliente createPJ(String nome, String email, String telefone, String cnpj, LocalDate data_abertura) {

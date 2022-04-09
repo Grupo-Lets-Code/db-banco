@@ -123,8 +123,10 @@ public class Menu {
         System.out.println("\nDigite sua data de nascimento: ");
         String data_nascimento = input.nextLine();
 
-        clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
+        var cliente =clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
+        MapearEndereco(cliente);
         painelContasPF();
+
     }
 
     protected void tipoPJ() {
@@ -159,6 +161,7 @@ public class Menu {
         var cliente = clienteController.createPJ(nome, email, telefone, cnpj, data_abertura);
 
         MapearEndereco(cliente);
+        painelContasPJ();
     }
 
 
@@ -354,10 +357,11 @@ public class Menu {
     }
 
     public void MapearEndereco(Cliente cliente) {
-
+        input.nextLine();
 
         System.out.println("Digite o logradouro:");
         String lagradouro = input.nextLine();
+
 
         System.out.println("Digite o numero:");
         String numero = input.nextLine();
@@ -378,8 +382,8 @@ public class Menu {
         String cep = input.nextLine();
 
 
-        //var criarEndereco = new Endereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
-        EnderecoController.createEndereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
+        var criarEndereco = new Endereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
+        enderecoController.createEndereco(criarEndereco);
     }
 
 

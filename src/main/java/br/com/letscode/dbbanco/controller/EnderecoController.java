@@ -21,10 +21,9 @@ public class EnderecoController {
     }
 
 
-    public void createEndereco(String logradouro, String numero, String cidade, String bairro, String uf, String pais, String cep, Cliente cliente){
-        var criarEnd = new Endereco(logradouro,numero,cidade,bairro,uf,pais,cep,cliente);
-        enderecoRepository.save(criarEnd);
-        System.out.printf("Endereco salvo com sucesso!!!");
+    public void createEndereco(Endereco endereco){
+        enderecoRepository.save(endereco);
+        System.out.printf("Endereco salvo com sucesso!!!\n");
     }
 
 
