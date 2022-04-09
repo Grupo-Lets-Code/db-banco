@@ -137,10 +137,10 @@ public class Menu {
             cpf = input.nextLine();
         }
 
-        System.out.println("\nDigite sua data de nascimento: ");
-        String data_nascimento = input.nextLine();
+        System.out.println("\nDigite sua data de nascimento, com barras: ");
+        String dataNascimento = input.nextLine();
 
-        var cliente = clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
+        var cliente = clienteController.createPF(nome, email, telefone, cpf, formatarData(dataNascimento));
         MapearEndereco(cliente);
         painelContasPF();
 
@@ -168,14 +168,9 @@ public class Menu {
         }
 
         System.out.println("\nDigite a data de abertura da empresa, com barras: ");
-        String data = input.nextLine();
+        String dataAbertura = input.nextLine();
 
-        String[] fields = data.split("/");
-
-        var data_abertura = LocalDate.of(Integer.parseInt(fields[2]),
-                Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
-
-        var cliente = clienteController.createPJ(nome, email, telefone, cnpj, data_abertura);
+        var cliente = clienteController.createPJ(nome, email, telefone, cnpj, formatarData(dataAbertura));
 
         MapearEndereco(cliente);
         //painelContasPJ(cliente);
@@ -192,7 +187,7 @@ public class Menu {
 
         switch (tipoConta) {
             case 1:
-                //Chamar o metodo abrir conta corrente
+            //    painelCriarCorrentePF(Cliente cliente);
                 break;
             case 2:
                 //Chamar o metodo abrir conta poupança
@@ -233,7 +228,7 @@ public class Menu {
                 break;
         }
     }
-    /*
+
     private void painelCriarCorrentePF(Cliente cliente) {
         Scanner input = new Scanner(System.in);
         var agencia = painelAgencia();
@@ -242,7 +237,7 @@ public class Menu {
         var criarConta = new Conta(cliente,TipoConta.CONTA_CORRENTE,agencia, senha, TipoCliente.PESSOA_JURIDICA);
         contaController.criarConta(criarConta);
         painelInicio();
-    }*/
+    }
 
     private void painelCriarCorrentePJ(Cliente cliente) {
         Scanner input = new Scanner(System.in);
@@ -458,6 +453,14 @@ public class Menu {
         System.out.println("Agencia: 404");
 
         return input.nextInt();
+    }
+
+    private LocalDate formatarData(String data) {
+
+        String[] fields = data.split("/");
+
+        return LocalDate.of(Integer.parseInt(fields[2]), Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
+
     }
 
 }
