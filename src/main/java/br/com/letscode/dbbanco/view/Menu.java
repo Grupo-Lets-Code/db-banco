@@ -456,11 +456,10 @@ public class Menu {
     }
 
     private LocalDate formatarData(String data) {
+
         String[] fields = data.split("/");
 
-        var dataFormatada = LocalDate.of(Integer.parseInt(fields[2]), Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
-
-        return dataFormatada;
+        return LocalDate.of(Integer.parseInt(fields[2]), Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
 
     }
 
