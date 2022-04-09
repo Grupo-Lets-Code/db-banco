@@ -38,13 +38,14 @@ public class ClienteController {
         System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
     }
 
-    public void createPJ(String nome, String email, String telefone, String cnpj, LocalDate data_abertura) {
+    public Cliente createPJ(String nome, String email, String telefone, String cnpj, LocalDate data_abertura) {
         var createCliente = new Cliente(nome, email, telefone);
-        clienteRepository.save(createCliente);
+        var cliente = clienteRepository.save(createCliente);
 
         var createClientePJ = new ClientePJ(cnpj, data_abertura, createCliente);
         clientePJRepository.save(createClientePJ);
         System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
+        return cliente;
     }
 }
 

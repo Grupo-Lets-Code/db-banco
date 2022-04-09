@@ -2,8 +2,10 @@ package br.com.letscode.dbbanco.view;
 
 import br.com.letscode.dbbanco.controller.ClienteController;
 import br.com.letscode.dbbanco.controller.ContaController;
+import br.com.letscode.dbbanco.controller.EnderecoController;
 import br.com.letscode.dbbanco.entities.Endereco;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
+import org.apache.catalina.valves.rewrite.Substitution;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -19,9 +21,12 @@ public class Menu {
 
     private final ContaController contaController;
 
-    public Menu(ClienteController clienteController, ContaController contaController) {
+    private final EnderecoController enderecoController;
+
+    public Menu(ClienteController clienteController, ContaController contaController, EnderecoController enderecoController) {
         this.clienteController = clienteController;
         this.contaController = contaController;
+        this.enderecoController = enderecoController;
     }
 
     public void painelInicio() {
@@ -145,8 +150,12 @@ public class Menu {
         var data_abertura = LocalDate.of(Integer.parseInt(fields[2]),
                 Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
 
-        clienteController.createPJ(nome, email, telefone, cnpj, data_abertura);
+        var cliente = clienteController.createPJ(nome, email, telefone, cnpj, data_abertura);
+
+        MapearEndereco(cliente);
     }
+
+
 
     protected void painelContasPF() {
         System.out.println("|    Opção 1 - Conta Corrente           |");
@@ -338,8 +347,7 @@ public class Menu {
         painelSaldo();
     }
 
-    public static void MapearEndereco(){
-
+    public void MapearEndereco(Cliente cliente) {
 
 
         System.out.println("Digite o logradouro:");
@@ -361,11 +369,13 @@ public class Menu {
         String pais = input.nextLine();
 
         System.out.println("Digite o cep (Só os números):");
-        String cep =input.nextLine();
-
-        var criarCliente = new Cliente("Rafael","rafael@gmail.com","11977507307");
-        var criarEndereco = new Endereco(lagradouro,numero,cidade,bairro,estado,pais,cep, criarCliente);
+        String cep = input.nextLine();
 
 
+        //var criarEndereco = new Endereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
+        EnderecoController.createEndereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
     }
+
+
+
 }
