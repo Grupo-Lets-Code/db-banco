@@ -5,11 +5,14 @@ import br.com.letscode.dbbanco.controller.ContaController;
 import br.com.letscode.dbbanco.controller.EnderecoController;
 import br.com.letscode.dbbanco.entities.Endereco;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
-import org.apache.catalina.valves.rewrite.Substitution;
+import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
+import br.com.letscode.dbbanco.entities.conta.Conta;
+import br.com.letscode.dbbanco.entities.conta.TipoConta;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Scanner;
 
 @Component
@@ -42,7 +45,9 @@ public class Menu {
         System.out.println("|    Opção 4 - Transferir          |");
         System.out.println("|    Opção 5 - Investir            |");
         System.out.println("|    Opção 6 - Consultar saldo     |");
-        System.out.println("|    Opção 7 - Sair                |");
+        System.out.println("|    Opção 7 - Listar conta        |");
+        System.out.println("|    Opção 8 - Excluir contas      |");
+        System.out.println("|    Opção 9 - Sair                |");
 
         int operacao = input.nextInt();
 
@@ -66,6 +71,12 @@ public class Menu {
                 painelSaldo();
                 break;
             case 7:
+                painelListar();
+                break;
+            case 8:
+                painelExcluir();
+                break;
+            case 9:
                 System.out.println("Obrigado por utilizar o Banco Grupo Azul!");
                 System.exit(0);
             default:
@@ -73,6 +84,12 @@ public class Menu {
                 painelInicio();
                 break;
         }
+    }
+
+    private void painelListar() {
+        var allContas = contaController.listarContas();
+        allContas.stream().forEach(System.out::println);
+        painelInicio();
     }
 
     protected void painelPessoa() {
@@ -114,7 +131,7 @@ public class Menu {
         System.out.println("\nDigite seu CPF, somente números: ");
         String cpf = input.nextLine();
 
-        while(cpf.length() != 11) {
+        while (cpf.length() != 11) {
             System.out.println("Formato Inválido");
             System.out.println("\nDigite seu CPF, somente números: ");
             cpf = input.nextLine();
@@ -123,7 +140,7 @@ public class Menu {
         System.out.println("\nDigite sua data de nascimento: ");
         String data_nascimento = input.nextLine();
 
-        var cliente =clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
+        var cliente = clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
         MapearEndereco(cliente);
         painelContasPF();
 
@@ -144,7 +161,7 @@ public class Menu {
         System.out.println("\nDigite seu CNPJ, somente números: ");
         String cnpj = input.nextLine();
 
-        while(cnpj.length() != 14) {
+        while (cnpj.length() != 14) {
             System.out.println("Formato Inválido");
             System.out.println("\nDigite seu CNPJ, somente números: ");
             cnpj = input.nextLine();
@@ -161,9 +178,8 @@ public class Menu {
         var cliente = clienteController.createPJ(nome, email, telefone, cnpj, data_abertura);
 
         MapearEndereco(cliente);
-        painelContasPJ();
+        //painelContasPJ(cliente);
     }
-
 
 
     protected void painelContasPF() {
@@ -194,7 +210,7 @@ public class Menu {
         }
     }
 
-    protected void painelContasPJ() {
+    protected void painelContasPJ(Cliente cliente) {
         System.out.println("|    Opção 1 - Conta Corrente           |");
         System.out.println("|    Opção 2 - Conta Investimento       |");
         System.out.println("|    Opção 3 - Voltar                   |");
@@ -203,7 +219,7 @@ public class Menu {
 
         switch (tipoContaPJ) {
             case 1:
-                //Banco.criarCorrentePJ();
+                painelCriarCorrentePJ(cliente);
                 break;
             case 2:
                 //Banco.criarInvestimentoPJ();
@@ -217,10 +233,30 @@ public class Menu {
                 break;
         }
     }
+    /*
+    private void painelCriarCorrentePF(Cliente cliente) {
+        Scanner input = new Scanner(System.in);
+        var agencia = painelAgencia();
+        System.out.println("Digite sua senha");
+        var senha = input.nextInt();
+        var criarConta = new Conta(cliente,TipoConta.CONTA_CORRENTE,agencia, senha, TipoCliente.PESSOA_JURIDICA);
+        contaController.criarConta(criarConta);
+        painelInicio();
+    }*/
 
-    protected Boolean acessarConta(Integer numeroConta, int senha){
+    private void painelCriarCorrentePJ(Cliente cliente) {
+        Scanner input = new Scanner(System.in);
+        var agencia = painelAgencia();
+        System.out.println("Digite sua senha de 6 digitos: ");
+        var senha = input.nextInt();
+        var criarConta = new Conta(cliente, TipoConta.CONTA_CORRENTE, agencia, senha, TipoCliente.PESSOA_JURIDICA);
+        contaController.criarConta(criarConta);
+        painelInicio();
+    }
+
+    protected Boolean acessarConta(Integer numeroConta, int senha) {
         var valida = contaController.validarLogin(numeroConta, senha);
-        if(valida){
+        if (valida) {
             return true;
         }
         return false;
@@ -236,13 +272,13 @@ public class Menu {
         System.out.println("\nDigite a senha da conta: ");
         int senha = input.nextInt();
 
-        if(acessarConta(numeroConta, senha)){
+        if (acessarConta(numeroConta, senha)) {
             System.out.println("\nDigite o valor do saque: ");
             BigDecimal valor = input.nextBigDecimal();
             var verifica = contaController.sacar(numeroConta, valor);
-            if(verifica){
+            if (verifica) {
                 painelInicio();
-            } else{
+            } else {
                 painelSacar();
             }
         } else {
@@ -257,12 +293,12 @@ public class Menu {
         System.out.println("\nDigite o número da conta que deseja realizar o depósito: ");
         Integer numeroConta = Integer.valueOf(input.next());
         var verificaConta = contaController.validarConta(numeroConta);
-        if(verificaConta){
+        if (verificaConta) {
             System.out.println("\nDigite o valor do depósito: ");
             BigDecimal valor = input.nextBigDecimal();
             contaController.depositar(numeroConta, valor);
             painelInicio();
-        }else{
+        } else {
             System.out.println("\nConta não encontrada!");
             painelDepositar();
         }
@@ -331,7 +367,6 @@ public class Menu {
     }
 
 
-
     protected void painelSaldo() {
         Scanner input = new Scanner(System.in);
 
@@ -384,8 +419,45 @@ public class Menu {
 
         var criarEndereco = new Endereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
         enderecoController.createEndereco(criarEndereco);
+
+        painelContasPJ(cliente);
     }
 
+    private void painelExcluir() {
+        Scanner input = new Scanner(System.in);
 
+        System.out.println("\nDigite o número da conta: ");
+        Integer numeroConta = Integer.valueOf(input.next());
+
+        System.out.println("\nDigite a senha da conta: ");
+        int senha = input.nextInt();
+        input.nextLine();
+
+        if (acessarConta(numeroConta, senha)) {
+            System.out.println("\nDeseja realmente EXCLUIR sua conta? Escreva: sim ou nao");
+            String validacao = input.nextLine();
+            if (validacao.equals("sim")) {
+                contaController.excluirConta(numeroConta);
+                painelInicio();
+            } else {
+                painelInicio();
+            }
+        } else {
+            System.out.println("\nDados inválidos!");
+            painelInicio();
+        }
+
+    }
+
+    private int painelAgencia() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Escolha suas agencias:");
+        System.out.println("Agencia: 101");
+        System.out.println("Agencia: 202");
+        System.out.println("Agencia: 303");
+        System.out.println("Agencia: 404");
+
+        return input.nextInt();
+    }
 
 }
