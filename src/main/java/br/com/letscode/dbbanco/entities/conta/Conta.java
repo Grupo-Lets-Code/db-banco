@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@ToString
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -53,5 +53,15 @@ public class Conta {
         this.agencia = agencia;
         this.senha = senha;
         this.tipoCliente = tipoCliente;
+    }
+
+    @Override
+    public String toString() {
+        return "Lista de contas: \n" +
+                "Numero da Conta: " + numeroConta +
+                ", Nome: " + cliente.getNome() +
+                ", Tipo da Conta: " + tipoConta +
+                ", Numero da Agencia: " + agencia +
+                ", tipo: " + tipoCliente + "\n";
     }
 }
