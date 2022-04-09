@@ -14,27 +14,28 @@ import java.time.LocalDate;
 public class ClienteController {
 
     private final ClienteRepository clienteRepository;
-    //private final ClientePFRepository clientePFRepository;
+    private final ClientePFRepository clientePFRepository;
     private final ClientePJRepository clientePJRepository;
 
-    public ClienteController(ClienteRepository clienteRepository, ClientePJRepository clientePJRepository) {
+/*    public ClienteController(ClienteRepository clienteRepository, ClientePJRepository clientePJRepository) {
         this.clienteRepository = clienteRepository;
         this.clientePJRepository = clientePJRepository;
     }
+ */
 
-    /* public ClienteController(ClienteRepository clienteRepository,
+     public ClienteController(ClienteRepository clienteRepository,
                              ClientePFRepository clientePFRepository, ClientePJRepository clientePJRepository) {
         this.clienteRepository = clienteRepository;
         this.clientePFRepository = clientePFRepository;
         this.clientePJRepository = clientePJRepository;
-    } */
+    }
 
-    public Cliente createPF(String nome, String email, String telefone, String cpf, String data_nascimento) {
+    public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
         var createCliente = new Cliente(nome, email, telefone);
         var cliente = clienteRepository.save(createCliente);
 
-        //var createClientePF = new ClientePF(cpf, data_nascimento, createCliente);
-        //clientePFRepository.save(createClientePF);
+        var createClientePF = new ClientePF(cpf, data_nascimento, createCliente);
+        clientePFRepository.save(createClientePF);
         System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
         return cliente;
 
@@ -50,4 +51,3 @@ public class ClienteController {
         return cliente;
     }
 }
-
