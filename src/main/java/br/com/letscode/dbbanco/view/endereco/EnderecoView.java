@@ -5,7 +5,6 @@ import br.com.letscode.dbbanco.entities.Endereco;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
 import br.com.letscode.dbbanco.view.conta.ContaView;
-import br.com.letscode.dbbanco.view.pessoa.PessoaView;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -13,13 +12,11 @@ import java.util.Scanner;
 @Component
 public class EnderecoView {
 
-    private final PessoaView pessoaView;
     private final EnderecoController enderecoController;
     private final ContaView contaView;
 
-    public EnderecoView(ContaView contaView, PessoaView pessoaView, EnderecoController enderecoController) {
+    public EnderecoView(ContaView contaView, EnderecoController enderecoController) {
         this.contaView = contaView;
-        this.pessoaView = pessoaView;
         this.enderecoController = enderecoController;
     }
 
@@ -53,7 +50,7 @@ public class EnderecoView {
         if(tipoCliente == TipoCliente.PESSOA_JURIDICA){
             contaView.painelContasPJ(cliente, criarEndereco);
         } else{
-            pessoaView.painelContasPF(cliente, criarEndereco);
+            contaView.painelContasPF(cliente, criarEndereco);
         }
     }
 

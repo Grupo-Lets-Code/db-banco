@@ -1,16 +1,13 @@
 package br.com.letscode.dbbanco.view.conta;
 
-import br.com.letscode.dbbanco.controller.ClienteController;
 import br.com.letscode.dbbanco.controller.ContaController;
 import br.com.letscode.dbbanco.entities.Endereco;
-import br.com.letscode.dbbanco.entities.Utils;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
 import br.com.letscode.dbbanco.view.Menu;
 import br.com.letscode.dbbanco.view.agencia.AgenciaView;
-import br.com.letscode.dbbanco.view.endereco.EnderecoView;
 import br.com.letscode.dbbanco.view.pessoa.PessoaView;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +50,36 @@ public class ContaView {
                 break;
             default:
                 System.out.println("Opção inválida!");
-                pessoaView.tipoPJ();
+                painelContasPJ(cliente, endereco);
+                break;
+        }
+    }
+
+    public void painelContasPF(Cliente cliente, Endereco endereco) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("|    Opção 1 - Conta Corrente           |");
+        System.out.println("|    Opção 2 - Conta Poupança           |");
+        System.out.println("|    Opção 3 - Conta Investimento       |");
+        System.out.println("|    Opção 4 - Voltar                   |");
+
+        int tipoConta = input.nextInt();
+
+        switch (tipoConta) {
+            case 1:
+                criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_FISICA, endereco);
+                break;
+            case 2:
+                criarConta(cliente, TipoConta.CONTA_POUPANCA, TipoCliente.PESSOA_FISICA, endereco);
+                break;
+            case 3:
+                criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_FISICA, endereco);
+                break;
+            case 4:
+                pessoaView.painelPessoa();
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                painelContasPF(cliente, endereco);
                 break;
         }
     }

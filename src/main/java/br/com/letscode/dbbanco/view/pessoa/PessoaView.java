@@ -1,13 +1,9 @@
 package br.com.letscode.dbbanco.view.pessoa;
 
 import br.com.letscode.dbbanco.controller.ClienteController;
-import br.com.letscode.dbbanco.entities.Endereco;
 import br.com.letscode.dbbanco.entities.Utils;
-import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
-import br.com.letscode.dbbanco.entities.conta.TipoConta;
 import br.com.letscode.dbbanco.view.Menu;
-import br.com.letscode.dbbanco.view.conta.ContaView;
 import br.com.letscode.dbbanco.view.endereco.EnderecoView;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -23,13 +19,11 @@ public class PessoaView {
     private final Utils utilities;
     private final ClienteController clienteController;
     private final EnderecoView enderecoView;
-    private final ContaView contaView;
 
-    public PessoaView(Menu menu, EnderecoView enderecoView, ContaView contaView,
+    public PessoaView(Menu menu, EnderecoView enderecoView,
                       Utils utilities, ClienteController clienteController) {
         this.menu = menu;
         this.enderecoView = enderecoView;
-        this.contaView = contaView;
         this.utilities = utilities;
         this.clienteController = clienteController;
     }
@@ -112,33 +106,5 @@ public class PessoaView {
 
         var cliente = clienteController.createPJ(nome, email, telefone, cnpj, utilities.formatarData(dataAbertura));
         enderecoView.mapearEndereco(cliente, TipoCliente.PESSOA_JURIDICA);
-    }
-
-    public void painelContasPF(Cliente cliente, Endereco endereco) {
-        System.out.println("|    Opção 1 - Conta Corrente           |");
-        System.out.println("|    Opção 2 - Conta Poupança           |");
-        System.out.println("|    Opção 3 - Conta Investimento       |");
-        System.out.println("|    Opção 4 - Voltar                   |");
-
-        int tipoConta = input.nextInt();
-
-        switch (tipoConta) {
-            case 1:
-                contaView.criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_FISICA, endereco);
-                break;
-            case 2:
-                contaView.criarConta(cliente, TipoConta.CONTA_POUPANCA, TipoCliente.PESSOA_FISICA, endereco);
-                break;
-            case 3:
-                contaView.criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_FISICA, endereco);
-                break;
-            case 4:
-                painelPessoa();
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                painelContasPF(cliente, endereco);
-                break;
-        }
     }
 }
