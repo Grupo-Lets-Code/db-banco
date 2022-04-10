@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ContaController {
@@ -76,6 +77,10 @@ public class ContaController {
             return false;
         }
 
+    }
+
+    public Conta recuperaContaPorNumero(Integer numeroConta){
+        return contaRepository.findByNumeroConta(numeroConta).get();
     }
 
     public boolean transferir(Integer contaRemetente, Integer contaDestinataria, int senha, BigDecimal valor) {

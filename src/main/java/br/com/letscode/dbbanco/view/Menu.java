@@ -1,6 +1,7 @@
 package br.com.letscode.dbbanco.view;
 
 import br.com.letscode.dbbanco.view.conta.OperacoesView;
+import br.com.letscode.dbbanco.view.endereco.EnderecoView;
 import br.com.letscode.dbbanco.view.pessoa.PessoaView;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,12 @@ public class Menu {
 
     private final PessoaView pessoaView;
     private final OperacoesView operacoesView;
+    private final EnderecoView enderecoView;
 
-    public Menu(PessoaView pessoaView, OperacoesView operacoesView) {
+    public Menu(PessoaView pessoaView, OperacoesView operacoesView, EnderecoView enderecoView) {
         this.pessoaView = pessoaView;
         this.operacoesView = operacoesView;
+        this.enderecoView = enderecoView;
     }
 
     public void painelInicio() {
@@ -35,7 +38,8 @@ public class Menu {
         System.out.println("|    Opção 6 - Consultar saldo     |");
         System.out.println("|    Opção 7 - Listar conta        |");
         System.out.println("|    Opção 8 - Excluir contas      |");
-        System.out.println("|    Opção 9 - Sair                |");
+        System.out.println("|    Opção 9 - Alterar endereço    |");
+        System.out.println("|    Opção 10 - Sair                |");
 
         int operacao = input.nextInt();
 
@@ -65,6 +69,9 @@ public class Menu {
                 operacoesView.painelExcluir();
                 break;
             case 9:
+                enderecoView.painelAlterarEndereco();
+                break;
+            case 10:
                 System.out.println("Obrigado por utilizar o Banco Grupo Azul!");
                 System.exit(0);
             default:
