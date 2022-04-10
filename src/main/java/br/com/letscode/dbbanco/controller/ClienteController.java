@@ -17,12 +17,6 @@ public class ClienteController {
     private final ClientePFRepository clientePFRepository;
     private final ClientePJRepository clientePJRepository;
 
-/*    public ClienteController(ClienteRepository clienteRepository, ClientePJRepository clientePJRepository) {
-        this.clienteRepository = clienteRepository;
-        this.clientePJRepository = clientePJRepository;
-    }
- */
-
      public ClienteController(ClienteRepository clienteRepository,
                              ClientePFRepository clientePFRepository, ClientePJRepository clientePJRepository) {
         this.clienteRepository = clienteRepository;

@@ -33,7 +33,7 @@ public class ContaController {
             var saldo = catConta.get().getSaldo();
             var valorCorrigido = contaFactory.valorTipoConta(catConta.get(), valor);
             var saldo_atual = saldo.subtract(valorCorrigido);
-            if (saldo.compareTo(valor) == 1) {
+            if (saldo.compareTo(valorCorrigido) == 1) {
                 catConta.get().setSaldo(saldo_atual);
                 contaRepository.save(catConta.get());
                 System.out.println("\nSaque no valor de " + valor + "R$ realizado com sucesso! Saldo atual: " + catConta.get().getSaldo());
@@ -46,8 +46,6 @@ public class ContaController {
             System.out.println("Dados inválidos!");
             return false;
         }
-
-
     }
 
     public void depositar(Integer numeroConta, BigDecimal valor) {
