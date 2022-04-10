@@ -31,7 +31,7 @@ public class OperacoesView {
         System.out.println("\nDigite o valor do saque: ");
         BigDecimal valor = input.nextBigDecimal();
 
-        var verifica = contaController.sacar(numeroConta, senha, valor);
+        var verifica = contaController.sacar(numeroConta, senha, valor, true);
         if (verifica) {
             menu.painelInicio();
         } else {
@@ -49,7 +49,7 @@ public class OperacoesView {
         if (verificaConta) {
             System.out.println("\nDigite o valor do depósito: ");
             BigDecimal valor = input.nextBigDecimal();
-            contaController.depositar(numeroConta, valor);
+            contaController.depositar(numeroConta, valor, true);
             menu.painelInicio();
         } else {
             System.out.println("\nConta não encontrada!");

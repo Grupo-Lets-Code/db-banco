@@ -8,6 +8,8 @@ import br.com.letscode.dbbanco.repository.ContaRepository;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.Normalizer;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +30,7 @@ public class ContaController {
         System.out.println("Conta Criada com sucesso!");
     }
 
-    public boolean sacar(Integer numeroConta, int senha, BigDecimal valor) {
+    public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {
         if(this.validarLogin(numeroConta, senha)){
             var catConta = contaRepository.findByNumeroConta(numeroConta);
             var saldo = catConta.get().getSaldo();
@@ -37,10 +39,12 @@ public class ContaController {
             if (saldo.compareTo(valorCorrigido) == 1) {
                 catConta.get().setSaldo(saldo_atual);
                 contaRepository.save(catConta.get());
-                System.out.println("\nSaque no valor de " + valor + "R$ realizado com sucesso! Saldo atual: " + catConta.get().getSaldo());
+                if(exibir)
+                System.out.println("\nSaque no valor de R$ " + utilities.FormatValor(valor) + " realizado com sucesso! Saldo atual: " + catConta.get().getSaldo());
                 return true;
             } else {
-                System.out.println("\nSaque no valor de " + valor + "R$ foi negado! Saldo atual: " + saldo);
+                if(exibir)
+                System.out.println("\nSaque no valor de R$ " + utilities.FormatValor(valor) + " foi negado! Saldo atual: " + utilities.FormatValor(saldo));
                 return false;
             }
         }else{
@@ -49,13 +53,14 @@ public class ContaController {
         }
     }
 
-    public void depositar(Integer numeroConta, BigDecimal valor) {
+    public void depositar(Integer numeroConta, BigDecimal valor, boolean exibir) {
         var catConta = contaRepository.findByNumeroConta(numeroConta);
         var saldo = catConta.get().getSaldo();
         var saldo_atual = saldo.add(valor);
         catConta.get().setSaldo(saldo_atual);
         contaRepository.save(catConta.get());
-        System.out.println("\nDepósito no valor de " + valor + "R$ realizado com sucesso! Saldo atual: " + saldo_atual);
+        if(exibir)
+        System.out.println("\nDepósito no valor de R$ " + utilities.FormatValor(valor) + " realizado com sucesso! Saldo atual: " + utilities.FormatValor(saldo_atual));
     }
 
     public boolean investir(Integer numeroConta, BigDecimal valor) {
@@ -70,7 +75,7 @@ public class ContaController {
             var saldo_atual = saldo.add(valorCorrigido);
             catConta.get().setSaldo(saldo_atual);
             contaRepository.save(catConta.get());
-            System.out.println("Investimento no valor R$" + valor + " realizado com sucesso!" + "saldo atual de R$" + catConta.get().getSaldo());
+            System.out.println("Investimento no valor R$ " + utilities.FormatValor(valor) + " realizado com sucesso!" + "saldo atual de R$" + catConta.get().getSaldo());
             return true;
         } else{
             System.out.println("Conta não encontrada para investimento!");
@@ -85,10 +90,10 @@ public class ContaController {
 
     public boolean transferir(Integer contaRemetente, Integer contaDestinataria, int senha, BigDecimal valor) {
         if(this.validarLogin(contaRemetente, senha) && this.validarConta(contaDestinataria)){
-            this.depositar(contaDestinataria, valor);
-            this.sacar(contaRemetente, senha, valor);
+            this.depositar(contaDestinataria, valor, false);
+            this.sacar(contaRemetente, senha, valor, false);
             var catchContaRem = contaRepository.findByNumeroConta(contaRemetente);
-            System.out.println("\nTransferência no valor de " + valor + "R$ realizada com sucesso! Saldo atual: " + catchContaRem.get().getSaldo());
+            System.out.println("\nTransferência no valor de R$ " + utilities.FormatValor(valor) + " realizada com sucesso! Saldo atual: " + catchContaRem.get().getSaldo());
             return true;
         }else{
             System.out.println("Conta destinatária ou remetente não encontrada!");
@@ -136,4 +141,5 @@ public class ContaController {
     public boolean validarTipoConta(TipoConta tipoConta){
         return !(tipoConta == TipoConta.CONTA_INVESTIMENTO);
     }
+
 }

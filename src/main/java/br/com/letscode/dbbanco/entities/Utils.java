@@ -2,6 +2,8 @@ package br.com.letscode.dbbanco.entities;
 
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Component
@@ -14,5 +16,8 @@ public class Utils {
                 Integer.parseInt(fields[1]),
                 Integer.parseInt(fields[0])
         );
+    }
+    public BigDecimal FormatValor (BigDecimal valor){
+        return valor.setScale(2, RoundingMode.HALF_EVEN);
     }
 }
