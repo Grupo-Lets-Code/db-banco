@@ -70,7 +70,7 @@ public class OperacoesView {
         if(verifica){
             menu.painelInicio();
         } else{
-            painelInvestir();
+            menu.painelInicio();
         }
     }
 
@@ -129,6 +129,7 @@ public class OperacoesView {
         int senha = input.nextInt();
 
         var verifica = contaController.validarLogin(numeroConta, senha);
+        input.nextLine();
         if(verifica){
             System.out.println("\nDeseja realmente EXCLUIR sua conta? Escreva: sim ou nao");
             String validacao = input.nextLine();
@@ -136,7 +137,7 @@ public class OperacoesView {
                 contaController.excluirConta(numeroConta);
                 menu.painelInicio();
             } else {
-                menu.painelInicio();
+                painelExcluir();
             }
         } else {
             System.out.println("\nDados inválidos!");
