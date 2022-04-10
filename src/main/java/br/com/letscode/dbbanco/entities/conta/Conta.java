@@ -38,7 +38,7 @@ public class Conta {
     private Integer agencia;
 
     @Column(name = "senha", length = 6, nullable = false)
-    private int senha; // SENHA 6 DIGITOS!
+    private int senha;
 
     @Column(name = "data_abertura", nullable = false)
     private LocalDateTime dataAbertura = LocalDateTime.now();

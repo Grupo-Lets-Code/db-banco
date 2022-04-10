@@ -23,7 +23,7 @@ public class EnderecoController {
 
     public void createEndereco(Endereco endereco){
         enderecoRepository.save(endereco);
-        System.out.printf("Endereco salvo com sucesso!!!\n");
+        System.out.printf("Cadastro de endereco realizado, escolha o tipo conta: \n");
     }
 
 
