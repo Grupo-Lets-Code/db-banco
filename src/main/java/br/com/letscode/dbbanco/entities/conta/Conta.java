@@ -1,9 +1,9 @@
 package br.com.letscode.dbbanco.entities.conta;
 
+import br.com.letscode.dbbanco.entities.Endereco;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
-import br.com.letscode.dbbanco.entities.conta.Agencia;
-import br.com.letscode.dbbanco.entities.conta.TipoConta;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,21 +47,25 @@ public class Conta {
     @Column(name = "tipo_cliente", nullable = false)
     private TipoCliente tipoCliente;
 
-    public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente) {
+    @OneToOne
+    @JoinColumn(name = "endereco_id", nullable = false)
+    private Endereco endereco;
+
+    public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente, Endereco endereco) {
         this.cliente = cliente;
         this.tipoConta = tipoConta;
         this.agencia = agencia;
         this.senha = senha;
         this.tipoCliente = tipoCliente;
+        this.endereco = endereco;
     }
 
     @Override
     public String toString() {
-        return "Lista de contas: \n" +
-                "Numero da Conta: " + numeroConta +
-                ", Nome: " + cliente.getNome() +
-                ", Tipo da Conta: " + tipoConta +
-                ", Numero da Agencia: " + agencia +
-                ", tipo: " + tipoCliente + "\n";
+        return  "\nNumero da Conta: " + numeroConta +
+                "\nNome: " + cliente.getNome() +
+                "\nTipo da Conta: " + tipoConta +
+                "\nNumero da Agencia: " + agencia +
+                "\nTipo de Cliente: " + tipoCliente;
     }
 }
