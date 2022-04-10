@@ -140,7 +140,7 @@ public class Menu {
         System.out.println("\nDigite sua data de nascimento, com barras: ");
         String dataNascimento = input.nextLine();
 
-        var cliente = clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
+        var cliente = clienteController.createPF(nome, email, telefone, cpf, formatarData(dataNascimento));
         MapearEndereco(cliente, TipoCliente.PESSOA_FISICA);
 
     }
@@ -241,11 +241,6 @@ public class Menu {
         painelInicio();
     }
 
-    protected Boolean acessarConta(Integer numeroConta, int senha) {
-        return contaController.validarLogin(numeroConta, senha);
-    }
-
-
     public void painelSacar() {
         Scanner input = new Scanner(System.in);
 
@@ -255,18 +250,14 @@ public class Menu {
         System.out.println("\nDigite a senha da conta: ");
         int senha = input.nextInt();
 
-        if (acessarConta(numeroConta, senha)) {
-            System.out.println("\nDigite o valor do saque: ");
-            BigDecimal valor = input.nextBigDecimal();
-            var verifica = contaController.sacar(numeroConta, valor);
-            if (verifica) {
-                painelInicio();
-            } else {
-                painelSacar();
-            }
-        } else {
-            System.out.println("\nDados inválidos!");
+        System.out.println("\nDigite o valor do saque: ");
+        BigDecimal valor = input.nextBigDecimal();
+
+        var verifica = contaController.sacar(numeroConta, senha, valor);
+        if (verifica) {
             painelInicio();
+        } else {
+            painelSacar();
         }
     }
 
@@ -388,11 +379,11 @@ public class Menu {
         System.out.println("\nDigite a senha da conta: ");
         int senha = input.nextInt();
         input.nextLine();
-
-        if (acessarConta(numeroConta, senha)) {
+        var verifica = contaController.validarLogin(numeroConta, senha);
+        if(verifica){
             System.out.println("\nDeseja realmente EXCLUIR sua conta? Escreva: sim ou nao");
             String validacao = input.nextLine();
-            if (validacao.equals("sim")) {
+            if(validacao.equals("sim")) {
                 contaController.excluirConta(numeroConta);
                 painelInicio();
             } else {
@@ -402,7 +393,6 @@ public class Menu {
             System.out.println("\nDados inválidos!");
             painelInicio();
         }
-
     }
 
     private int painelAgencia() {
