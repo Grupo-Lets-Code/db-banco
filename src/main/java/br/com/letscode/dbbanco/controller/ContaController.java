@@ -1,5 +1,6 @@
 package br.com.letscode.dbbanco.controller;
 
+import br.com.letscode.dbbanco.entities.Utils;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
@@ -13,10 +14,12 @@ import java.util.List;
 public class ContaController {
     private final ContaFactory contaFactory;
     private final ContaRepository contaRepository;
+    private final Utils utilities;
 
-    public ContaController(ContaFactory contaFactory, ContaRepository contaRepository) {
+    public ContaController(ContaFactory contaFactory, ContaRepository contaRepository, Utils utilities) {
         this.contaFactory = contaFactory;
         this.contaRepository = contaRepository;
+        this.utilities = utilities;
     }
 
     public void criarConta(Conta criarConta) {
@@ -40,7 +43,7 @@ public class ContaController {
                 return false;
             }
         }else{
-            System.out.println("Conta não encontrada!");
+            System.out.println("Dados inválidos!");
             return false;
         }
 
@@ -85,7 +88,7 @@ public class ContaController {
             System.out.println("\nTransferência no valor de " + valor + "R$ realizada com sucesso! Saldo atual: " + catchContaRem.get().getSaldo());
             return true;
         }else{
-            System.out.println("Conta destinatário ou remetente não encontrada!");
+            System.out.println("Conta destinatária ou remetente não encontrada!");
             return false;
         }
     }
@@ -94,7 +97,7 @@ public class ContaController {
         var catchConta = contaRepository.findByNumeroConta(numeroConta);
         var catchSenha = contaRepository.findBySenhaEquals(senha);
         if(catchConta.isPresent() && catchSenha.isPresent()){
-            System.out.println("O saldo da conta de número " + catchConta.get().getNumeroConta() + " é: R$" + catchConta.get().getSaldo());
+            System.out.println("\nO saldo atual da conta é: R$" + catchConta.get().getSaldo());
             return true;
         } else{
             System.out.println("Conta não encontrada!");

@@ -20,7 +20,7 @@ public class PessoaView {
     private final ClienteController clienteController;
     private final EnderecoView enderecoView;
 
-    public PessoaView(Menu menu, EnderecoView enderecoView,
+    public PessoaView(@Lazy Menu menu, EnderecoView enderecoView,
                       Utils utilities, ClienteController clienteController) {
         this.menu = menu;
         this.enderecoView = enderecoView;

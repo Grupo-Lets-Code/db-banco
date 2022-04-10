@@ -9,12 +9,12 @@ public class AgenciaView {
 
     public int painelAgencia() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Escolha suas agencias:");
-        System.out.println("Agencia: 101 - Agencia Sul");
-        System.out.println("Agencia: 202 - Agencia Sudeste");
-        System.out.println("Agencia: 303 - Agencia Centro-Oeste");
-        System.out.println("Agencia: 404 - Agencia Nordeste");
-        System.out.println("Agencia: 505 - Agencia Norte");
+        System.out.println("Escolha sua agência:");
+        System.out.println("Agência: 101 - Agência Sul");
+        System.out.println("Agência: 202 - Agência Sudeste");
+        System.out.println("Agência: 303 - Agência Centro-Oeste");
+        System.out.println("Agência: 404 - Agência Nordeste");
+        System.out.println("Agência: 505 - Agência Norte");
         return input.nextInt();
     }
 }

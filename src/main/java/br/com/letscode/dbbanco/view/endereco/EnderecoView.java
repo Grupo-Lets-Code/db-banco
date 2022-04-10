@@ -5,6 +5,7 @@ import br.com.letscode.dbbanco.entities.Endereco;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
 import br.com.letscode.dbbanco.view.conta.ContaView;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class EnderecoView {
     private final EnderecoController enderecoController;
     private final ContaView contaView;
 
-    public EnderecoView(ContaView contaView, EnderecoController enderecoController) {
+    public EnderecoView(@Lazy ContaView contaView, EnderecoController enderecoController) {
         this.contaView = contaView;
         this.enderecoController = enderecoController;
     }
@@ -41,7 +42,7 @@ public class EnderecoView {
         System.out.println("Digite o pais:");
         String pais = input.nextLine();
 
-        System.out.println("Digite o cep (Só os números):");
+        System.out.println("Digite o cep, somente os números: ");
         String cep = input.nextLine();
 
         var criarEndereco = new Endereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);

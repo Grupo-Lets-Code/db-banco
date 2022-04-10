@@ -14,6 +14,5 @@ public class Utils {
                 Integer.parseInt(fields[1]),
                 Integer.parseInt(fields[0])
         );
-
     }
 }

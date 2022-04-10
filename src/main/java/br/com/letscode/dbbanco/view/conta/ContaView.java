@@ -9,6 +9,7 @@ import br.com.letscode.dbbanco.entities.conta.TipoConta;
 import br.com.letscode.dbbanco.view.Menu;
 import br.com.letscode.dbbanco.view.agencia.AgenciaView;
 import br.com.letscode.dbbanco.view.pessoa.PessoaView;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -21,7 +22,7 @@ public class ContaView {
     private final AgenciaView agenciaView;
     private final ContaController contaController;
 
-    public ContaView(Menu menu, PessoaView pessoaView, ContaController contaController,
+    public ContaView(@Lazy Menu menu, PessoaView pessoaView, ContaController contaController,
                      AgenciaView agenciaView) {
         this.menu = menu;
         this.pessoaView = pessoaView;
@@ -32,7 +33,7 @@ public class ContaView {
     public void painelContasPJ(Cliente cliente, Endereco endereco) {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("|    Opção 1 - Conta Corrente           |");
+        System.out.println("\n|    Opção 1 - Conta Corrente           |");
         System.out.println("|    Opção 2 - Conta Investimento       |");
         System.out.println("|    Opção 3 - Voltar                   |");
 
@@ -57,7 +58,8 @@ public class ContaView {
 
     public void painelContasPF(Cliente cliente, Endereco endereco) {
         Scanner input = new Scanner(System.in);
-        System.out.println("|    Opção 1 - Conta Corrente           |");
+
+        System.out.println("\n|    Opção 1 - Conta Corrente           |");
         System.out.println("|    Opção 2 - Conta Poupança           |");
         System.out.println("|    Opção 3 - Conta Investimento       |");
         System.out.println("|    Opção 4 - Voltar                   |");
@@ -86,10 +88,11 @@ public class ContaView {
 
     public void criarConta(Cliente cliente, TipoConta tipoConta, TipoCliente tipoCliente, Endereco endereco) {
         Scanner input = new Scanner(System.in);
-        var agencia =  agenciaView.painelAgencia();
 
-        System.out.println("Digite sua senha");
-        var senha = input.nextInt();
+        var agencia = agenciaView.painelAgencia();
+
+        System.out.println("Digite sua senha, máximo de 6 digitos: ");
+        int senha = input.nextInt();
 
         var criarConta = new Conta(cliente, tipoConta, agencia, senha, tipoCliente, endereco);
         contaController.criarConta(criarConta);

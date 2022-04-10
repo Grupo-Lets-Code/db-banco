@@ -2,6 +2,7 @@ package br.com.letscode.dbbanco.view.conta;
 
 import br.com.letscode.dbbanco.controller.ContaController;
 import br.com.letscode.dbbanco.view.Menu;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ public class OperacoesView {
     private final Menu menu;
     private final ContaController contaController;
 
-    public OperacoesView(Menu menu, ContaController contaController) {
+    public OperacoesView(@Lazy Menu menu, ContaController contaController) {
         this.menu = menu;
         this.contaController = contaController;
     }
