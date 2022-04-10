@@ -137,11 +137,12 @@ public class Menu {
             cpf = input.nextLine();
         }
 
-        System.out.println("\nDigite sua data de nascimento: ");
-        String data_nascimento = input.nextLine();
+        System.out.println("\nDigite sua data de nascimento, com barras: ");
+        String dataNascimento = input.nextLine();
 
         var cliente = clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
         MapearEndereco(cliente, TipoCliente.PESSOA_FISICA);
+
     }
 
     protected void tipoPJ() {
@@ -166,14 +167,9 @@ public class Menu {
         }
 
         System.out.println("\nDigite a data de abertura da empresa, com barras: ");
-        String data = input.nextLine();
+        String dataAbertura = input.nextLine();
 
-        String[] fields = data.split("/");
-
-        var data_abertura = LocalDate.of(Integer.parseInt(fields[2]),
-                Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
-
-        var cliente = clienteController.createPJ(nome, email, telefone, cnpj, data_abertura);
+        var cliente = clienteController.createPJ(nome, email, telefone, cnpj, formatarData(dataAbertura));
 
         MapearEndereco(cliente, TipoCliente.PESSOA_JURIDICA);
     }
@@ -189,7 +185,10 @@ public class Menu {
 
         switch (tipoConta) {
             case 1:
+
                 criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_FISICA, endereco);
+
+
                 break;
             case 2:
                 criarConta(cliente, TipoConta.CONTA_POUPANCA, TipoCliente.PESSOA_FISICA, endereco);
@@ -230,6 +229,7 @@ public class Menu {
                 break;
         }
     }
+
 
     private void criarConta(Cliente cliente, TipoConta tipoConta, TipoCliente tipoCliente, Endereco endereco) {
         Scanner input = new Scanner(System.in);
@@ -371,7 +371,7 @@ public class Menu {
 
         var criarEndereco = new Endereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
         enderecoController.createEndereco(criarEndereco);
-        //FIXME URGENTEMENTE
+        
         if(tipoCliente == TipoCliente.PESSOA_JURIDICA){
             painelContasPJ(cliente, criarEndereco);
         } else{
@@ -415,6 +415,14 @@ public class Menu {
         System.out.println("Agencia: 505 - Agencia Norte");
 
         return input.nextInt();
+    }
+
+    private LocalDate formatarData(String data) {
+
+        String[] fields = data.split("/");
+
+        return LocalDate.of(Integer.parseInt(fields[2]), Integer.parseInt(fields[1]), Integer.parseInt(fields[0]));
+
     }
 
 }
