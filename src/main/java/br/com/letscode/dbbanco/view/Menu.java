@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Scanner;
 
 @Component
@@ -88,7 +87,8 @@ public class Menu {
 
     private void painelListar() {
         var allContas = contaController.listarContas();
-        allContas.stream().forEach(System.out::println);
+        System.out.println("Lista de Contas");
+        allContas.forEach(System.out::println);
         painelInicio();
     }
 
@@ -140,9 +140,8 @@ public class Menu {
         System.out.println("\nDigite sua data de nascimento, com barras: ");
         String dataNascimento = input.nextLine();
 
-        var cliente = clienteController.createPF(nome, email, telefone, cpf, formatarData(dataNascimento));
-        MapearEndereco(cliente);
-        painelContasPF();
+        var cliente = clienteController.createPF(nome, email, telefone, cpf, data_nascimento);
+        MapearEndereco(cliente, TipoCliente.PESSOA_FISICA);
 
     }
 
@@ -172,12 +171,11 @@ public class Menu {
 
         var cliente = clienteController.createPJ(nome, email, telefone, cnpj, formatarData(dataAbertura));
 
-        MapearEndereco(cliente);
-        //painelContasPJ(cliente);
+        MapearEndereco(cliente, TipoCliente.PESSOA_JURIDICA);
     }
 
 
-    protected void painelContasPF() {
+    protected void painelContasPF(Cliente cliente, Endereco endereco) {
         System.out.println("|    Opção 1 - Conta Corrente           |");
         System.out.println("|    Opção 2 - Conta Poupança           |");
         System.out.println("|    Opção 3 - Conta Investimento       |");
@@ -187,25 +185,28 @@ public class Menu {
 
         switch (tipoConta) {
             case 1:
-            //    painelCriarCorrentePF(Cliente cliente);
+
+                criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_FISICA, endereco);
+
+
                 break;
             case 2:
-                //Chamar o metodo abrir conta poupança
+                criarConta(cliente, TipoConta.CONTA_POUPANCA, TipoCliente.PESSOA_FISICA, endereco);
                 break;
             case 3:
-                //Chamar o metodo abrir conta investimento
+                criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_FISICA, endereco);
                 break;
             case 4:
                 painelPessoa();
                 break;
             default:
                 System.out.println("Opção inválida!");
-                painelContasPF();
+                painelContasPF(cliente, endereco);
                 break;
         }
     }
 
-    protected void painelContasPJ(Cliente cliente) {
+    protected void painelContasPJ(Cliente cliente, Endereco endereco) {
         System.out.println("|    Opção 1 - Conta Corrente           |");
         System.out.println("|    Opção 2 - Conta Investimento       |");
         System.out.println("|    Opção 3 - Voltar                   |");
@@ -214,10 +215,10 @@ public class Menu {
 
         switch (tipoContaPJ) {
             case 1:
-                painelCriarCorrentePJ(cliente);
+                criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_JURIDICA, endereco);
                 break;
             case 2:
-                //Banco.criarInvestimentoPJ();
+                criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_JURIDICA, endereco);
                 break;
             case 3:
                 painelPessoa();
@@ -229,32 +230,19 @@ public class Menu {
         }
     }
 
-    private void painelCriarCorrentePF(Cliente cliente) {
+
+    private void criarConta(Cliente cliente, TipoConta tipoConta, TipoCliente tipoCliente, Endereco endereco) {
         Scanner input = new Scanner(System.in);
         var agencia = painelAgencia();
         System.out.println("Digite sua senha");
         var senha = input.nextInt();
-        var criarConta = new Conta(cliente,TipoConta.CONTA_CORRENTE,agencia, senha, TipoCliente.PESSOA_JURIDICA);
-        contaController.criarConta(criarConta);
-        painelInicio();
-    }
-
-    private void painelCriarCorrentePJ(Cliente cliente) {
-        Scanner input = new Scanner(System.in);
-        var agencia = painelAgencia();
-        System.out.println("Digite sua senha de 6 digitos: ");
-        var senha = input.nextInt();
-        var criarConta = new Conta(cliente, TipoConta.CONTA_CORRENTE, agencia, senha, TipoCliente.PESSOA_JURIDICA);
+        var criarConta = new Conta(cliente, tipoConta, agencia, senha, tipoCliente, endereco);
         contaController.criarConta(criarConta);
         painelInicio();
     }
 
     protected Boolean acessarConta(Integer numeroConta, int senha) {
-        var valida = contaController.validarLogin(numeroConta, senha);
-        if (valida) {
-            return true;
-        }
-        return false;
+        return contaController.validarLogin(numeroConta, senha);
     }
 
 
@@ -305,21 +293,15 @@ public class Menu {
         System.out.println("\nDigite o número da conta: ");
         Integer numeroConta = Integer.valueOf(input.next());
 
-        //FIXME Validar se a conta existe antes de passar para a senha
-        //Exemplo: contaExists(); para verificar se a conta existe
-
-        //FIXME SE CONTA NÃO EXISTE:
-        System.out.println("\nConta inválida!");
-        painelInvestir();
-
-
         System.out.println("\nDigite o valor do investimento: ");
         BigDecimal valor = input.nextBigDecimal();
 
-        contaController.investir(numeroConta, valor);
-
-        System.out.println("\nInvestimento no valor de " + valor + "R$ realizado com sucesso! Saldo atual: " /*saldo*/);
-
+        var verifica = contaController.investir(numeroConta, valor);
+        if(verifica){
+            painelInicio();
+        } else{
+            painelInvestir();
+        }
     }
 
     protected void painelTransferir() {
@@ -331,34 +313,18 @@ public class Menu {
         System.out.println("\nDigite o número da conta que deseja enviar a transferência: ");
         Integer contaDestinataria = Integer.valueOf(input.next());
 
-        //FIXME Validar se as contas existem antes de passar para a senha
-        //Exemplo: contaExists(); para verificar se as contas existem
-
-        /*
-        System.out.println("\nConta remetente inválida!");
-        contaRemetente = Integer.valueOf(input.next());
-
-
-        System.out.println("\nConta destinatária inválida!");
-        contaDestinataria = Integer.valueOf(input.next());
-        */
-
-
         System.out.println("\nDigite a senha da sua conta: ");
         int senha = input.nextInt();
 
-        System.out.println("\nSenha inválida!");
-        painelTransferir();
-
-        //FIXME SE SENHA CORRETA, então
         System.out.println("\nDigite o valor da transferência: ");
         BigDecimal valor = input.nextBigDecimal();
 
-        contaController.transferir(contaRemetente, contaDestinataria, senha, valor);
-
-        System.out.println("\nTransferência no valor de " + valor + "R$ realizada com sucesso! Saldo atual: " /*saldo*/);
-
-
+        var verifica = contaController.transferir(contaRemetente, contaDestinataria, senha, valor);
+        if (verifica){
+            painelInicio();
+        } else{
+            painelTransferir();
+        }
     }
 
 
@@ -371,22 +337,13 @@ public class Menu {
         System.out.println("\nDigite a senha da conta: ");
         int senha = input.nextInt();
 
-        contaController.consultarSaldo(numeroConta, senha);
-
-        //FIXME Validar se a conta existe antes de passar para a senha
-        //Exemplo: contaExists(); para verificar se a conta existe
-
-        //FIXME SE CONTA NÃO EXISTE:
-        System.out.println("\nConta inválida!");
-        painelSaldo();
-
-
-        //FIXME SE SENHA INCORRETA, então
-        System.out.println("\nSenha inválida!");
-        painelSaldo();
+        var verifica = contaController.consultarSaldo(numeroConta, senha);
+        if(verifica)
+            painelInicio();
+        else painelSaldo();
     }
 
-    public void MapearEndereco(Cliente cliente) {
+    public void MapearEndereco(Cliente cliente, TipoCliente tipoCliente) {
         input.nextLine();
 
         System.out.println("Digite o logradouro:");
@@ -414,8 +371,12 @@ public class Menu {
 
         var criarEndereco = new Endereco(lagradouro, numero, cidade, bairro, estado, pais, cep, cliente);
         enderecoController.createEndereco(criarEndereco);
-
-        painelContasPJ(cliente);
+        
+        if(tipoCliente == TipoCliente.PESSOA_JURIDICA){
+            painelContasPJ(cliente, criarEndereco);
+        } else{
+            painelContasPF(cliente, criarEndereco);
+        }
     }
 
     private void painelExcluir() {
@@ -447,10 +408,11 @@ public class Menu {
     private int painelAgencia() {
         Scanner input = new Scanner(System.in);
         System.out.println("Escolha suas agencias:");
-        System.out.println("Agencia: 101");
-        System.out.println("Agencia: 202");
-        System.out.println("Agencia: 303");
-        System.out.println("Agencia: 404");
+        System.out.println("Agencia: 101 - Agencia Sul");
+        System.out.println("Agencia: 202 - Agencia Sudeste");
+        System.out.println("Agencia: 303 - Agencia Centro-Oeste");
+        System.out.println("Agencia: 404 - Agencia Nordeste");
+        System.out.println("Agencia: 505 - Agencia Norte");
 
         return input.nextInt();
     }

@@ -1,7 +1,5 @@
 package br.com.letscode.dbbanco.controller;
 
-import br.com.letscode.dbbanco.entities.cliente.Cliente;
-import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
@@ -52,47 +50,61 @@ public class ContaController {
         System.out.println("\nDepósito no valor de " + valor + "R$ realizado com sucesso! Saldo atual: " + saldo_atual);
     }
 
-    public void investir(Integer numeroConta, BigDecimal valor) {
-        var catConta = contaRepository.findByNumeroConta(numeroConta);
-        var saldo = catConta.get().getSaldo();
-        var saldo_atual = saldo.add(valor);
-        catConta.get().setSaldo(saldo_atual);
+    public boolean investir(Integer numeroConta, BigDecimal valor) {
+        if(this.validarConta(numeroConta)){
+            var catConta = contaRepository.findByNumeroConta(numeroConta);
+            if( this.validarTipoConta(catConta.get().getTipoConta())){
+                System.out.println("Conta não é do tipo Investimento!");
+                return false;
+            }
+            var saldo = catConta.get().getSaldo();
+            var valorCorrigido = contaFactory.valorTipoConta(catConta.get(), valor);
+            var saldo_atual = saldo.add(valorCorrigido);
+            catConta.get().setSaldo(saldo_atual);
+            contaRepository.save(catConta.get());
+            System.out.println("Investimento no valor R$" + valor + " realizado com sucesso!" + "saldo atual de R$" + catConta.get().getSaldo());
+            return true;
+        } else{
+            System.out.println("Conta não encontrada para investimento!");
+            return false;
+        }
+
     }
 
-    public void transferir(Integer contaRemetente, Integer contaDestinataria, int senha, BigDecimal valor) {
-        var catContaRemetente = contaRepository.findByNumeroConta(contaRemetente);
-        var catContaDestinataria = contaRepository.findByNumeroConta(contaDestinataria);
-
-        var catSaldoRemetente = catContaRemetente.get().getSaldo();
-        var saldoRemetente = catSaldoRemetente.subtract(valor);
-
-        var catSaldoDestinataria = catContaDestinataria.get().getSaldo();
-        var saldoDestinataria = catSaldoDestinataria.add(valor);
-
+    public boolean transferir(Integer contaRemetente, Integer contaDestinataria, int senha, BigDecimal valor) {
+        if(this.validarLogin(contaRemetente, senha) && this.validarConta(contaDestinataria)){
+            this.depositar(contaDestinataria, valor);
+            this.sacar(contaRemetente, valor);
+            var catchContaRem = contaRepository.findByNumeroConta(contaRemetente);
+            System.out.println("\nTransferência no valor de " + valor + "R$ realizada com sucesso! Saldo atual: " + catchContaRem.get().getSaldo());
+            return true;
+        }else{
+            System.out.println("Conta destinatário ou remetente não encontrada!");
+            return false;
+        }
     }
 
-    public void consultarSaldo(Integer numeroConta, int senha) {
-        var catConta = contaRepository.findByNumeroConta(numeroConta);
-        var catSenha = contaRepository.findBySenhaEquals(senha);
+    public boolean consultarSaldo(Integer numeroConta, int senha) {
+        var catchConta = contaRepository.findByNumeroConta(numeroConta);
+        var catchSenha = contaRepository.findBySenhaEquals(senha);
+        if(catchConta.isPresent() && catchSenha.isPresent()){
+            System.out.println("O saldo da conta de número " + catchConta.get().getNumeroConta() + " é: R$" + catchConta.get().getSaldo());
+            return true;
+        } else{
+            System.out.println("Conta não encontrada!");
+            return false;
+        }
     }
 
     public boolean validarLogin(Integer numeroConta, int senha) {
         var catchConta = contaRepository.findByNumeroConta(numeroConta);
         var catchSenha = contaRepository.findBySenhaEquals(senha);
-        if (catchConta.isPresent() && catchSenha.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return catchConta.isPresent() && catchSenha.isPresent();
     }
 
     public boolean validarConta(Integer numeroConta) {
         var catchConta = contaRepository.findByNumeroConta(numeroConta);
-        if (catchConta.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return catchConta.isPresent();
     }
 
     public boolean excluirConta(Integer numeroConta) {
@@ -107,7 +119,10 @@ public class ContaController {
     }
 
     public List<Conta> listarContas() {
-        var contas = contaRepository.findAll();
-        return contas;
+        return contaRepository.findAll();
+    }
+
+    public boolean validarTipoConta(TipoConta tipoConta){
+        return !(tipoConta == TipoConta.CONTA_INVESTIMENTO);
     }
 }
