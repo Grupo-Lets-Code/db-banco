@@ -39,7 +39,7 @@ public class Menu {
         System.out.println("|    Opção 7 - Listar conta        |");
         System.out.println("|    Opção 8 - Excluir contas      |");
         System.out.println("|    Opção 9 - Alterar endereço    |");
-        System.out.println("|    Opção 10 - Sair                |");
+        System.out.println("|    Opção 10 - Sair               |");
 
         int operacao = input.nextInt();
 
