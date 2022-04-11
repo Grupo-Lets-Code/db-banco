@@ -15,6 +15,19 @@ public class AgenciaView {
         System.out.println("Agência: 303 - Agência Centro-Oeste");
         System.out.println("Agência: 404 - Agência Nordeste");
         System.out.println("Agência: 505 - Agência Norte");
+
+        int operacao = input.nextInt();
+        switch (operacao) {
+            case 101:
+            case 202:
+            case 303:
+            case 404:
+            case 505:
+                return operacao;
+            default:
+                System.out.println("Agência Inválida!");
+                painelAgencia();
+        }
         return input.nextInt();
     }
 }

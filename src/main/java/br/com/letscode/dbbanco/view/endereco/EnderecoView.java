@@ -31,7 +31,7 @@ public class EnderecoView {
     public void mapearEndereco(Cliente cliente, TipoCliente tipoCliente) {
 
         Endereco endereco = new Endereco();
-        instanciarEndereco(endereco);
+        instanciarEndereco(cliente, endereco);
 
         enderecoController.createEndereco(endereco);
 
@@ -42,28 +42,28 @@ public class EnderecoView {
         }
     }
 
-    public void instanciarEndereco(Endereco endereco) {
+    public void instanciarEndereco(Cliente cliente, Endereco endereco) {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Digite o logradouro:");
+        System.out.println("Digite o logradouro: ");
         String logradouro = input.nextLine();
 
-        System.out.println("Digite o numero:");
+        System.out.println("Digite o número: ");
         String numero = input.nextLine();
 
-        System.out.println("Digite a cidade:");
+        System.out.println("Digite a cidade: ");
         String cidade = input.nextLine();
 
-        System.out.println("Digite o bairro:");
+        System.out.println("Digite o bairro: ");
         String bairro = input.nextLine();
 
-        System.out.println("Digite o estado:");
+        System.out.println("Digite o estado: ");
         String estado = input.nextLine();
 
-        System.out.println("Digite o pais:");
+        System.out.println("Digite o pais: ");
         String pais = input.nextLine();
 
-        System.out.println("Digite o cep, somente os números: ");
+        System.out.println("Digite o CEP, somente os números: ");
         String cep = input.nextLine();
 
         endereco.setLogradouro(logradouro);
@@ -73,6 +73,7 @@ public class EnderecoView {
         endereco.setPais(pais);
         endereco.setUf(estado);
         endereco.setNumero(numero);
+        endereco.setCliente(cliente);
     }
 
     public void painelAlterarEndereco() {
@@ -88,10 +89,9 @@ public class EnderecoView {
         if(contaController.validarLogin(numeroConta, senha)) {
             Conta conta = contaController.recuperaContaPorNumero(numeroConta);
             Endereco endereco = enderecoController.recuperaEnderecoPorId(conta.getEndereco().getId());
-            instanciarEndereco(endereco);
+            instanciarEndereco(conta.getCliente(), endereco);
             enderecoController.updateEndereco(endereco);
             menuView.painelInicio();
-
         } else {
             System.out.println("Os dados inseridos estão incorretos, tente novamente!");
             painelAlterarEndereco();
