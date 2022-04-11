@@ -8,10 +8,7 @@ import br.com.letscode.dbbanco.repository.ContaRepository;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.Normalizer;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ContaController {
@@ -32,15 +29,15 @@ public class ContaController {
 
     public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {
         if(this.validarLogin(numeroConta, senha)){
-            var catConta = contaRepository.findByNumeroConta(numeroConta);
-            var saldo = catConta.get().getSaldo();
-            var valorCorrigido = contaFactory.valorTipoConta(catConta.get(), valor);
+            var catchConta = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
+            var saldo = catchConta.get().getSaldo();
+            var valorCorrigido = contaFactory.valorTipoConta(catchConta.get(), valor);
             var saldo_atual = saldo.subtract(valorCorrigido);
             if (saldo.compareTo(valorCorrigido) == 1) {
-                catConta.get().setSaldo(saldo_atual);
-                contaRepository.save(catConta.get());
+                catchConta.get().setSaldo(saldo_atual);
+                contaRepository.save(catchConta.get());
                 if(exibir)
-                System.out.println("\nSaque no valor de R$ " + utilities.FormatValor(valor) + " realizado com sucesso! Saldo atual: " + catConta.get().getSaldo());
+                System.out.println("\nSaque no valor de R$ " + utilities.FormatValor(valor) + " realizado com sucesso! Saldo atual: " + catchConta.get().getSaldo());
                 return true;
             } else {
                 if(exibir)
@@ -54,28 +51,28 @@ public class ContaController {
     }
 
     public void depositar(Integer numeroConta, BigDecimal valor, boolean exibir) {
-        var catConta = contaRepository.findByNumeroConta(numeroConta);
-        var saldo = catConta.get().getSaldo();
+        var catchConta = contaRepository.findByNumeroConta(numeroConta);
+        var saldo = catchConta.get().getSaldo();
         var saldo_atual = saldo.add(valor);
-        catConta.get().setSaldo(saldo_atual);
-        contaRepository.save(catConta.get());
+        catchConta.get().setSaldo(saldo_atual);
+        contaRepository.save(catchConta.get());
         if(exibir)
         System.out.println("\nDepósito no valor de R$ " + utilities.FormatValor(valor) + " realizado com sucesso! Saldo atual: " + utilities.FormatValor(saldo_atual));
     }
 
     public boolean investir(Integer numeroConta, BigDecimal valor) {
         if(this.validarConta(numeroConta)){
-            var catConta = contaRepository.findByNumeroConta(numeroConta);
-            if( this.validarTipoConta(catConta.get().getTipoConta())){
+            var catchConta = contaRepository.findByNumeroConta(numeroConta);
+            if( this.validarTipoConta(catchConta.get().getTipoConta())){
                 System.out.println("Conta não é do tipo Investimento!");
                 return false;
             }
-            var saldo = catConta.get().getSaldo();
-            var valorCorrigido = contaFactory.valorTipoConta(catConta.get(), valor);
+            var saldo = catchConta.get().getSaldo();
+            var valorCorrigido = contaFactory.valorTipoConta(catchConta.get(), valor);
             var saldo_atual = saldo.add(valorCorrigido);
-            catConta.get().setSaldo(saldo_atual);
-            contaRepository.save(catConta.get());
-            System.out.println("Investimento no valor R$ " + utilities.FormatValor(valor) + " realizado com sucesso!" + "saldo atual de R$" + catConta.get().getSaldo());
+            catchConta.get().setSaldo(saldo_atual);
+            contaRepository.save(catchConta.get());
+            System.out.println("Investimento no valor R$ " + utilities.FormatValor(valor) + " realizado com sucesso!" + "saldo atual de R$" + catchConta.get().getSaldo());
             return true;
         } else{
             System.out.println("Conta não encontrada para investimento!");
@@ -102,10 +99,9 @@ public class ContaController {
     }
 
     public boolean consultarSaldo(Integer numeroConta, int senha) {
-        var catchConta = contaRepository.findByNumeroConta(numeroConta);
-        var catchSenha = contaRepository.findBySenhaEquals(senha);
-        if(catchConta.isPresent() && catchSenha.isPresent()){
-            System.out.println("\nO saldo atual da conta é: R$" + catchConta.get().getSaldo());
+        var catchContaAndSenha = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
+        if(catchContaAndSenha.isPresent()){
+            System.out.println("\nO saldo atual da conta é: R$" + catchContaAndSenha.get().getSaldo());
             return true;
         } else{
             System.out.println("Conta não encontrada!");
@@ -114,9 +110,8 @@ public class ContaController {
     }
 
     public boolean validarLogin(Integer numeroConta, int senha) {
-        var catchConta = contaRepository.findByNumeroConta(numeroConta);
-        var catchSenha = contaRepository.findBySenhaEquals(senha);
-        return catchConta.isPresent() && catchSenha.isPresent();
+        var catchContaAndSenha = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
+        return catchContaAndSenha.isPresent();
     }
 
     public boolean validarConta(Integer numeroConta) {
