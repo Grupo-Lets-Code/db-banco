@@ -1,7 +1,7 @@
 package br.com.letscode.dbbanco.view.conta;
 
 import br.com.letscode.dbbanco.controller.ContaController;
-import br.com.letscode.dbbanco.view.Menu;
+import br.com.letscode.dbbanco.entities.Utils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +11,12 @@ import java.util.Scanner;
 @Component
 public class OperacoesView {
 
-    private final Menu menu;
     private final ContaController contaController;
+    private final Utils utilites;
 
-    public OperacoesView(@Lazy Menu menu, ContaController contaController) {
-        this.menu = menu;
+    public OperacoesView(@Lazy ContaController contaController, Utils utilites) {
         this.contaController = contaController;
+        this.utilites = utilites;
     }
 
     public void painelSacar() {
@@ -33,7 +33,7 @@ public class OperacoesView {
 
         var verifica = contaController.sacar(numeroConta, senha, valor, true);
         if (verifica) {
-            menu.painelInicio();
+            utilites.outraOperacao();
         } else {
             menu.painelInicio();
         }
@@ -50,7 +50,7 @@ public class OperacoesView {
             System.out.println("\nDigite o valor do depósito: ");
             BigDecimal valor = input.nextBigDecimal();
             contaController.depositar(numeroConta, valor, true);
-            menu.painelInicio();
+            utilites.outraOperacao();
         } else {
             System.out.println("\nConta não encontrada!");
             painelDepositar();
@@ -68,9 +68,9 @@ public class OperacoesView {
 
         var verifica = contaController.investir(numeroConta, valor);
         if(verifica){
-            menu.painelInicio();
+            utilites.outraOperacao();
         } else{
-            menu.painelInicio();
+            painelInvestir();
         }
     }
 
@@ -91,7 +91,7 @@ public class OperacoesView {
 
         var verifica = contaController.transferir(contaRemetente, contaDestinataria, senha, valor);
         if (verifica){
-            menu.painelInicio();
+            utilites.outraOperacao();
         } else{
             painelTransferir();
         }
@@ -108,15 +108,16 @@ public class OperacoesView {
 
         var verifica = contaController.consultarSaldo(numeroConta, senha);
         if(verifica)
-            menu.painelInicio();
-        else painelSaldo();
+            utilites.outraOperacao();
+        else
+            painelSaldo();
     }
 
     public void painelListar() {
         var allContas = contaController.listarContas();
         System.out.println("Lista de Contas");
         allContas.forEach(System.out::println);
-        menu.painelInicio();
+        utilites.outraOperacao();
     }
 
     public void painelExcluir() {
@@ -135,13 +136,13 @@ public class OperacoesView {
             String validacao = input.nextLine();
             if(validacao.equals("sim")) {
                 contaController.excluirConta(numeroConta);
-                menu.painelInicio();
+                utilites.outraOperacao();
             } else {
                 painelExcluir();
             }
         } else {
             System.out.println("\nDados inválidos!");
-            menu.painelInicio();
+            painelExcluir();
         }
     }
 }

@@ -28,6 +28,6 @@ public class AgenciaView {
                 System.out.println("Agência Inválida!");
                 painelAgencia();
         }
-        return input.nextInt();
+        return painelAgencia();
     }
 }
