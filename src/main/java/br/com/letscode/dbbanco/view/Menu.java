@@ -41,43 +41,50 @@ public class Menu {
         System.out.println("|    Opção 9 - Alterar endereço    |");
         System.out.println("|    Opção 10 - Sair               |");
 
-        int operacao = input.nextInt();
+        String validador = input.nextLine();
+        int operacao = 0;
 
-        switch (operacao) {
-            case 1:
-                pessoaView.painelPessoa();
-                break;
-            case 2:
-                operacoesView.painelSacar();
-                break;
-            case 3:
-                operacoesView.painelDepositar();
-                break;
-            case 4:
-                operacoesView.painelTransferir();
-                break;
-            case 5:
-                operacoesView.painelInvestir();
-                break;
-            case 6:
-                operacoesView.painelSaldo();
-                break;
-            case 7:
-                operacoesView.painelListar();
-                break;
-            case 8:
-                operacoesView.painelExcluir();
-                break;
-            case 9:
-                enderecoView.painelAlterarEndereco();
-                break;
-            case 10:
-                System.out.println("Obrigado por utilizar o Banco Grupo Azul!");
-                System.exit(0);
-            default:
-                System.out.println("Opção inválida!");
-                painelInicio();
-                break;
+        try{
+            operacao = Integer.parseInt(validador);
+            switch (operacao){
+                case 1:
+                    pessoaView.painelPessoa();
+                    break;
+                case 2:
+                    operacoesView.painelSacar();
+                    break;
+                case 3:
+                    operacoesView.painelDepositar();
+                    break;
+                case 4:
+                    operacoesView.painelTransferir();
+                    break;
+                case 5:
+                    operacoesView.painelInvestir();
+                    break;
+                case 6:
+                    operacoesView.painelSaldo();
+                    break;
+                case 7:
+                    operacoesView.painelListar();
+                    break;
+                case 8:
+                    operacoesView.painelExcluir();
+                    break;
+                case 9:
+                    enderecoView.painelAlterarEndereco();
+                    break;
+                case 10:
+                    System.out.println("Obrigado por utilizar o Banco Grupo Azul!");
+                    System.exit(0);
+                default:
+                    System.out.println("Opção inválida!");
+                    painelInicio();
+                    break;
+            }
+        } catch (Exception e){
+            System.out.println("Opção Inválida\n");
+            painelInicio();
         }
     }
 }
