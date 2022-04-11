@@ -35,7 +35,7 @@ public class OperacoesView {
         if (verifica) {
             menu.painelInicio();
         } else {
-            painelSacar();
+            menu.painelInicio();
         }
     }
 
