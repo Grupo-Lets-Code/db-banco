@@ -16,11 +16,16 @@ public class DbBancoApplication implements CommandLineRunner{
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(DbBancoApplication.class, args);
+        try{
+            SpringApplication.run(DbBancoApplication.class, args);
+        } catch (Exception e){
+            System.out.println("Erro");
+        }
+
     }
 
     @Override
-    public void run(String... args){
+    public void run(String... args) throws Exception{
         chamarMenu.painelInicio();
     }
 }

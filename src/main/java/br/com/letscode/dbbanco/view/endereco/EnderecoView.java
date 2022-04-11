@@ -57,23 +57,29 @@ public class EnderecoView {
         System.out.println("Digite o bairro: ");
         String bairro = input.nextLine();
 
-        System.out.println("Digite o estado: ");
+        System.out.println("Digite a sigla do Estado. Ex:SP : ");
         String estado = input.nextLine();
 
         System.out.println("Digite o pais: ");
         String pais = input.nextLine();
 
-        System.out.println("Digite o CEP, somente os números: ");
+        System.out.println("Digite o CEP, somente os números. Ex:12345678: ");
         String cep = input.nextLine();
 
-        endereco.setLogradouro(logradouro);
-        endereco.setBairro(bairro);
-        endereco.setCidade(cidade);
-        endereco.setCep(cep);
-        endereco.setPais(pais);
-        endereco.setUf(estado);
-        endereco.setNumero(numero);
-        endereco.setCliente(cliente);
+        if(estado.matches("[A-Z]{2}") && cep.matches("\\d{8}")){
+            endereco.setLogradouro(logradouro);
+            endereco.setBairro(bairro);
+            endereco.setCidade(cidade);
+            endereco.setCep(cep);
+            endereco.setPais(pais);
+            endereco.setUf(estado);
+            endereco.setNumero(numero);
+            endereco.setCliente(cliente);
+        } else {
+            System.out.println("Dados de Endereço inválido. Digite novamente");
+            instanciarEndereco(cliente, endereco);
+        }
+
     }
 
     public void painelAlterarEndereco() {

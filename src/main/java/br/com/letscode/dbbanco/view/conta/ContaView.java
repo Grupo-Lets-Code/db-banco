@@ -37,23 +37,32 @@ public class ContaView {
         System.out.println("|    Opção 2 - Conta Investimento       |");
         System.out.println("|    Opção 3 - Voltar                   |");
 
-        int tipoContaPJ = input.nextInt();
+        String validador = input.nextLine();
+        int tipoContaPJ = 0;
 
-        switch (tipoContaPJ) {
-            case 1:
-                criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_JURIDICA, endereco);
-                break;
-            case 2:
-                criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_JURIDICA, endereco);
-                break;
-            case 3:
-                pessoaView.painelPessoa();
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                painelContasPJ(cliente, endereco);
-                break;
+        try{
+            tipoContaPJ = Integer.parseInt(validador);
+            switch (tipoContaPJ) {
+                case 1:
+                    criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_JURIDICA, endereco);
+                    break;
+                case 2:
+                    criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_JURIDICA, endereco);
+                    break;
+                case 3:
+                    pessoaView.painelPessoa();
+                    break;
+                default:
+                    System.out.println("Opção inválida!\n");
+                    painelContasPJ(cliente, endereco);
+                    break;
+            }
+        } catch (Exception e){
+            System.out.println("Código Inválido\n");
+            painelContasPJ(cliente, endereco);
         }
+
+
     }
 
     public void painelContasPF(Cliente cliente, Endereco endereco) {
@@ -64,26 +73,35 @@ public class ContaView {
         System.out.println("|    Opção 3 - Conta Investimento       |");
         System.out.println("|    Opção 4 - Voltar                   |");
 
-        int tipoConta = input.nextInt();
+        String validador = input.nextLine();
+        int tipoConta = 0;
 
-        switch (tipoConta) {
-            case 1:
-                criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_FISICA, endereco);
-                break;
-            case 2:
-                criarConta(cliente, TipoConta.CONTA_POUPANCA, TipoCliente.PESSOA_FISICA, endereco);
-                break;
-            case 3:
-                criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_FISICA, endereco);
-                break;
-            case 4:
-                pessoaView.painelPessoa();
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                painelContasPF(cliente, endereco);
-                break;
+        if (validador.matches("\\d")){
+            tipoConta = Integer.parseInt(validador);
+            switch (tipoConta) {
+                case 1:
+                    criarConta(cliente, TipoConta.CONTA_CORRENTE, TipoCliente.PESSOA_FISICA, endereco);
+                    break;
+                case 2:
+                    criarConta(cliente, TipoConta.CONTA_POUPANCA, TipoCliente.PESSOA_FISICA, endereco);
+                    break;
+                case 3:
+                    criarConta(cliente, TipoConta.CONTA_INVESTIMENTO, TipoCliente.PESSOA_FISICA, endereco);
+                    break;
+                case 4:
+                    pessoaView.painelPessoa();
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+                    painelContasPF(cliente, endereco);
+                    break;
+            }
+        } else {
+            System.out.println("Opção Inválida");
+            painelContasPF(cliente, endereco);
         }
+
+
     }
 
     public void criarConta(Cliente cliente, TipoConta tipoConta, TipoCliente tipoCliente, Endereco endereco) {
