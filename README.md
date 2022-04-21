@@ -9,7 +9,12 @@
   - [Especificações](#especificações)
   - [Regras de negócio do projeto](#regras-de-negócio-do-projeto)
 - [Como rodar o projeto](#como-rodar-o-projeto)
-- [Usuários para testes manuais - login](#usuários-para-testes-manuais---login)
+- [Usuários para testes manuais](#usuários-para-testes-manuais)
+  - [LOGIN](#login)
+  - [modelos de dados para criação](#modelos-de-dados-para-criação)
+    - [emails gerados por https://temp-mail.org/pt/](#emails-gerados-por-httpstemp-mailorgpt)
+    - [Telefone](#telefone)
+    - [cpf](#cpf)
 - [Descrição original do projeto](#descrição-original-do-projeto)
 
 # Introdução
@@ -68,7 +73,9 @@ Ao abrir o link certifique que todas as configurações condizem com a imagem lo
 
 // todo adicionar imagem 
 
-# Usuários para testes manuais - login
+# Usuários para testes manuais
+
+## LOGIN
 
 | numero da conta | senha  |
 |-----------------|--------|
@@ -78,6 +85,20 @@ Ao abrir o link certifique que todas as configurações condizem com a imagem lo
 | 4               | 456789 |
 | 5               | 567890 |
 | 6               | 678901 |
+
+## modelos de dados para criação
+
+### emails gerados por https://temp-mail.org/pt/
+
+vawoj59235@bamibi.com
+
+### Telefone
+
+(11)99999-9999
+
+### cpf
+
+
 
 ---
 
