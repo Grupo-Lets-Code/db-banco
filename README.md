@@ -9,7 +9,7 @@
   - [Especificações](#especificações)
   - [Regras de negócio do projeto](#regras-de-negócio-do-projeto)
 - [Como rodar o projeto](#como-rodar-o-projeto)
-- [Usuários para testes manuais](#usuários-para-testes-manuais)
+- [Usuários para testes manuais - login](#usuários-para-testes-manuais---login)
 - [Descrição original do projeto](#descrição-original-do-projeto)
 
 # Introdução
@@ -68,9 +68,16 @@ Ao abrir o link certifique que todas as configurações condizem com a imagem lo
 
 // todo adicionar imagem 
 
-# Usuários para testes manuais
+# Usuários para testes manuais - login
 
-// todo adicionar usuarios testes
+| numero da conta | senha  |
+|-----------------|--------|
+| 1               | 123456 |
+| 2               | 234567 |
+| 3               | 345678 |
+| 4               | 456789 |
+| 5               | 567890 |
+| 6               | 678901 |
 
 ---
 
