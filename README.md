@@ -13,7 +13,7 @@
   - [LOGIN](#login)
   - [modelos de dados para criação](#modelos-de-dados-para-criação)
     - [emails gerados por https://temp-mail.org/pt/](#emails-gerados-por-httpstemp-mailorgpt)
-    - [Telefone](#telefone)
+    - [Telefone (14 numeros)](#telefone-14-numeros)
     - [cpf](#cpf)
 - [Descrição original do projeto](#descrição-original-do-projeto)
 
@@ -63,6 +63,8 @@ Usar HTTP Basic Authentication com Spring security (Deverá criar uma tela de lo
 
 // fazer especicações do fluxo do aplicativo
 
+![](https://user-images.githubusercontent.com/18223610/164721519-c2bc4700-7968-40eb-9808-d1db84c2a02c.png)
+
 # Como rodar o projeto
 
 Para os desenvolvedores, basta clonar o projeto, abrir no IntelliJ e rodar como está definido por default.
@@ -71,7 +73,7 @@ Para visualizar o bando de dados veja o link http://localhost:8080/h2-console/
 
 Ao abrir o link certifique que todas as configurações condizem com a imagem logo abaixo: 
 
-// todo adicionar imagem 
+![](https://raw.githubusercontent.com/NatSatie/db-banco-letscode/1-configura%C3%A7%C3%B5es-iniciais/img/h2.png)
 
 # Usuários para testes manuais
 
@@ -92,11 +94,11 @@ Ao abrir o link certifique que todas as configurações condizem com a imagem lo
 
 vawoj59235@bamibi.com
 
-### Telefone
+### Telefone (14 numeros)
 
-(11)99999-9999
+11999999999
 
-### cpf
+### cpf 
 
 
 
