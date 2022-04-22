@@ -77,7 +77,7 @@ public class PessoaView {
         System.out.println("\nDigite sua data de nascimento, com barras. Ex: 01/01/2001: ");
         String dataNascimento = input.nextLine();
 
-        if (email.matches("\\S{1,100}@[a-z]{1,7}(?:.com)") &&
+        if (email.matches("[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+") &&
                 cpf.matches("\\d{11}") &&
                 telefone.matches("\\d{9,13}") &&
                 dataNascimento.matches("\\d{2}\\/\\d{2}\\/\\d{4}")){

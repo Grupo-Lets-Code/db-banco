@@ -1,3 +1,111 @@
+# Projeto Lets Code: Banco Azul
+
+## Sumário
+
+- [Projeto Lets Code: Banco Azul](#projeto-lets-code-banco-azul)
+  - [Sumário](#sumário)
+- [Introdução](#introdução)
+  - [Autores](#autores)
+  - [Especificações](#especificações)
+  - [Regras de negócio do projeto](#regras-de-negócio-do-projeto)
+- [Como rodar o projeto](#como-rodar-o-projeto)
+- [Usuários para testes manuais](#usuários-para-testes-manuais)
+  - [LOGIN](#login)
+  - [modelos de dados para criação](#modelos-de-dados-para-criação)
+    - [emails gerados por https://temp-mail.org/pt/](#emails-gerados-por-httpstemp-mailorgpt)
+    - [Telefone (14 numeros)](#telefone-14-numeros)
+    - [cpf](#cpf)
+- [Descrição original do projeto](#descrição-original-do-projeto)
+
+# Introdução
+
+## Autores
+
+Projeto de banco de dados realizado por:
+
+- Carlos Masao Mito
+- Caroline Fernanda Bezerra de Oliveira
+- João Vitor de Paula Pereira
+- Marcos Roberto Franciosi
+- Natália Satie Odashima
+- Pedro Otávio Freiman Blaudt
+
+**Tema do projeto:** projeto clonado a partir [Grupo-Lets-Code](https://github.com/Grupo-Lets-Code/db-banco).
+
+## Especificações
+
+Criar um REST API com o projeto sorteado levando em consideração os seguintes tópicos:
+- Ter rest endpoints especificos para cada operação de um CRUD - RestFul style.
+- Usar os métodos HTTP de acordo com a operação.
+- Usar os códigos de status HTTP na resposta de cada operação.
+- Criar classes services para tratamento das regras de negócio e lançar as exceções necessárias.
+- Fazer o tratamento de exceções com as anotações spring.
+- Adicionar logs ao projeto.
+
+**Desafio**
+
+Implementar uma interface web com Thymeleaf que se comunicará com sua api rest
+
+- Uma tela para listar dados onde será possível deletar um registro.
+- Um tela para realizar o insert e update dos dados.
+
+Usar HTTP Basic Authentication com Spring security (Deverá criar uma tela de login).
+
+**Critérios de avaliação:**
+
+- Uso correto dos métodos HTTP
+- Uso correto dos códigos de status HTTP.
+- Regras de negócios no local requisitado.
+- Exceções tratadas corretamente.
+- Logs devidamente implementados.
+
+## Regras de negócio do projeto
+
+// fazer especicações do fluxo do aplicativo
+
+![](https://user-images.githubusercontent.com/18223610/164721519-c2bc4700-7968-40eb-9808-d1db84c2a02c.png)
+
+# Como rodar o projeto
+
+Para os desenvolvedores, basta clonar o projeto, abrir no IntelliJ e rodar como está definido por default.
+
+Para visualizar o bando de dados veja o link http://localhost:8080/h2-console/
+
+Ao abrir o link certifique que todas as configurações condizem com a imagem logo abaixo: 
+
+![](https://raw.githubusercontent.com/NatSatie/db-banco-letscode/1-configura%C3%A7%C3%B5es-iniciais/img/h2.png)
+
+# Usuários para testes manuais
+
+## LOGIN
+
+| numero da conta | senha  |
+|-----------------|--------|
+| 1               | 123456 |
+| 2               | 234567 |
+| 3               | 345678 |
+| 4               | 456789 |
+| 5               | 567890 |
+| 6               | 678901 |
+
+## modelos de dados para criação
+
+### emails gerados por https://temp-mail.org/pt/
+
+vawoj59235@bamibi.com
+
+### Telefone (14 numeros)
+
+11999999999
+
+### cpf 
+
+
+
+---
+
+# Descrição original do projeto
+
 -- Portuguese (PT-BR)
 OLÁ MUNDO!!!
 
@@ -25,7 +133,7 @@ Investir.
 -- Processos de consulta:
 Consultar Contas;
 Consultar Saldo;
-Exclurir Conta.
+Excluir Conta.
 
 Temos também separações por Tipo Conta e Tipo Cliente!
 Sendo assim, conseguimos aplicar metódos diferentes dependendo do Tipo Cliente e taxas personalizadas dependendo do Tipo Conta.
@@ -37,7 +145,8 @@ Obs: Tipo Pessoa Jurídica não pode abrir Conta Poupança!
 Todas essas operações são feitas na nossa aplicação via console interativo e as ações 3,são salvas em um Banco de Dados H2.
 Segue o diagrama base para criação do sistema bancário:
 
-https://user-images.githubusercontent.com/61168932/162626314-1d297406-20b7-449d-b702-da29d654bd28.png
+![](https://user-images.githubusercontent.com/61168932/162626304-f7ca47c5-8a37-419f-8a09-00d18bd95bff.png
+)
 
 Obrigado!!!
 
@@ -80,6 +189,7 @@ Note: Legal Entity cannot open a Savings Account!
 All these operations are done in our application via an interactive console and the actions are saved in an H2 Database.
 Below is the basic diagram for creating the banking system:
 
-https://user-images.githubusercontent.com/61168932/162626304-f7ca47c5-8a37-419f-8a09-00d18bd95bff.png
+![](https://user-images.githubusercontent.com/61168932/162626304-f7ca47c5-8a37-419f-8a09-00d18bd95bff.png
+)
 
 Thanks!!!
