@@ -1,6 +1,7 @@
 package br.com.letscode.dbbanco.service;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
+import br.com.letscode.dbbanco.entities.cliente.ClientePF;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClientePJRepository;
@@ -21,6 +22,22 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
         this.clientePFRepository = clientePFRepository;
         this.clientePJRepository = clientePJRepository;
+    }
+
+    public Cliente salvarCliente(Cliente cliente){
+        if(!this.clienteRepository.existsById(cliente.getId())){
+            return this.clienteRepository.save(cliente);
+        } else {
+            throw new ClienteNaoEncontradoException();
+        }
+    }
+
+    public ClientePF salvarClientePF(ClientePF cliente){
+        if(!this.clientePFRepository.existsById(cliente.getId())){
+            return this.clientePFRepository.save(cliente);
+        } else {
+            throw new ClienteNaoEncontradoException();
+        }
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {

@@ -4,18 +4,17 @@ import br.com.letscode.dbbanco.entities.Utils;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.repository.ContaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ContaService {
-    private final ContaFactory contaFactory;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContaService.class);
     private final ContaRepository contaRepository;
-    private final Utils utilities;
 
-    public ContaController(ContaFactory contaFactory, ContaRepository contaRepository, Utils utilities) {
-        this.contaFactory = contaFactory;
+    public ContaService(ContaRepository contaRepository) {
         this.contaRepository = contaRepository;
-        this.utilities = utilities;
     }
 
     public void criarConta(Conta conta) {
