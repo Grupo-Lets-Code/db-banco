@@ -13,6 +13,14 @@ INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Marcos Nofre', 'nofre@email
 INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Rafael Dorta', 'dorta@email.com', '(11)99999-9999');
 INSERT INTO CLIENTE (NOME, EMAIL, TELEFONE) VALUES ('Wendel Henrique', 'henrique@email.com', '(11)99999-9999');
 
+INSERT INTO PESSOA_FISICA (cpf, data_nascimento, cliente_id) VALUES ('235.711.131-71', TO_DATE('17/12/2015', 'DD/MM/YYYY'), '6');
+INSERT INTO PESSOA_FISICA (cpf, data_nascimento, cliente_id) VALUES ('123.456.789-00', TO_DATE('20/09/2000', 'DD/MM/YYYY'), '2');
+INSERT INTO PESSOA_FISICA (cpf, data_nascimento, cliente_id) VALUES ('111.222.333-44', TO_DATE('05/06/1999', 'DD/MM/YYYY'), '3');
+
+INSERT INTO PESSOA_JURIDICA (cnpj, data_abertura, cliente_id) VALUES ('235.711.131-71', TO_DATE('08/11/2009', 'DD/MM/YYYY'), '1');
+INSERT INTO PESSOA_JURIDICA (cnpj, data_abertura, cliente_id) VALUES ('123.456.789-00', TO_DATE('19/01/2007', 'DD/MM/YYYY'), '4');
+INSERT INTO PESSOA_JURIDICA (cnpj, data_abertura, cliente_id) VALUES ('111.222.333-44', TO_DATE('15/06/1996', 'DD/MM/YYYY'), '5');
+
 --Inserindo 6 enderecos
 --INSERT INTO ENDERECO (BAIRRO, CEP, CIDADE, LOGRADOURO, NUMERO, PAIS, UF, CLIENTE_ID) VALUES ('Pimentas', '07179168', 'Guarulhos', 'Rua das Oliveiras', '100', 'Brasil', 'SP', 1);
 --INSERT INTO ENDERECO (BAIRRO, CEP, CIDADE, LOGRADOURO, NUMERO, PAIS, UF, CLIENTE_ID) VALUES ('Castro Alves', '12345000', 'Paiçandu', 'Rua das Hortências', '200', 'Brasil', 'PR', 2);
