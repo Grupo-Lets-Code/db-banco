@@ -49,7 +49,7 @@ public class ClienteService {
     }
 
     public boolean existsById(int id) {
-        return this.clientePJRepository.existsById(id);
+        return this.clienteRepository.existsById(id);
     }
 
     public Cliente selecionaClienteById(Integer idCliente) {
