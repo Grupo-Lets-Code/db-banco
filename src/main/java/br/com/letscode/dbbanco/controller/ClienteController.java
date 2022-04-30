@@ -25,44 +25,37 @@ public class ClienteController {
     }
 
     @GetMapping("{cliente}")
-    public ResponseEntity selecionarClienteById(@PathVariable("cliente") Integer idCliente) {
+    public ResponseEntity<Cliente> selecionarClienteById(@PathVariable("cliente") Integer idCliente) {
         Cliente cliente = this.clienteService.selecionaClienteById(idCliente);
-        ResponseEntity response = new ResponseEntity(cliente, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
-
     @PostMapping("novo")
-    public ResponseEntity salvarCliente(@Valid @RequestBody Cliente cliente){
+    public ResponseEntity<String> salvarCliente(@Valid @RequestBody Cliente cliente){
         System.out.println(cliente);
         this.clienteService.salvarCliente(cliente);
-        ResponseEntity response = new ResponseEntity("Cliente cadastrado com sucesso", HttpStatus.CREATED);
-        return response;
+        return new ResponseEntity<>("Cliente cadastrado com sucesso", HttpStatus.CREATED);;
     }
 
     @PostMapping("novo-pf")
     public ResponseEntity<String> salvarClientePF(@Valid @RequestBody ClientePF clientePF) {
-        Cliente clienteBase = clientePF.getCliente();
+        int ClienteID = clientePF.getCliente().getId();
 
-        try {
-            clientePF.setCliente(this.clienteService.selecionaClienteById(clienteBase.getId()));
-            this.clienteService.salvarClientePF(clientePF);
-            return new ResponseEntity<>("Cliente Pessoa Física cadastrado com sucesso", HttpStatus.CREATED);
-        } catch (ClienteNaoEncontradoException e) {
-            return new ResponseEntity<>("Cliente base de ID " + clienteBase.getId() + " não encontrado", HttpStatus.BAD_REQUEST);
-        }
+        if (!this.clienteService.existsById(ClienteID))
+            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
+
+        this.clienteService.salvarClientePF(clientePF);
+        return new ResponseEntity<>("Cliente Pessoa Física cadastrado com sucesso", HttpStatus.CREATED);
     }
 
     @PostMapping("novo-pj")
     public ResponseEntity<String> salvarClientePJ(@Valid @RequestBody ClientePJ clientePJ) {
-        Cliente clienteBase = clientePJ.getCliente();
+        int ClienteID = clientePJ.getCliente().getId();
 
-        try {
-            clientePJ.setCliente(this.clienteService.selecionaClienteById(clienteBase.getId()));
-            this.clienteService.salvarClientePJ(clientePJ);
-            return new ResponseEntity<>("Cliente Pessoa Jurídica cadastrado com sucesso", HttpStatus.CREATED);
-        } catch (ClienteNaoEncontradoException e) {
-            return new ResponseEntity<>("Cliente base de ID " + clienteBase.getId() + " não encontrado", HttpStatus.BAD_REQUEST);
-        }
+        if (!this.clienteService.existsById(ClienteID))
+            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
+
+        this.clienteService.salvarClientePJ(clientePJ);
+        return new ResponseEntity<>("Cliente Pessoa Jurídica cadastrado com sucesso", HttpStatus.CREATED);
     }
 }
