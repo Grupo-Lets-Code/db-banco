@@ -1,6 +1,5 @@
 package br.com.letscode.dbbanco.entities.conta;
 
-import br.com.letscode.dbbanco.entities.Endereco;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
 
@@ -47,17 +46,12 @@ public class Conta {
     @Column(name = "tipo_cliente", nullable = false)
     private TipoCliente tipoCliente;
 
-    @OneToOne
-    @JoinColumn(name = "endereco_id", nullable = false)
-    private Endereco endereco;
-
-    public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente, Endereco endereco) {
+    public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente) {
         this.cliente = cliente;
         this.tipoConta = tipoConta;
         this.agencia = agencia;
         this.senha = senha;
         this.tipoCliente = tipoCliente;
-        this.endereco = endereco;
     }
 
     @Override
