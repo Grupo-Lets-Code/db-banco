@@ -38,4 +38,12 @@ public class ClientePJ {
         this.dataDeAbertura = dataDeAbertura;
         this.cliente = cliente;
     }
+
+    @Override
+    public String toString() {
+        return cliente.toString() +
+                "\nClientePJ ID: " + id +
+                "\nCNPJ: " + CNPJ +
+                "\nData de abertura: " + dataDeAbertura;
+    }
 }
