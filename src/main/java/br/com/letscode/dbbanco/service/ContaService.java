@@ -1,4 +1,4 @@
-package service;
+package br.com.letscode.dbbanco.service;
 
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.repository.ContaRepository;

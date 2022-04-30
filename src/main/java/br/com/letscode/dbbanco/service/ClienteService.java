@@ -1,4 +1,4 @@
-package service;
+package br.com.letscode.dbbanco.service;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;

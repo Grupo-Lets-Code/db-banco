@@ -2,7 +2,7 @@ package br.com.letscode.dbbanco.controller;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
-import service.ClienteService;
+import br.com.letscode.dbbanco.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
