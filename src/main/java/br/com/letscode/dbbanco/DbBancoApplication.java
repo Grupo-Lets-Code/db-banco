@@ -2,6 +2,8 @@ package br.com.letscode.dbbanco;
 
 import br.com.letscode.dbbanco.controller.ContaController;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +12,17 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 public class DbBancoApplication{
+    private static final Logger LOGGER = LoggerFactory.getLogger(DbBancoApplication.class);
     public static void main(String[] args) {
         try{
-            SpringApplication.run(DbBancoApplication.class, args);
+            LOGGER.info("\n ===>>> Iniciando Aplicação Banco Grupo Azul <<<===");
+//            SpringApplication.run(DbBancoApplication.class, args);
+            LOGGER.info("\n=============================================================== \n" +
+                    "                 Banco Grupo Azul\n" +
+                    "===============================================================");
+            throw new Exception();
         } catch (Exception e){
-            System.out.println("Erro");
+            LOGGER.error("Erro ao iniciar a Aplicação", e);
         }
 
     }
