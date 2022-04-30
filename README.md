@@ -11,9 +11,7 @@
 - [Como rodar o projeto](#como-rodar-o-projeto)
 - [Usuários para testes manuais](#usuários-para-testes-manuais)
   - [LOGIN](#login)
-  - [modelos de dados para criaçã](#modelos-de-dados-para-criaçã)
-    - [Telefone (14 numeros)](#telefone-14-numeros)
-    - [cpf](#cpf)
+  - [Endpoints](#endpoints)
 - [Descrição original do projeto](#descrição-original-do-projeto)
 
 # Introdução
@@ -87,13 +85,8 @@ Ao abrir o link certifique que todas as configurações condizem com a imagem lo
 | 5               | 567890 |
 | 6               | 678901 |
 
-## modelos de dados para criaçã
+## Endpoints
 
-### Telefone (14 numeros)
-
-11999999999
-
-### cpf 
 
 
 
