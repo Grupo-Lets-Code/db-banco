@@ -12,8 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Integer> {
+    Optional<Conta> findByNumeroConta(Integer integer);
 
-    Optional<Conta> findByNumeroConta(Integer numeroConta);
     Optional<Conta> findByNumeroContaAndSenha(Integer numeroConta, int senha);
 
     @Transactional

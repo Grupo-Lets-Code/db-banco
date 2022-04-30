@@ -1,13 +1,26 @@
 package br.com.letscode.dbbanco.controller;
 
+
+import br.com.letscode.dbbanco.entities.Utils;
+import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
+import br.com.letscode.dbbanco.entities.conta.ContaFactory;
+import br.com.letscode.dbbanco.entities.conta.TipoConta;
+import br.com.letscode.dbbanco.repository.ContaRepository;
+
 import br.com.letscode.dbbanco.service.ClienteService;
 import br.com.letscode.dbbanco.service.ContaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,9 +48,16 @@ public class ContaController {
         return new ResponseEntity<>("Conta cadastrada com sucesso", HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("cliente-{id}")
     public ResponseEntity<List<Conta>> selecionarContaPorCliente(@PathVariable("id") Integer clienteID) {
         List<Conta> contas = this.contaService.selecionaContasPorClienteID(clienteID);
         return new ResponseEntity<>(contas, HttpStatus.OK);
+    }
+
+    @GetMapping("{conta}")
+    public ResponseEntity selecionarContaByNumeroConta(@PathVariable("conta") Integer numeroConta){
+        Conta conta = this.contaService.selecionaContaByNumeroConta(numeroConta);
+        ResponseEntity response = new ResponseEntity(conta, HttpStatus.OK);
+        return response;
     }
 }

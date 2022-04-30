@@ -52,6 +52,11 @@ public class ClienteService {
         return this.clientePJRepository.existsById(id);
     }
 
+    public Cliente selecionaClienteById(Integer idCliente){
+        LOGGER.info("Procurando cliente do id ", idCliente, ".");
+        return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
+    }
+
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
         var createCliente = new Cliente(nome, email, telefone);
         var cliente = clienteRepository.save(createCliente);

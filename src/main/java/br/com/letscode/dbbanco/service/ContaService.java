@@ -3,6 +3,8 @@ package br.com.letscode.dbbanco.service;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.repository.ClienteRepository;
+import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
+import br.com.letscode.dbbanco.exception.ContaNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ContaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,11 @@ public class ContaService {
 
     public List<Conta> selecionaContasPorClienteID(Integer clienteID) {
         return this.contaRepository.findContasByClienteID(clienteID);
+    }
+  
+    public Conta selecionaContaByNumeroConta(Integer numeroConta){
+        LOGGER.info("Procurando conta do id ", numeroConta, ".");
+        return this.contaRepository.findByNumeroConta(numeroConta).orElseThrow(ContaNaoEncontradoException::new);
     }
 
     /*public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {
