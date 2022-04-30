@@ -40,13 +40,17 @@ public class ClienteController {
         return response;
     }
 
-    @PostMapping("novo-cliente-pf")
-    public String salvarClientePF(@Valid ClientePF cliente, BindingResult result){
-        if(result.hasErrors()) {
-            return "formulariocliente";
+    @PostMapping("novo-pf")
+    public ResponseEntity<String> salvarClientePF(@Valid @RequestBody ClientePF clientePF) {
+        Cliente clienteBase = clientePF.getCliente();
+
+        try {
+            clientePF.setCliente(this.clienteService.selecionaClienteById(clienteBase.getId()));
+            this.clienteService.salvarClientePF(clientePF);
+            return new ResponseEntity<>("Cliente Pessoa Física cadastrado com sucesso", HttpStatus.CREATED);
+        } catch (ClienteNaoEncontradoException e) {
+            return new ResponseEntity<>("Cliente base de ID " + clienteBase.getId() + " não encontrado", HttpStatus.BAD_REQUEST);
         }
-        this.clienteService.salvarClientePF(cliente);
-        return "redirect:/clientes";
     }
 
     @PostMapping("novo-pj")
@@ -55,11 +59,10 @@ public class ClienteController {
 
         try {
             clientePJ.setCliente(this.clienteService.selecionaClienteById(clienteBase.getId()));
-            System.out.println(clientePJ);
             this.clienteService.salvarClientePJ(clientePJ);
             return new ResponseEntity<>("Cliente Pessoa Jurídica cadastrado com sucesso", HttpStatus.CREATED);
         } catch (ClienteNaoEncontradoException e) {
-            return new ResponseEntity<>("Cliente base de ID " + clienteBase.getId() + " não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Cliente base de ID " + clienteBase.getId() + " não encontrado", HttpStatus.BAD_REQUEST);
         }
     }
 }

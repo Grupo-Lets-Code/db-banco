@@ -2,6 +2,8 @@ package br.com.letscode.dbbanco.service;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
+import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
+import br.com.letscode.dbbanco.exception.ClienteJaCadastradoException;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClientePJRepository;
@@ -33,11 +35,21 @@ public class ClienteService {
     }
 
     public ClientePF salvarClientePF(ClientePF cliente){
-        if(!this.clientePFRepository.existsById(cliente.getId())){
-            return this.clientePFRepository.save(cliente);
-        } else {
-            throw new ClienteNaoEncontradoException();
-        }
+        if (this.clientePFRepository.existsById(cliente.getId()))
+            throw new ClienteJaCadastradoException();
+
+        return this.clientePFRepository.save(cliente);
+    }
+
+    public ClientePJ salvarClientePJ(ClientePJ cliente){
+        if (this.clientePJRepository.existsById(cliente.getId()))
+            throw new ClienteJaCadastradoException();
+
+        return this.clientePJRepository.save(cliente);
+    }
+
+    public boolean existsById(int id) {
+        return this.clientePJRepository.existsById(id);
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
@@ -60,13 +72,8 @@ public class ClienteService {
         return cliente;
     }*/
 
-    public Cliente selecionaClienteById(Integer idCliente){
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        LOGGER.info("Procurando cliente do id ", idCliente, ".");
+    public Cliente selecionaClienteById(Integer idCliente) {
+        LOGGER.info("Procurando cliente de ID " + idCliente + ".");
         return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
     }
 }
