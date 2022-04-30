@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "c83329db-e292-4463-967e-9a97a0bf7816",
+		"name": "lets code",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get cliente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/clientes/1"
+			},
+			"response": []
+		},
+		{
+			"name": "criar novo cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"junior\",\r\n  \"email\": \"franstein@gmail.com\",\r\n  \"telefone\": \"1123452345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/clientes"
+			},
+			"response": []
+		}
+	]
+}
