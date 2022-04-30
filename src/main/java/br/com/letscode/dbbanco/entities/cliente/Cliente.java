@@ -5,9 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @NoArgsConstructor
 @Getter
@@ -21,13 +19,15 @@ public class Cliente {
     protected int id;
 
     @Column
-    @NotBlank(message = "O nome do cliente deve ser cadastrado")
+    @NotBlank(message = "Um cliente não pode ter um nome vazio")
     protected String nome;
 
     @Column
+    @Email(message = "Formato de e-mail inválido")
     private String email;
 
     @Column
+    @Pattern(regexp = "^\\d{9,13}$", message = "Número de telefone inválido - registrar apenas números")
     private String telefone;
 
     public Cliente(String nome, String email, String telefone) {

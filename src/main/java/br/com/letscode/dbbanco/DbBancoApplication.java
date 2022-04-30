@@ -12,6 +12,8 @@ import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 @Slf4j
@@ -28,22 +30,29 @@ public class DbBancoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         // Teste da validação pelo Beans Annotation
-        @Valid Cliente clienteOK = new Cliente("Carlos Masao Mito", "carlosmsmito@gmail.com", "(99) 99999-9999");
-        @Valid Cliente clienteSemNome = new Cliente("", "carlosmsmito@gmail.com", "(99) 99999-9999");
-        @Valid Cliente clienteEmailErrado1 = new Cliente("Carlos Masao Mito", "abc245@", "(99) 99999-9999");
-        @Valid Cliente clienteEmailErrado2 = new Cliente("Carlos Masao Mito", "abc245", "(99) 99999-9999");
-        @Valid Cliente clienteEmailErrado3 = new Cliente("Carlos Masao Mito", "abc245@af@asd", "(99) 99999-9999");
-        @Valid Cliente clienteTelefoneErrado = new Cliente("Carlos Masao Mito", "carlosmsmito@gmail.com", "123456");
-        @Valid Cliente clienteTelefoneDesformatado = new Cliente("Carlos Masao Mito", "", "99999999999");
+        Cliente clienteOK = new Cliente("Carlos Masao Mito", "carlosmsmito@gmail.com", "99999999999");
+        Cliente clienteSemEmail = new Cliente("Carlos Masao Mito", "", "99999999999");
+        Cliente clienteSemNome = new Cliente("", "carlosmsmito@gmail.com", "99999999999");
+        Cliente clienteEmailErrado1 = new Cliente("Carlos Masao Mito", "abc245@", "1111111111");
+        Cliente clienteEmailErrado2 = new Cliente("Carlos Masao Mito", "abc245", "9999999999");
+        Cliente clienteEmailErrado3 = new Cliente("Carlos Masao Mito", "abc245@af@asd", "9999999999");
+        Cliente clienteTelefoneErrado = new Cliente("Carlos Masao Mito", "carlosmsmito@gmail.com", "123456");
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+        List<Cliente> clientes = Arrays.asList(
+                clienteOK,
+                clienteSemEmail,
+                clienteSemNome,
+                clienteEmailErrado1,
+                clienteEmailErrado2,
+                clienteEmailErrado3,
+                clienteTelefoneErrado
+        );
 
-        var violations1 = validator.validate(clienteOK);
-        var violations2 = validator.validate(clienteSemNome);
-
-        System.out.println(violations1);
-        System.out.println(violations2);
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            Validator validator = factory.getValidator();
+            clientes.forEach(cliente -> System.out.println(validator.validate(cliente)));
+        }
     }
 }
