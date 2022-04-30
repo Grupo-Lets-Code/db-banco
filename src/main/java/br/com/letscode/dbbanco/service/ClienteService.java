@@ -64,18 +64,6 @@ public class ClienteService {
         return this.clienteRepository.findAll();
     }
 
-    public Cliente updateClienteEmail(Integer id, Cliente cliente) {
-        Cliente entidade = this.selecionaClienteById(id);
-        entidade.setEmail(cliente.getEmail());
-        return this.clienteRepository.save(entidade);
-    }
-
-    public Cliente updateClienteTelefone(Integer telefone, Cliente cliente) {
-        Cliente entidade = this.selecionaClienteById(telefone);
-        entidade.setTelefone(cliente.getTelefone());
-        return this.clienteRepository.save(entidade);
-    }
-
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
         var createCliente = new Cliente(nome, email, telefone);
         var cliente = clienteRepository.save(createCliente);
