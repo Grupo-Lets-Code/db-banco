@@ -40,6 +40,17 @@ public class ContaService {
         return this.contaRepository.findAll();
     }
 
+    public void deletarConta(Integer id) {
+        Conta conta = selecionaContaByNumeroConta(id);
+        this.contaRepository.delete(conta);
+    }
+
+    public void alterarSenha(Integer id, Conta conta) {
+        Conta entidade = this.selecionaContaByNumeroConta(id);
+        entidade.setSenha(conta.getSenha());
+        this.contaRepository.save(entidade);
+    }
+
     /*public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {
         if(this.validarLogin(numeroConta, senha)){
             var catchConta = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
