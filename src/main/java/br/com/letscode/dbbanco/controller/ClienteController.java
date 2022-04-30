@@ -6,42 +6,34 @@ import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClientePJRepository;
 import br.com.letscode.dbbanco.repository.ClienteRepository;
+import br.com.letscode.dbbanco.service.ClienteService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
 
-@Component
+@Controller
+@RequestMapping("/clientes")
+@Slf4j
 public class ClienteController {
+    private final ClienteService clienteService;
 
-    private final ClienteRepository clienteRepository;
-    private final ClientePFRepository clientePFRepository;
-    private final ClientePJRepository clientePJRepository;
-
-     public ClienteController(ClienteRepository clienteRepository,
-                             ClientePFRepository clientePFRepository, ClientePJRepository clientePJRepository) {
-        this.clienteRepository = clienteRepository;
-        this.clientePFRepository = clientePFRepository;
-        this.clientePJRepository = clientePJRepository;
+    public ClienteController(ClienteService clienteService){
+        this.clienteService = clienteService;
     }
 
-    public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
-        var createCliente = new Cliente(nome, email, telefone);
-        var cliente = clienteRepository.save(createCliente);
-
-        var createClientePF = new ClientePF(cpf, data_nascimento, createCliente);
-        clientePFRepository.save(createClientePF);
-        System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
-        return cliente;
-
-    }
-
-    public Cliente createPJ(String nome, String email, String telefone, String cnpj, LocalDate data_abertura) {
-        var createCliente = new Cliente(nome, email, telefone);
-        var cliente = clienteRepository.save(createCliente);
-
-        var createClientePJ = new ClientePJ(cnpj, data_abertura, createCliente);
-        clientePJRepository.save(createClientePJ);
-        System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
-        return cliente;
+    @GetMapping("{cliente}")
+    public ResponseEntity selecionarClienteById(@PathVariable("cliente") Integer idCliente){
+        Cliente cliente = this.clienteService.selecionaClienteById(idCliente);
+        ResponseEntity response = new ResponseEntity(cliente, HttpStatus.OK);
+        return response;
     }
 }
