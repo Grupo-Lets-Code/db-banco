@@ -4,8 +4,12 @@ import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.TipoCliente;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -24,19 +28,25 @@ public class Conta {
 
     @OneToOne
     @JoinColumn(name = "cliente_id", nullable = false)
+    @Valid
     private Cliente cliente;
 
     @Column(name = "saldo", nullable = false)
     private BigDecimal saldo = BigDecimal.valueOf(0);
 
     @Enumerated(EnumType.STRING)
+    @Valid
     @Column(name = "tipo_Conta", nullable = false)
     private TipoConta tipoConta;
 
+    @Valid
     @Column(name = "agencia",nullable = false)
     private Integer agencia;
 
+
     @Column(name = "senha", length = 6, nullable = false)
+    @NotBlank(message = "Senha não informada")
+    @Length(min = 6,max = 6, message ="Senha deve ter 6 dígitos")
     private int senha;
 
     @Column(name = "data_abertura", nullable = false)
@@ -44,6 +54,7 @@ public class Conta {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cliente", nullable = false)
+    @Valid
     private TipoCliente tipoCliente;
 
     public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente) {
