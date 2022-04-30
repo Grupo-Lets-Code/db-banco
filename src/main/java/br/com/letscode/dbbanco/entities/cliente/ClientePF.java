@@ -20,17 +20,15 @@ public class ClientePF {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column
-    @Pattern(regexp = "^\\d{11}$", message = "Formato de CPF inválido - registrar apenas números")
+    @Column(nullable = false)
+    @Pattern(regexp = "^\\d{3}.\\d{3}.\\d{3}-\\d{2}$", message = "Formato de CPF inválido - Formato esperado XXX.XXX.XXX-XX")
     protected String CPF;
 
     @Column(name = "data_nascimento", nullable = false)
-    @NotNull(message = "O cliente deve informar a data de nascimento")
     protected LocalDate dataNascimento;
 
     @OneToOne
-    @JoinColumn(name = "Cliente_ID", nullable = false)
-    @NotNull(message = "O cliente pessoa física deve estar associado à uma entidade cliente")
+    @JoinColumn(name = "cliente_id", nullable = false)
     protected Cliente cliente;
 
     public ClientePF(String CPF, LocalDate dataNascimento, Cliente cliente) {

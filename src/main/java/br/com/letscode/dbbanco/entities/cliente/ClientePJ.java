@@ -22,17 +22,15 @@ public class ClientePJ {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column(name = "CNPJ", nullable = false)
-    @Pattern(regexp = "^\\d{14}$", message = "Formato de CNPJ inválido - registrar apenas números")
+    @Column
+    @Pattern(regexp = "^\\d{2}.\\d{3}.\\d{3}/(0001|0002)-\\d{2}$", message = "Formato de CNPJ inválido - Formato esperado XX.XXX.XXX/0001-XX")
     protected String CNPJ;
 
-    @Column(name = "Data_Abertura", nullable = false)
-    @NotNull(message = "O cliente deve informar a data de abertura da empresa")
+    @Column(name = "data_abertura", nullable = false)
     protected LocalDate dataDeAbertura;
 
     @OneToOne
-    @JoinColumn(name = "Cliente_ID", nullable = false)
-    @NotNull(message = "O cliente pessoa jurídica deve estar associado à uma entidade cliente")
+    @JoinColumn(name = "cliente_id", nullable = false)
     protected Cliente cliente;
 
     public ClientePJ(String CNPJ, LocalDate dataDeAbertura, Cliente cliente) {
