@@ -1,6 +1,5 @@
 package br.com.letscode.dbbanco.entities;
 
-import br.com.letscode.dbbanco.view.Menu;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +11,11 @@ import java.util.Scanner;
 @Component
 public class Utils {
 
-    private final Menu chamar;
+    /*private final Menu chamar;
 
     public Utils(@Lazy Menu chamar) {
         this.chamar = chamar;
-    }
+    }*/
 
     public LocalDate formatarData(String data) {
         String[] fields = data.split("/");
@@ -31,7 +30,7 @@ public class Utils {
         return valor.setScale(2, RoundingMode.HALF_EVEN);
     }
 
-    public void outraOperacao() {
+    /*public void outraOperacao() {
         Scanner input = new Scanner(System.in);
 
         System.out.println("\nDeseja realizar outra operação? Escreva: sim ou nao");
@@ -42,6 +41,6 @@ public class Utils {
             System.out.println("Obrigado por utilizar o Banco Grupo Azul!");
             System.exit(0);
         }
-    }
+    }*/
 
 }

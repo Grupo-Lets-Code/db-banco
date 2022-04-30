@@ -8,7 +8,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
