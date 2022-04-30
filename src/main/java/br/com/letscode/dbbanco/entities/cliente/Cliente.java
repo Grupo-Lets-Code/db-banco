@@ -8,7 +8,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente {
@@ -17,14 +16,14 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column(name = "NOME", length = 100, nullable = false)
+    @Column
     protected String nome;
 
-    @Column(name = "EMAIL", length = 100, nullable = false)
-    protected String email;
+    @Column
+    private String email;
 
-    @Column(name = "TELEFONE", length = 14, nullable = false)
-    protected String telefone;
+    @Column
+    private String telefone;
 
     public Cliente(String nome, String email, String telefone) {
         this.nome = nome;

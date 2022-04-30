@@ -18,7 +18,7 @@ public class ClientePF {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column(name = "CPF", nullable = false, length = 11)
+    @Column
     protected String CPF;
 
     @Column(name = "data_nascimento", nullable = false)
