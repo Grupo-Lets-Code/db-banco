@@ -40,6 +40,11 @@ public class ClienteService {
         }
     }
 
+    public Cliente selecionaClienteById(Integer idCliente){
+        LOGGER.info("Procurando cliente do id ", idCliente, ".");
+        return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
+    }
+
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
         var createCliente = new Cliente(nome, email, telefone);
         var cliente = clienteRepository.save(createCliente);
@@ -59,14 +64,4 @@ public class ClienteService {
         System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
         return cliente;
     }*/
-
-    public Cliente selecionaClienteById(Integer idCliente){
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        LOGGER.info("Procurando cliente do id ", idCliente, ".");
-        return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
-    }
 }
