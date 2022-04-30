@@ -31,7 +31,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/contas/1",
+					"raw": "http://localhost:8080/contas/cliente-2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -39,7 +39,7 @@
 					"port": "8080",
 					"path": [
 						"contas",
-						"1"
+						"cliente-2"
 					]
 				}
 			},

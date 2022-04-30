@@ -52,8 +52,8 @@ public class ClienteService {
         return this.clientePJRepository.existsById(id);
     }
 
-    public Cliente selecionaClienteById(Integer idCliente){
-        LOGGER.info("Procurando cliente do id ", idCliente, ".");
+    public Cliente selecionaClienteById(Integer idCliente) {
+        LOGGER.info("Procurando cliente de ID " + idCliente + ".");
         return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
     }
 
@@ -76,9 +76,4 @@ public class ClienteService {
         System.out.println("Cadastrado de cliente realizado, siga para a criação de conta!\n");
         return cliente;
     }*/
-
-    public Cliente selecionaClienteById(Integer idCliente) {
-        LOGGER.info("Procurando cliente de ID " + idCliente + ".");
-        return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
-    }
 }
