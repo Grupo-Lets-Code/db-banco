@@ -2,26 +2,15 @@ package br.com.letscode.dbbanco.controller;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
-import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
-import br.com.letscode.dbbanco.repository.ClientePFRepository;
-import br.com.letscode.dbbanco.repository.ClientePJRepository;
-import br.com.letscode.dbbanco.repository.ClienteRepository;
-import br.com.letscode.dbbanco.service.ClienteService;
+import service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/clientes")
@@ -41,11 +30,19 @@ public class ClienteController {
     }
 
     @PostMapping
-    public String salvarCliente(@Valid Cliente cliente, BindingResult result){
+    public ResponseEntity salvarCliente(@Valid @RequestBody Cliente cliente){
+        System.out.println(cliente.toString());
+        this.clienteService.salvarCliente(cliente);
+        ResponseEntity response = new ResponseEntity("Aluno criado com sucesso", HttpStatus.CREATED);
+        return response;
+    }
+
+    @PostMapping("/pf")
+    public String salvarClientePF(@Valid ClientePF cliente, BindingResult result){
         if(result.hasErrors()){
             return "formulariocliente";
         }
-        this.clienteService.salvarCliente(cliente);
+        this.clienteService.salvarClientePF(cliente);
         return "redirect:/clientes";
     }
 }
