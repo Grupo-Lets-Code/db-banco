@@ -60,4 +60,25 @@ public class ContaController {
         ResponseEntity response = new ResponseEntity(conta, HttpStatus.OK);
         return response;
     }
+
+    @GetMapping("listatodascontas")
+    public List<Conta> listarTodasContas(){
+        return this.contaService.listarTodasContas();
+    }
+
+    @DeleteMapping("{conta}")
+    public ResponseEntity deleteAluno(@PathVariable("conta") Integer numeroConta){
+        this.contaService.deletarConta(numeroConta);
+        return ResponseEntity.ok("Conta deletada com sucesso.");
+    }
+
+    @PutMapping("{senha}")
+    public ResponseEntity alterarSenha(@PathVariable("senha") Integer senha, @RequestBody Conta conta){
+        this.contaService.alterarSenha(senha, conta);
+        ResponseEntity response = new ResponseEntity("Senha atualizada com sucesso", HttpStatus.OK);
+        return response;
+    }
+
+
+
 }
