@@ -27,7 +27,7 @@ public class Cliente {
     private String email;
 
     @Column
-    @Pattern(regexp = "^\\d{9,13}$", message = "Número de telefone inválido - registrar apenas números")
+    @Pattern(regexp = "^\\d{9,13}$", message = "Formato de telefone inválido - registrar apenas números")
     private String telefone;
 
     public Cliente(String nome, String email, String telefone) {
