@@ -1,8 +1,6 @@
-package br.com.letscode.dbbanco.service;
+package service;
 
-import br.com.letscode.dbbanco.entities.Utils;
 import br.com.letscode.dbbanco.entities.conta.Conta;
-import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.repository.ContaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
