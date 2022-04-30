@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @Getter
@@ -17,6 +21,7 @@ public class Cliente {
     protected int id;
 
     @Column
+    @NotBlank(message = "O nome do cliente deve ser cadastrado")
     protected String nome;
 
     @Column
