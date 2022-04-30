@@ -32,9 +32,8 @@ public class ClienteController {
 
     @PostMapping("novo")
     public ResponseEntity<String> salvarCliente(@Valid @RequestBody Cliente cliente){
-        System.out.println(cliente);
         this.clienteService.salvarCliente(cliente);
-        return new ResponseEntity<>("Cliente cadastrado com sucesso", HttpStatus.CREATED);;
+        return new ResponseEntity<>("Cliente cadastrado com sucesso", HttpStatus.CREATED);
     }
 
     @PostMapping("novo-pf")
