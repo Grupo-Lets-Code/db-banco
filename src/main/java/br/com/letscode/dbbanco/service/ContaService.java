@@ -36,6 +36,10 @@ public class ContaService {
         return this.contaRepository.findByNumeroConta(numeroConta).orElseThrow(ContaNaoEncontradoException::new);
     }
 
+    public List<Conta> listarTodasContas() {
+        return this.contaRepository.findAll();
+    }
+
     /*public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {
         if(this.validarLogin(numeroConta, senha)){
             var catchConta = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);

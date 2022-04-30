@@ -3,6 +3,7 @@ package br.com.letscode.dbbanco.service;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
 import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
+import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.exception.ClienteJaCadastradoException;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
@@ -11,6 +12,8 @@ import br.com.letscode.dbbanco.repository.ClienteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -55,6 +58,22 @@ public class ClienteService {
     public Cliente selecionaClienteById(Integer idCliente) {
         LOGGER.info("Procurando cliente de ID " + idCliente + ".");
         return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
+    }
+
+    public List<Cliente> listarTodosClientes() {
+        return this.clienteRepository.findAll();
+    }
+
+    public Cliente updateClienteEmail(Integer id, Cliente cliente) {
+        Cliente entidade = this.selecionaClienteById(id);
+        entidade.setEmail(cliente.getEmail());
+        return this.clienteRepository.save(entidade);
+    }
+
+    public Cliente updateClienteTelefone(Integer telefone, Cliente cliente) {
+        Cliente entidade = this.selecionaClienteById(telefone);
+        entidade.setTelefone(cliente.getTelefone());
+        return this.clienteRepository.save(entidade);
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
