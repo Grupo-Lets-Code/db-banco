@@ -2,6 +2,8 @@ package br.com.letscode.dbbanco.controller;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
+import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,5 +46,15 @@ public class ClienteController {
         }
         this.clienteService.salvarClientePF(cliente);
         return "redirect:/clientes";
+    }
+    @ExceptionHandler
+    public ResponseEntity tratarClienteNaoEncontrado(ClienteNaoEncontradoException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        return response;
+    }
+    @ExceptionHandler
+    public ResponseEntity tratarClienteDuplicado(ClienteDuplicadoException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+        return response;
     }
 }
