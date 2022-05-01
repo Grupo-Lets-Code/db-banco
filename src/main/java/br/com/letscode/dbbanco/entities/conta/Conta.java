@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -35,18 +36,17 @@ public class Conta {
     private BigDecimal saldo = BigDecimal.valueOf(0);
 
     @Enumerated(EnumType.STRING)
-    @Valid
+    @NotNull
     @Column(name = "tipo_Conta", nullable = false)
     private TipoConta tipoConta;
 
-    @Valid
+    @Pattern(regexp="^\\d{3}$",message = "Agência inválida")
     @Column(name = "agencia",nullable = false)
     private Integer agencia;
 
 
     @Column(name = "senha", length = 6, nullable = false)
-    @NotBlank(message = "Senha não informada")
-    @Length(min = 6,max = 6, message ="Senha deve ter 6 dígitos")
+    @Pattern(regexp="^\\d{6}$",message = "Senha deverá ter 6 dígitos")
     private int senha;
 
     @Column(name = "data_abertura", nullable = false)
@@ -54,7 +54,7 @@ public class Conta {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cliente", nullable = false)
-    @Valid
+    @NotNull
     private TipoCliente tipoCliente;
 
     public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente) {
