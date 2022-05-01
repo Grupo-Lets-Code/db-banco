@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "c83329db-e292-4463-967e-9a97a0bf7816",
+		"_postman_id": "1533de13-3cac-4bd7-b269-689d1ae7d288",
 		"name": "lets code",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -10,7 +10,18 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/clientes/1"
+				"url": {
+					"raw": "http://localhost:8080/clientes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
@@ -28,7 +39,17 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/clientes"
+				"url": {
+					"raw": "http://localhost:8080/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes"
+					]
+				}
 			},
 			"response": []
 		},
@@ -37,7 +58,134 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/contas/1"
+				"url": {
+					"raw": "http://localhost:8080/contas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Saque",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroConta\":2,\r\n    \"senha\":\"654321\",\r\n    \"valor\":100\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/saque",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"saque"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Depósito",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroConta\":2,\r\n    \"valor\":1200\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/deposito",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"deposito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Depósito Investimento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroConta\":5,\r\n    \"valor\":1200\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/depositoInvestimento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"depositoInvestimento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transferência",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contaOrigem\":2,\r\n    \"contaDestino\":5,\r\n    \"senha\":\"654321\",\r\n    \"valor\":100\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"transferencia"
+					]
+				}
 			},
 			"response": []
 		}
