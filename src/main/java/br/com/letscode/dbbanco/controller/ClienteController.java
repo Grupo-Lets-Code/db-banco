@@ -2,12 +2,12 @@ package br.com.letscode.dbbanco.controller;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
+import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
 import br.com.letscode.dbbanco.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,26 +23,36 @@ public class ClienteController {
     }
 
     @GetMapping("{cliente}")
-    public ResponseEntity selecionarClienteById(@PathVariable("cliente") Integer idCliente){
+    public ResponseEntity<Cliente> selecionarClienteById(@PathVariable("cliente") Integer idCliente) {
         Cliente cliente = this.clienteService.selecionaClienteById(idCliente);
-        ResponseEntity response = new ResponseEntity(cliente, HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity salvarCliente(@Valid @RequestBody Cliente cliente){
-        System.out.println(cliente.toString());
+    @PostMapping("novo")
+    public ResponseEntity<String> salvarCliente(@Valid @RequestBody Cliente cliente){
         this.clienteService.salvarCliente(cliente);
-        ResponseEntity response = new ResponseEntity("Aluno criado com sucesso", HttpStatus.CREATED);
-        return response;
+        return new ResponseEntity<>("Cliente cadastrado com sucesso", HttpStatus.CREATED);
     }
 
-    @PostMapping("/pf")
-    public String salvarClientePF(@Valid ClientePF cliente, BindingResult result){
-        if(result.hasErrors()){
-            return "formulariocliente";
-        }
-        this.clienteService.salvarClientePF(cliente);
-        return "redirect:/clientes";
+    @PostMapping("novo-pf")
+    public ResponseEntity<String> salvarClientePF(@Valid @RequestBody ClientePF clientePF) {
+        int ClienteID = clientePF.getCliente().getId();
+
+        if (!this.clienteService.existsById(ClienteID))
+            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
+
+        this.clienteService.salvarClientePF(clientePF);
+        return new ResponseEntity<>("Cliente Pessoa Física cadastrado com sucesso", HttpStatus.CREATED);
+    }
+
+    @PostMapping("novo-pj")
+    public ResponseEntity<String> salvarClientePJ(@Valid @RequestBody ClientePJ clientePJ) {
+        int ClienteID = clientePJ.getCliente().getId();
+
+        if (!this.clienteService.existsById(ClienteID))
+            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
+
+        this.clienteService.salvarClientePJ(clientePJ);
+        return new ResponseEntity<>("Cliente Pessoa Jurídica cadastrado com sucesso", HttpStatus.CREATED);
     }
 }

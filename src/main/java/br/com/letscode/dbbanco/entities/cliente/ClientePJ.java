@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @ToString
@@ -14,25 +16,34 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "PESSOA_JURIDICA")
-public class ClientePJ{
+public class ClientePJ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column(name = "CNPJ", nullable = false)
+    @Column
+    @Pattern(regexp = "^\\d{2}.\\d{3}.\\d{3}/(0001|0002)-\\d{2}$", message = "Formato de CNPJ inválido - Formato esperado XX.XXX.XXX/0001-XX")
     protected String CNPJ;
 
-    @Column(name = "Data_Abertura", nullable = false)
+    @Column(name = "data_abertura", nullable = false)
     protected LocalDate dataDeAbertura;
 
     @OneToOne
-    @JoinColumn(name = "Cliente_ID", nullable = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
     protected Cliente cliente;
 
     public ClientePJ(String CNPJ, LocalDate dataDeAbertura, Cliente cliente) {
         this.CNPJ = CNPJ;
         this.dataDeAbertura = dataDeAbertura;
         this.cliente = cliente;
+    }
+
+    @Override
+    public String toString() {
+        return cliente.toString() +
+                "\nClientePJ ID: " + id +
+                "\nCNPJ: " + CNPJ +
+                "\nData de abertura: " + dataDeAbertura;
     }
 }
