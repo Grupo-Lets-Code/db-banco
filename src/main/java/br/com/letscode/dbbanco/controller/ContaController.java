@@ -6,6 +6,9 @@ import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
+import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
+import br.com.letscode.dbbanco.exception.ContaNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ContaRepository;
 
 import br.com.letscode.dbbanco.service.ClienteService;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +62,12 @@ public class ContaController {
     public ResponseEntity selecionarContaByNumeroConta(@PathVariable("conta") Integer numeroConta){
         Conta conta = this.contaService.selecionaContaByNumeroConta(numeroConta);
         ResponseEntity response = new ResponseEntity(conta, HttpStatus.OK);
+        return response;
+    }
+
+    @ExceptionHandler
+    public ResponseEntity tratarContaNaoEncontrado(ContaNaoEncontradoException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         return response;
     }
 }
