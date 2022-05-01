@@ -16,11 +16,10 @@ public class DbBancoApplication{
     public static void main(String[] args) {
         try{
             LOGGER.info("\n ===>>> Iniciando Aplicação Banco Grupo Azul <<<===");
-//            SpringApplication.run(DbBancoApplication.class, args);
+            SpringApplication.run(DbBancoApplication.class, args);
             LOGGER.info("\n=============================================================== \n" +
                     "                 Banco Grupo Azul\n" +
                     "===============================================================");
-            throw new Exception();
         } catch (Exception e){
             LOGGER.error("Erro ao iniciar a Aplicação", e);
         }

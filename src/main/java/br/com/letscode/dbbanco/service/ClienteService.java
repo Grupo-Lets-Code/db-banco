@@ -6,6 +6,7 @@ import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClientePJRepository;
 import br.com.letscode.dbbanco.repository.ClienteRepository;
+import net.bytebuddy.asm.Advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class ClienteService {
 
     public Cliente salvarCliente(Cliente cliente){
         if(!this.clienteRepository.existsById(cliente.getId())){
+            LOGGER.info("Requisição de Novo Cliente Aceita");
             return this.clienteRepository.save(cliente);
         } else {
             throw new ClienteNaoEncontradoException();
@@ -34,6 +36,7 @@ public class ClienteService {
 
     public ClientePF salvarClientePF(ClientePF cliente){
         if(!this.clientePFRepository.existsById(cliente.getId())){
+            LOGGER.info("Requisição de Novo Cliente Aceita");
             return this.clientePFRepository.save(cliente);
         } else {
             throw new ClienteNaoEncontradoException();
@@ -42,7 +45,7 @@ public class ClienteService {
 
     public Cliente selecionaClienteById(Integer idCliente){
         LOGGER.info("Procurando cliente do id ", idCliente, ".");
-        return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
+        return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
