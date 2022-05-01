@@ -33,7 +33,10 @@ public class ContaService {
   
     public Conta selecionaContaByNumeroConta(Integer numeroConta){
         LOGGER.info("Procurando conta do id ", numeroConta, ".");
-        return this.contaRepository.findByNumeroConta(numeroConta).orElseThrow(() -> {LOGGER.error("500 - Erro ao realizar requisição de Conta"); return new ContaNaoEncontradoException();});
+        return this.contaRepository.findByNumeroConta(numeroConta).orElseThrow(() -> {
+            LOGGER.error("500 - Erro ao realizar requisição de Conta");
+            return new ContaNaoEncontradoException();
+        });
     }
 
     /*public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {

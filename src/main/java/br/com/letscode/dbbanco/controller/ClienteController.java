@@ -4,6 +4,7 @@ import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
 import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
 import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
+import br.com.letscode.dbbanco.exception.ClienteJaCadastradoException;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,24 +39,26 @@ public class ClienteController {
 
     @PostMapping("novo-pf")
     public ResponseEntity<String> salvarClientePF(@Valid @RequestBody ClientePF clientePF) {
-        int ClienteID = clientePF.getCliente().getId();
-
-        if (!this.clienteService.existsById(ClienteID))
-            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
-
-        this.clienteService.salvarClientePF(clientePF);
-        return new ResponseEntity<>("Cliente Pessoa Física cadastrado com sucesso", HttpStatus.CREATED);
+        try {
+            this.clienteService.salvarClientePF(clientePF);
+            return new ResponseEntity<>("Cliente Pessoa Física cadastrado com sucesso", HttpStatus.CREATED);
+        } catch (ClienteJaCadastradoException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ClienteNaoEncontradoException e) {
+            return new ResponseEntity<>("Cliente base de ID " + clientePF.getCliente().getId() + " não encontrado", HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("novo-pj")
     public ResponseEntity<String> salvarClientePJ(@Valid @RequestBody ClientePJ clientePJ) {
-        int ClienteID = clientePJ.getCliente().getId();
-
-        if (!this.clienteService.existsById(ClienteID))
-            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
-
-        this.clienteService.salvarClientePJ(clientePJ);
-        return new ResponseEntity<>("Cliente Pessoa Jurídica cadastrado com sucesso", HttpStatus.CREATED);
+        try {
+            this.clienteService.salvarClientePJ(clientePJ);
+            return new ResponseEntity<>("Cliente Pessoa Jurídica cadastrado com sucesso", HttpStatus.CREATED);
+        } catch (ClienteJaCadastradoException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (ClienteNaoEncontradoException e) {
+            return new ResponseEntity<>("Cliente base de ID " + clientePJ.getCliente().getId() + " não encontrado", HttpStatus.NOT_FOUND);
+        }
     }
     @ExceptionHandler
     public ResponseEntity tratarClienteNaoEncontrado(ClienteNaoEncontradoException e) {
