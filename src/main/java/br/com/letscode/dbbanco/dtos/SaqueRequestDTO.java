@@ -11,12 +11,11 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class SaqueRequestDTO {
-    @NotNull
+    @NotNull(message = "Número de conta inválido")
     @Positive
     private int numeroConta;
 
-    @NotNull
-    @Pattern(regexp="^\\d{6}$",message = "Senha deverá ter 6 dígitos")
+    @NotNull(message = "Senha inválida")
     private int senha;
 
     @DecimalMin(value = "0.0", inclusive = false)

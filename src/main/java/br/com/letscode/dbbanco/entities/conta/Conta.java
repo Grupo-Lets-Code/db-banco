@@ -40,13 +40,13 @@ public class Conta {
     @Column(name = "tipo_Conta", nullable = false)
     private TipoConta tipoConta;
 
-    @Pattern(regexp="^\\d{3}$",message = "Agência inválida")
+    @NotNull(message = "Agência inválida")
     @Column(name = "agencia",nullable = false)
     private Integer agencia;
 
 
     @Column(name = "senha", length = 6, nullable = false)
-    @Pattern(regexp="^\\d{6}$",message = "Senha deverá ter 6 dígitos")
+    @NotNull(message = "Senha inválida")
     private int senha;
 
     @Column(name = "data_abertura", nullable = false)
@@ -54,7 +54,7 @@ public class Conta {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cliente", nullable = false)
-    @NotNull
+    @NotNull(message = "Tipo de conta inválida")
     private TipoCliente tipoCliente;
 
     public Conta(Cliente cliente, TipoConta tipoConta, Integer agencia, int senha, TipoCliente tipoCliente) {

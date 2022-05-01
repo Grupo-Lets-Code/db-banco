@@ -19,8 +19,7 @@ public class TransferenciaRequestDTO {
     @Positive
     private int contaDestino;
 
-    @NotNull
-    @Pattern(regexp="^\\d{6}$",message = "Senha deverá ter 6 dígitos")
+    @NotNull(message = "Senha inválida")
     private int senha;
 
     @DecimalMin(value = "0.0", inclusive = false)
