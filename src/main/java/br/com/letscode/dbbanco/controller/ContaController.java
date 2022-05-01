@@ -8,6 +8,7 @@ import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
 import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
+import br.com.letscode.dbbanco.exception.ContaExistenteException;
 import br.com.letscode.dbbanco.exception.ContaNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ContaRepository;
 
@@ -68,6 +69,11 @@ public class ContaController {
     @ExceptionHandler
     public ResponseEntity tratarContaNaoEncontrado(ContaNaoEncontradoException e) {
         ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        return response;
+    }
+    @ExceptionHandler
+    public ResponseEntity tratarContaExistente(ContaExistenteException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
         return response;
     }
 }

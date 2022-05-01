@@ -65,7 +65,11 @@ public class ClienteService {
 
     public Cliente selecionaClienteById(Integer idCliente) {
         LOGGER.info("Procurando cliente de ID " + idCliente + ".");
-        return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
+        return this.clienteRepository.findById(idCliente)
+                .orElseThrow(() -> {
+                    LOGGER.error("Erro ao realizar requisição de Cliente");
+                    return new ClienteNaoEncontradoException();
+                });
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {

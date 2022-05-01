@@ -6,6 +6,8 @@ import br.com.letscode.dbbanco.repository.ClienteRepository;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.exception.ContaNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ContaRepository;
+import net.bytebuddy.asm.Advice;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,14 +27,21 @@ public class ContaService {
 
     public void criarConta(Conta conta) {
         contaRepository.save(conta);
+        LOGGER.info("Requisição de Nova Conta Aceita");
     }
 
     public List<Conta> selecionaContasPorClienteID(Integer clienteID) {
-        return this.contaRepository.findContasByClienteID(clienteID);
+        LOGGER.info("Procurando conta do clientId " + clienteID + ".");
+        if (!this.contaRepository.findContasByClienteID(clienteID).isEmpty()){
+            LOGGER.info("Contas Encontradas");
+            return this.contaRepository.findContasByClienteID(clienteID);
+        }
+        LOGGER.error("Nenhuma conta Encontrada");
+        return (List<Conta>) new ContaNaoEncontradoException();
     }
   
     public Conta selecionaContaByNumeroConta(Integer numeroConta){
-        LOGGER.info("Procurando conta do id ", numeroConta, ".");
+        LOGGER.info("Procurando conta do id " + numeroConta + ".");
         return this.contaRepository.findByNumeroConta(numeroConta)
                 .orElseThrow(() -> {
                     LOGGER.error("500 - Erro ao realizar requisição de Conta");

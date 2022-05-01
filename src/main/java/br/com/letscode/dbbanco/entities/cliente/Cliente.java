@@ -24,12 +24,13 @@ public class Cliente {
     protected String nome;
 
     @Column
-    @Email(message = "Formato de e-mail inválido")
+    @NotBlank
+    @Email(message = "Formato de e-mail inválido - ex: email@email.com")
     private String email;
 
     @Column
+    @NotBlank
     @Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d?\\d{4}-?\\d{4}$", message = "Formato de telefone inválido - Formato esperado (XX) XXXXX-XXXX")
-    @NotBlank(message = "Telefone não Informado")
     private String telefone;
 
     public Cliente(String nome, String email, String telefone) {
