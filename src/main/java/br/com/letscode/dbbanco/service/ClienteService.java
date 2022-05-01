@@ -2,16 +2,10 @@ package br.com.letscode.dbbanco.service;
 
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
 import br.com.letscode.dbbanco.exception.ClienteJaCadastradoException;
-=======
 import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
->>>>>>> 3d47343 (Add ClienteAdvice and ExceptionHandler)
-=======
 import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
->>>>>>> 3d473439d597332712692af74bfd7e19985546a0
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClientePJRepository;
@@ -21,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.security.cert.Extension;
 
 @Service
 public class ClienteService {
@@ -49,7 +45,7 @@ public class ClienteService {
     }
 
     public ClientePF salvarClientePF(ClientePF cliente){
-<<<<<<< HEAD
+
         if (this.clientePFRepository.existsById(cliente.getId()))
             throw new ClienteJaCadastradoException();
 
@@ -69,39 +65,7 @@ public class ClienteService {
 
     public Cliente selecionaClienteById(Integer idCliente) {
         LOGGER.info("Procurando cliente de ID " + idCliente + ".");
-        return this.clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontradoException::new);
-=======
-        if(!this.clientePFRepository.existsById(cliente.getId())){
-            LOGGER.info("Requisição de Novo Cliente Aceita");
-            return this.clientePFRepository.save(cliente);
-        } else {
-            LOGGER.trace("Erro");
-            throw new ClienteDuplicadoException();
-        }
-    }
-
-    public Cliente selecionaClienteById(Integer idCliente){
-        LOGGER.info("Procurando cliente do id ", idCliente, ".");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
->>>>>>> 3354302 (add Loggers Cliente/Conta)
-=======
-        return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("500 - Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
->>>>>>> fdb3deb (Add ExceptionHandler Cliente)
-=======
-=======
->>>>>>> 3d473439d597332712692af74bfd7e19985546a0
-        return this.clienteRepository.findById(idCliente)
-                .orElseThrow(() -> {
-                    LOGGER.error("Erro ao realizar requisição de Cliente");
-                    return new ClienteNaoEncontradoException();
-                });
-<<<<<<< HEAD
->>>>>>> 3d47343 (Add ClienteAdvice and ExceptionHandler)
-=======
->>>>>>> 3d473439d597332712692af74bfd7e19985546a0
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
