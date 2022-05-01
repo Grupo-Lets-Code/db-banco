@@ -32,6 +32,7 @@ public class ClienteService {
             LOGGER.info("Requisição de Novo Cliente Aceita");
             return this.clienteRepository.save(cliente);
         } else {
+            LOGGER.trace("Erro");
             throw new ClienteNaoEncontradoException();
         }
     }
@@ -63,14 +64,19 @@ public class ClienteService {
             LOGGER.info("Requisição de Novo Cliente Aceita");
             return this.clientePFRepository.save(cliente);
         } else {
+            LOGGER.trace("Erro");
             throw new ClienteNaoEncontradoException();
         }
     }
 
     public Cliente selecionaClienteById(Integer idCliente){
         LOGGER.info("Procurando cliente do id ", idCliente, ".");
+<<<<<<< HEAD
         return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
 >>>>>>> 3354302 (add Loggers Cliente/Conta)
+=======
+        return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("500 - Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
+>>>>>>> fdb3deb (Add ExceptionHandler Cliente)
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {
