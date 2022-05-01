@@ -49,7 +49,7 @@ public class TransacaoService {
         } else throw new ContaNaoEncontradoException();
     }
 
-    public void investir(Integer numeroConta, BigDecimal valor) {
+    public void depositarInvestimento(Integer numeroConta, BigDecimal valor) {
         var optConta = contaRepository.findByNumeroConta(numeroConta);
         if (optConta.isPresent() && optConta.get().getTipoConta() == TipoConta.CONTA_INVESTIMENTO) {
             Conta conta = optConta.get();
