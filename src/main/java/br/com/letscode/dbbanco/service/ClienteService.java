@@ -3,11 +3,15 @@ package br.com.letscode.dbbanco.service;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
 import br.com.letscode.dbbanco.exception.ClienteJaCadastradoException;
 =======
 import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
 >>>>>>> 3d47343 (Add ClienteAdvice and ExceptionHandler)
+=======
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
+>>>>>>> 3d473439d597332712692af74bfd7e19985546a0
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClientePJRepository;
@@ -80,18 +84,24 @@ public class ClienteService {
         LOGGER.info("Procurando cliente do id ", idCliente, ".");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
 >>>>>>> 3354302 (add Loggers Cliente/Conta)
 =======
         return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("500 - Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
 >>>>>>> fdb3deb (Add ExceptionHandler Cliente)
 =======
+=======
+>>>>>>> 3d473439d597332712692af74bfd7e19985546a0
         return this.clienteRepository.findById(idCliente)
                 .orElseThrow(() -> {
                     LOGGER.error("Erro ao realizar requisição de Cliente");
                     return new ClienteNaoEncontradoException();
                 });
+<<<<<<< HEAD
 >>>>>>> 3d47343 (Add ClienteAdvice and ExceptionHandler)
+=======
+>>>>>>> 3d473439d597332712692af74bfd7e19985546a0
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {

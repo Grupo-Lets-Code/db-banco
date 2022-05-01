@@ -10,11 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @Slf4j
 @Configuration
-<<<<<<< HEAD
-public class DbBancoApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DbBancoApplication.class, args);
-=======
+
 public class DbBancoApplication{
     private static final Logger LOGGER = LoggerFactory.getLogger(DbBancoApplication.class);
     public static void main(String[] args) {
@@ -27,7 +23,5 @@ public class DbBancoApplication{
         } catch (Exception e){
             LOGGER.error("Erro ao iniciar a Aplicação", e);
         }
-
->>>>>>> 3cae86f (Testes Iniciais)
     }
 }
