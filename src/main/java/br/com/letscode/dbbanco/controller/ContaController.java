@@ -6,6 +6,7 @@ import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
+import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ContaRepository;
 
 import br.com.letscode.dbbanco.service.ClienteService;
@@ -39,13 +40,12 @@ public class ContaController {
 
     @PostMapping("novo")
     public ResponseEntity<String> criarConta(@Valid @RequestBody Conta conta) {
-        int ClienteID = conta.getCliente().getId();
-
-        if (!this.clienteService.existsById(ClienteID))
-            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
-
-        this.contaService.criarConta(conta);
-        return new ResponseEntity<>("Conta cadastrada com sucesso", HttpStatus.CREATED);
+        try {
+            this.contaService.criarConta(conta);
+            return new ResponseEntity<>("Conta cadastrada com sucesso", HttpStatus.CREATED);
+        } catch (ClienteNaoEncontradoException e) {
+            return new ResponseEntity<>("Cliente base de ID " + conta.getCliente().getId() + " não encontrado", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("cliente-{id}")
