@@ -40,14 +40,14 @@ public class ContaService {
         return this.contaRepository.findAll();
     }
 
-    public void deletarConta(Integer id) {
-        Conta conta = selecionaContaByNumeroConta(id);
+    public void deletarConta(Integer numeroConta) {
+        Conta conta = selecionaContaByNumeroConta(numeroConta);
         this.contaRepository.delete(conta);
     }
 
-    public void alterarSenha(Integer id, Conta conta) {
-        Conta entidade = this.selecionaContaByNumeroConta(id);
-        entidade.setSenha(conta.getSenha());
+    public void alterarSenha(Integer senha, Integer numeroConta) {
+        Conta entidade = this.selecionaContaByNumeroConta(numeroConta);
+        entidade.setSenha(senha);
         this.contaRepository.save(entidade);
     }
 
