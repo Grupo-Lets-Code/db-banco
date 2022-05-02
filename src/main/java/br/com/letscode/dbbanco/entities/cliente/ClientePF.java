@@ -1,17 +1,20 @@
 package br.com.letscode.dbbanco.entities.cliente;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = "PESSOA_FISICA")
 public class ClientePF {
@@ -37,4 +40,16 @@ public class ClientePF {
         this.cliente = cliente;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ClientePF clientePF = (ClientePF) o;
+        return id != 0 && Objects.equals(id, clientePF.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
