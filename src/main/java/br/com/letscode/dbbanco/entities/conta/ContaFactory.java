@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Component
 public class ContaFactory {
 
-    public BigDecimal valorTipoConta(Conta conta, BigDecimal valor) {
+    public static BigDecimal valorTipoConta(Conta conta, BigDecimal valor) {
         var tipoConta = conta.getTipoConta();
         if(conta.getTipoCliente() == TipoCliente.PESSOA_JURIDICA){
             switch (tipoConta) {

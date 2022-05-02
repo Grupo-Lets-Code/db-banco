@@ -1,140 +1,97 @@
 package br.com.letscode.dbbanco.controller;
 
+
 import br.com.letscode.dbbanco.entities.Utils;
+import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
+import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
+import br.com.letscode.dbbanco.exception.ContaExistenteException;
+import br.com.letscode.dbbanco.exception.ContaNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ContaRepository;
-import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import br.com.letscode.dbbanco.service.ClienteService;
+import br.com.letscode.dbbanco.service.ContaService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+import javax.validation.Valid;
 import java.util.List;
 
-@Component
+@Controller
+@RequestMapping("/contas")
+@Slf4j
 public class ContaController {
-    private final ContaFactory contaFactory;
-    private final ContaRepository contaRepository;
-    private final Utils utilities;
+    private final ContaService contaService;
+    private final ClienteService clienteService;
 
-    public ContaController(ContaFactory contaFactory, ContaRepository contaRepository, Utils utilities) {
-        this.contaFactory = contaFactory;
-        this.contaRepository = contaRepository;
-        this.utilities = utilities;
+    public ContaController(ContaService contaService, ClienteService clienteService){
+        this.contaService = contaService;
+        this.clienteService = clienteService;
     }
 
-    public void criarConta(Conta criarConta) {
-        contaRepository.save(criarConta);
-        System.out.println("Conta Criada com sucesso!");
-    }
-
-    public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {
-        if(this.validarLogin(numeroConta, senha)){
-            var catchConta = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
-            var saldo = catchConta.get().getSaldo();
-            var valorCorrigido = contaFactory.valorTipoConta(catchConta.get(), valor);
-            var saldo_atual = saldo.subtract(valorCorrigido);
-            if (saldo.compareTo(valorCorrigido) == 1) {
-                catchConta.get().setSaldo(saldo_atual);
-                contaRepository.save(catchConta.get());
-                if(exibir)
-                System.out.println("\nSaque no valor de R$ " + utilities.FormatValor(valor) + " realizado com sucesso! Saldo atual: " + catchConta.get().getSaldo());
-                return true;
-            } else {
-                if(exibir)
-                System.out.println("\nSaque no valor de R$ " + utilities.FormatValor(valor) + " foi negado! Saldo atual: " + utilities.FormatValor(saldo));
-                return false;
-            }
-        }else{
-            System.out.println("Dados inválidos!");
-            return false;
+    @PostMapping("novo")
+    public ResponseEntity<String> criarConta(@Valid @RequestBody Conta conta) {
+        try {
+            this.contaService.criarConta(conta);
+            return new ResponseEntity<>("Conta cadastrada com sucesso", HttpStatus.CREATED);
+        } catch (ClienteNaoEncontradoException e) {
+            return new ResponseEntity<>("Cliente base de ID " + conta.getCliente().getId() + " não encontrado", HttpStatus.BAD_REQUEST);
         }
     }
 
-    public void depositar(Integer numeroConta, BigDecimal valor, boolean exibir) {
-        var catchConta = contaRepository.findByNumeroConta(numeroConta);
-        var saldo = catchConta.get().getSaldo();
-        var saldo_atual = saldo.add(valor);
-        catchConta.get().setSaldo(saldo_atual);
-        contaRepository.save(catchConta.get());
-        if(exibir)
-        System.out.println("\nDepósito no valor de R$ " + utilities.FormatValor(valor) + " realizado com sucesso! Saldo atual: " + utilities.FormatValor(saldo_atual));
+    @GetMapping("cliente-{id}")
+    public ResponseEntity<List<Conta>> selecionarContaPorCliente(@PathVariable("id") Integer clienteID) {
+        List<Conta> contas = this.contaService.selecionaContasPorClienteID(clienteID);
+        return new ResponseEntity<>(contas, HttpStatus.OK);
     }
 
-    public boolean investir(Integer numeroConta, BigDecimal valor) {
-        if(this.validarConta(numeroConta)){
-            var catchConta = contaRepository.findByNumeroConta(numeroConta);
-            if( this.validarTipoConta(catchConta.get().getTipoConta())){
-                System.out.println("Conta não é do tipo Investimento!");
-                return false;
-            }
-            var saldo = catchConta.get().getSaldo();
-            var valorCorrigido = contaFactory.valorTipoConta(catchConta.get(), valor);
-            var saldo_atual = saldo.add(valorCorrigido);
-            catchConta.get().setSaldo(saldo_atual);
-            contaRepository.save(catchConta.get());
-            System.out.println("Investimento no valor R$ " + utilities.FormatValor(valor) + " realizado com sucesso!" + "saldo atual de R$" + catchConta.get().getSaldo());
-            return true;
-        } else{
-            System.out.println("Conta não encontrada para investimento!");
-            return false;
-        }
-
+    @GetMapping("{conta}")
+    public ResponseEntity selecionarContaByNumeroConta(@PathVariable("conta") Integer numeroConta){
+        Conta conta = this.contaService.selecionaContaByNumeroConta(numeroConta);
+        ResponseEntity response = new ResponseEntity(conta, HttpStatus.OK);
+        return response;
     }
 
-    public Conta recuperaContaPorNumero(Integer numeroConta){
-        return contaRepository.findByNumeroConta(numeroConta).get();
+    @ExceptionHandler
+    public ResponseEntity tratarContaNaoEncontrado(ContaNaoEncontradoException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        return response;
+    }
+    @ExceptionHandler
+    public ResponseEntity tratarContaExistente(ContaExistenteException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+        return response;
+    }
+    @GetMapping("listatodascontas")
+    public ResponseEntity listarTodasContas(){
+        List<Conta> listaconta = this.contaService.listarTodasContas();
+        ResponseEntity response = new ResponseEntity(listaconta, HttpStatus.OK);
+        return response;
     }
 
-    public boolean transferir(Integer contaRemetente, Integer contaDestinataria, int senha, BigDecimal valor) {
-        if(this.validarLogin(contaRemetente, senha) && this.validarConta(contaDestinataria)){
-            this.depositar(contaDestinataria, valor, false);
-            this.sacar(contaRemetente, senha, valor, false);
-            var catchContaRem = contaRepository.findByNumeroConta(contaRemetente);
-            System.out.println("\nTransferência no valor de R$ " + utilities.FormatValor(valor) + " realizada com sucesso! Saldo atual: " + catchContaRem.get().getSaldo());
-            return true;
-        }else{
-            System.out.println("Conta destinatária ou remetente não encontrada!");
-            return false;
-        }
+    @DeleteMapping("deleteconta-{numeroConta}")
+    public ResponseEntity deleteConta(@PathVariable("numeroConta") Integer numeroConta){
+        this.contaService.deletarConta(numeroConta);
+        return ResponseEntity.ok("Conta deletada com sucesso.");
     }
 
-    public boolean consultarSaldo(Integer numeroConta, int senha) {
-        var catchContaAndSenha = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
-        if(catchContaAndSenha.isPresent()){
-            System.out.println("\nO saldo atual da conta é: R$" + catchContaAndSenha.get().getSaldo());
-            return true;
-        } else{
-            System.out.println("Conta não encontrada!");
-            return false;
-        }
+    @PutMapping("alterarsenha-{senha}")
+    public ResponseEntity alterarSenha(@PathVariable("senha") Integer senha, @RequestBody Integer numeroConta ){
+        this.contaService.alterarSenha(senha, numeroConta);
+        ResponseEntity response = new ResponseEntity("Senha atualizada com sucesso", HttpStatus.OK);
+        return response;
     }
-
-    public boolean validarLogin(Integer numeroConta, int senha) {
-        var catchContaAndSenha = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
-        return catchContaAndSenha.isPresent();
-    }
-
-    public boolean validarConta(Integer numeroConta) {
-        var catchConta = contaRepository.findByNumeroConta(numeroConta);
-        return catchConta.isPresent();
-    }
-
-    public void excluirConta(Integer numeroConta) {
-        var catchConta = contaRepository.findByNumeroConta(numeroConta);
-        if (catchConta.isPresent()) {
-            contaRepository.deleteByNumeroConta(numeroConta);
-            System.out.println("Conta EXCLUIDA com Sucesso!");
-        } else {
-            System.out.println("Conta não encontrada!");
-        }
-    }
-
-    public List<Conta> listarContas() {
-        return contaRepository.findAll();
-    }
-
-    public boolean validarTipoConta(TipoConta tipoConta){
-        return !(tipoConta == TipoConta.CONTA_INVESTIMENTO);
-    }
-
 }
