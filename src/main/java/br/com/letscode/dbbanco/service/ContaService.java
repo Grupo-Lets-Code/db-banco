@@ -44,6 +44,21 @@ public class ContaService {
         });
     }
 
+    public List<Conta> listarTodasContas() {
+        return this.contaRepository.findAll();
+    }
+
+    public void deletarConta(Integer numeroConta) {
+        Conta conta = selecionaContaByNumeroConta(numeroConta);
+        this.contaRepository.delete(conta);
+    }
+
+    public void alterarSenha(Integer senha, Integer numeroConta) {
+        Conta entidade = this.selecionaContaByNumeroConta(numeroConta);
+        entidade.setSenha(senha);
+        this.contaRepository.save(entidade);
+    }
+
     /*public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {
         if(this.validarLogin(numeroConta, senha)){
             var catchConta = contaRepository.findByNumeroContaAndSenha(numeroConta, senha);
