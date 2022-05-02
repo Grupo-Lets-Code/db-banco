@@ -56,11 +56,6 @@ Usar HTTP Basic Authentication com Spring security (Deverá criar uma tela de lo
 - Exceções tratadas corretamente.
 - Logs devidamente implementados.
 
-## Regras de negócio do projeto
-
-// fazer especicações do fluxo do aplicativo
-
-![](https://user-images.githubusercontent.com/18223610/164721519-c2bc4700-7968-40eb-9808-d1db84c2a02c.png)
 
 # Como rodar o projeto
 
