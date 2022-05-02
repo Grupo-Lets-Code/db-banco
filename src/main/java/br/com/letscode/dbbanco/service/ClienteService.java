@@ -5,6 +5,8 @@ import br.com.letscode.dbbanco.entities.cliente.ClientePF;
 import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.exception.ClienteJaCadastradoException;
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClientePJRepository;
@@ -15,6 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.security.cert.Extension;
 
 import java.util.List;
 
@@ -36,9 +41,11 @@ public class ClienteService {
         if(!this.clienteRepository.existsById(cliente.getId())){
             LOGGER.info("Requisição de Novo Cliente Aceita");
             return this.clienteRepository.save(cliente);
+
         } else {
-            LOGGER.trace("Erro");
-            throw new ClienteNaoEncontradoException();
+            LOGGER.warn("Cliente já Existe na Base de Dados");
+            LOGGER.error("Não Foi possivel realizar a Requisição de novo Cliente");
+            throw new ClienteDuplicadoException();
         }
     }
 
@@ -76,9 +83,13 @@ public class ClienteService {
         return this.clienteRepository.existsById(id);
     }
 
-    public Cliente selecionaClienteById(Integer idCliente){
-        LOGGER.info("Procurando cliente do id ", idCliente, ".");
-        return this.clienteRepository.findById(idCliente).orElseThrow(() -> {LOGGER.error("Erro ao realizar requisição de Cliente"); return new ClienteNaoEncontradoException();});
+    public Cliente selecionaClienteById(Integer idCliente) {
+        LOGGER.info("Procurando cliente de ID " + idCliente + ".");
+        return this.clienteRepository.findById(idCliente)
+                .orElseThrow(() -> {
+                    LOGGER.error("Erro ao realizar requisição de Cliente");
+                    return new ClienteNaoEncontradoException();
+                });
     }
 
     public List<Cliente> listarTodosClientes() {

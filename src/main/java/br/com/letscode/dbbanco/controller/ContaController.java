@@ -6,7 +6,10 @@ import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.entities.conta.ContaFactory;
 import br.com.letscode.dbbanco.entities.conta.TipoConta;
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
 import br.com.letscode.dbbanco.exception.ClienteNaoEncontradoException;
+import br.com.letscode.dbbanco.exception.ContaExistenteException;
+import br.com.letscode.dbbanco.exception.ContaNaoEncontradoException;
 import br.com.letscode.dbbanco.repository.ContaRepository;
 
 import br.com.letscode.dbbanco.service.ClienteService;
@@ -18,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +65,16 @@ public class ContaController {
         return response;
     }
 
+    @ExceptionHandler
+    public ResponseEntity tratarContaNaoEncontrado(ContaNaoEncontradoException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        return response;
+    }
+    @ExceptionHandler
+    public ResponseEntity tratarContaExistente(ContaExistenteException e) {
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+        return response;
+    }
     @GetMapping("listatodascontas")
     public ResponseEntity listarTodasContas(){
         List<Conta> listaconta = this.contaService.listarTodasContas();
@@ -80,7 +94,4 @@ public class ContaController {
         ResponseEntity response = new ResponseEntity("Senha atualizada com sucesso", HttpStatus.OK);
         return response;
     }
-
-
-
 }

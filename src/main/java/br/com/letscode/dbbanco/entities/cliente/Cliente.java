@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @Getter
@@ -23,10 +24,12 @@ public class Cliente {
     protected String nome;
 
     @Column
-    @Email(message = "Formato de e-mail inválido")
+    @NotBlank
+    @Email(message = "Formato de e-mail inválido - ex: email@email.com")
     private String email;
 
     @Column
+    @NotBlank
     @Pattern(regexp = "^\\(\\d{2}\\)\\s?\\d?\\d{4}-?\\d{4}$", message = "Formato de telefone inválido - Formato esperado (XX) XXXXX-XXXX")
     private String telefone;
 

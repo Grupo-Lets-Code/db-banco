@@ -22,6 +22,5 @@ public class DbBancoApplication{
         } catch (Exception e){
             LOGGER.error("Erro ao iniciar a Aplicação", e);
         }
-
     }
 }
