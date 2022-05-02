@@ -22,7 +22,7 @@ public class TransacaoAdvice {
 
     @ExceptionHandler
     public ResponseEntity tratarContaNaoEncontrada(ContaNaoEncontradoException e){
-        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         return response;
     }
 
@@ -51,8 +51,8 @@ public class TransacaoAdvice {
 
             String fieldName =  ((FieldError) e.getBindingResult().getAllErrors().get(indice)).getField();
             String errorMessage = ((FieldError) e.getBindingResult().getAllErrors().get(indice)).getDefaultMessage();
-            String erroFormatado = String.format("Erro no campo %s mensagem erro %s",fieldName,errorMessage);
-            erros.put(String.format("Erro %s ",indice ), String.format("Erro no campo %s mensagem erro %s",fieldName,errorMessage));
+            String erroFormatado = String.format("Erro no campo %s : %s",fieldName,errorMessage);
+            erros.put(String.format("Erro %s ",indice ), String.format("Erro no campo %s : %s",fieldName,errorMessage));
             LOGGER.debug(erroFormatado);
         }
 
