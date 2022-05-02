@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @Slf4j
 @Configuration
-
 public class DbBancoApplication{
     private static final Logger LOGGER = LoggerFactory.getLogger(DbBancoApplication.class);
     public static void main(String[] args) {

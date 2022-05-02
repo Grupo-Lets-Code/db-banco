@@ -3,6 +3,7 @@ package br.com.letscode.dbbanco.service;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
 import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
+import br.com.letscode.dbbanco.entities.conta.Conta;
 import br.com.letscode.dbbanco.exception.ClienteJaCadastradoException;
 import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
 import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
@@ -13,10 +14,14 @@ import br.com.letscode.dbbanco.repository.ClienteRepository;
 import net.bytebuddy.asm.Advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.security.cert.Extension;
+
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -44,19 +49,34 @@ public class ClienteService {
         }
     }
 
-    public ClientePF salvarClientePF(ClientePF cliente){
-
-        if (this.clientePFRepository.existsById(cliente.getId()))
+    public ClientePF salvarClientePF(ClientePF clientePF){
+        if (this.clientePFRepository.existsById(clientePF.getId())) {
+            LOGGER.error("Cliente Pessoa Física já cadastrado");
             throw new ClienteJaCadastradoException();
+        }
 
-        return this.clientePFRepository.save(cliente);
+        if (!this.clienteRepository.existsById(clientePF.getCliente().getId())) {
+            LOGGER.error("Cliente base não encontrado");
+            throw new ClienteNaoEncontradoException();
+        }
+
+        LOGGER.info("Requisição de Novo Cliente Pessoa Física Aceita");
+        return this.clientePFRepository.save(clientePF);
     }
 
-    public ClientePJ salvarClientePJ(ClientePJ cliente){
-        if (this.clientePJRepository.existsById(cliente.getId()))
+    public ClientePJ salvarClientePJ(ClientePJ clientePJ){
+        if (this.clientePJRepository.existsById(clientePJ.getId())) {
+            LOGGER.error("Cliente Pessoa Jurídica já cadastrado");
             throw new ClienteJaCadastradoException();
+        }
 
-        return this.clientePJRepository.save(cliente);
+        if (!this.clienteRepository.existsById(clientePJ.getCliente().getId())) {
+            LOGGER.error("Cliente base não encontrado");
+            throw new ClienteNaoEncontradoException();
+        }
+
+        LOGGER.info("Requisição de Novo Cliente Pessoa Jurídica Aceita");
+        return this.clientePJRepository.save(clientePJ);
     }
 
     public boolean existsById(int id) {
@@ -70,6 +90,10 @@ public class ClienteService {
                     LOGGER.error("Erro ao realizar requisição de Cliente");
                     return new ClienteNaoEncontradoException();
                 });
+    }
+
+    public List<Cliente> listarTodosClientes() {
+        return this.clienteRepository.findAll();
     }
 
     /*public Cliente createPF(String nome, String email, String telefone, String cpf, LocalDate data_nascimento) {

@@ -1,43 +1,279 @@
 {
 	"info": {
-		"_postman_id": "c83329db-e292-4463-967e-9a97a0bf7816",
+		"_postman_id": "6cfe0f3d-9fa5-41d6-ae9e-f86adfe5928b",
 		"name": "lets code",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "get cliente",
+			"name": "Obter Cliente",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/clientes/1"
+				"url": {
+					"raw": "http://localhost:8080/clientes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"1"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "criar novo cliente",
+			"name": "Obter Contas por ID do Cliente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contas/cliente-2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contas",
+						"cliente-2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Cliente",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"nome\": \"junior\",\r\n  \"email\": \"franstein@gmail.com\",\r\n  \"telefone\": \"1123452345\"\r\n}",
+					"raw": "{\r\n    \"nome\": \"Carlos Masao Mito\",\r\n    \"email\": \"carlosmsmito@gmail.com\",\r\n    \"telefone\": \"(32) 98498-0040\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/clientes"
+				"url": {
+					"raw": "http://localhost:8080/clientes/novo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"novo"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "get conta",
+			"name": "Cadastrar ClientePJ",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
-				"url": "http://localhost:8080/contas/1"
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cnpj\": \"11.222.333/0001-44\",\r\n    \"dataDeAbertura\": \"2012-04-23T18:25:43.511Z\",\r\n    \"cliente\": {\r\n        \"id\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/novo-pj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"novo-pj"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar ClientePF",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cpf\": \"123-456-678-91\",\r\n    \"dataNascimento\": \"2012-04-23T18:25:43.511Z\",\r\n    \"cliente\": {\r\n        \"id\": 56\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/novo-pf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"novo-pf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Conta",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dataAbertura\": \"2012-04-23T18:25:43.511Z\",\r\n    \"saldo\": 100.00,\r\n    \"agencia\": 202,\r\n    \"senha\": 123456,\r\n    \"tipoCliente\": \"PESSOA_JURIDICA\",\r\n    \"tipoConta\": \"CONTA_CORRENTE\",\r\n    \"cliente\": {\r\n        \"id\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/contas/novo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contas",
+						"novo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Saque",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroConta\":2,\r\n    \"senha\":\"654321\",\r\n    \"valor\":100\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/saque",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"saque"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transferência",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contaOrigem\":2,\r\n    \"contaDestino\":5,\r\n    \"senha\":\"654321\",\r\n    \"valor\":100\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"transferencia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Depósito Investimento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroConta\":5,\r\n    \"valor\":1200\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/depositoInvestimento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"depositoInvestimento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Depósito",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroConta\":2,\r\n    \"valor\":1200\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transacao/deposito",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacao",
+						"deposito"
+					]
+				}
 			},
 			"response": []
 		}

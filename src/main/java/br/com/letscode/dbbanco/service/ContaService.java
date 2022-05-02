@@ -26,6 +26,11 @@ public class ContaService {
     }
 
     public void criarConta(Conta conta) {
+        if (!this.clienteRepository.existsById(conta.getCliente().getId())) {
+            LOGGER.error("Cliente base não encontrado");
+            throw new ClienteNaoEncontradoException();
+        }
+
         contaRepository.save(conta);
         LOGGER.info("Requisição de Nova Conta Aceita");
     }
@@ -47,6 +52,21 @@ public class ContaService {
                     LOGGER.error("500 - Erro ao realizar requisição de Conta");
                     return new ContaNaoEncontradoException();
                 });
+    }
+
+    public List<Conta> listarTodasContas() {
+        return this.contaRepository.findAll();
+    }
+
+    public void deletarConta(Integer numeroConta) {
+        Conta conta = selecionaContaByNumeroConta(numeroConta);
+        this.contaRepository.delete(conta);
+    }
+
+    public void alterarSenha(Integer senha, Integer numeroConta) {
+        Conta entidade = this.selecionaContaByNumeroConta(numeroConta);
+        entidade.setSenha(senha);
+        this.contaRepository.save(entidade);
     }
 
     /*public boolean sacar(Integer numeroConta, int senha, BigDecimal valor, boolean exibir) {

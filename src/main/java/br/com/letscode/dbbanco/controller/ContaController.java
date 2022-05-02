@@ -44,13 +44,12 @@ public class ContaController {
 
     @PostMapping("novo")
     public ResponseEntity<String> criarConta(@Valid @RequestBody Conta conta) {
-        int ClienteID = conta.getCliente().getId();
-
-        if (!this.clienteService.existsById(ClienteID))
-            return new ResponseEntity<>("Cliente base de ID " + ClienteID + " não encontrado", HttpStatus.BAD_REQUEST);
-
-        this.contaService.criarConta(conta);
-        return new ResponseEntity<>("Conta cadastrada com sucesso", HttpStatus.CREATED);
+        try {
+            this.contaService.criarConta(conta);
+            return new ResponseEntity<>("Conta cadastrada com sucesso", HttpStatus.CREATED);
+        } catch (ClienteNaoEncontradoException e) {
+            return new ResponseEntity<>("Cliente base de ID " + conta.getCliente().getId() + " não encontrado", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("cliente-{id}")
@@ -74,6 +73,25 @@ public class ContaController {
     @ExceptionHandler
     public ResponseEntity tratarContaExistente(ContaExistenteException e) {
         ResponseEntity response = new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+        return response;
+    }
+    @GetMapping("listatodascontas")
+    public ResponseEntity listarTodasContas(){
+        List<Conta> listaconta = this.contaService.listarTodasContas();
+        ResponseEntity response = new ResponseEntity(listaconta, HttpStatus.OK);
+        return response;
+    }
+
+    @DeleteMapping("deleteconta-{numeroConta}")
+    public ResponseEntity deleteConta(@PathVariable("numeroConta") Integer numeroConta){
+        this.contaService.deletarConta(numeroConta);
+        return ResponseEntity.ok("Conta deletada com sucesso.");
+    }
+
+    @PutMapping("alterarsenha-{senha}")
+    public ResponseEntity alterarSenha(@PathVariable("senha") Integer senha, @RequestBody Integer numeroConta ){
+        this.contaService.alterarSenha(senha, numeroConta);
+        ResponseEntity response = new ResponseEntity("Senha atualizada com sucesso", HttpStatus.OK);
         return response;
     }
 }
