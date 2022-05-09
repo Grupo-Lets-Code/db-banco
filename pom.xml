@@ -15,6 +15,9 @@
     <description>db-banco</description>
     <properties>
         <java.version>11</java.version>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.login>admin</sonar.login>
+        <sonar.password>suasenha</sonar.password>
     </properties>
     <dependencies>
         <dependency>
