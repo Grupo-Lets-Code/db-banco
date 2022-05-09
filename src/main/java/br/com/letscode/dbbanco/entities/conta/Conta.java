@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Table(name = "CONTA")
 public class Conta {
