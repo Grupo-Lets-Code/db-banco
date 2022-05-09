@@ -41,7 +41,6 @@ public class ClienteService {
         if(!this.clienteRepository.existsById(cliente.getId())){
             LOGGER.info("Requisição de Novo Cliente Aceita");
             return this.clienteRepository.save(cliente);
-
         } else {
             LOGGER.warn("Cliente já Existe na Base de Dados");
             LOGGER.error("Não Foi possivel realizar a Requisição de novo Cliente");
