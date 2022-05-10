@@ -1,5 +1,6 @@
 package br.com.letscode.dbbanco.entities.cliente;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@AllArgsConstructor
 public class Cliente {
 
     @Id
@@ -34,6 +36,13 @@ public class Cliente {
     private String telefone;
 
     public Cliente(String nome, String email, String telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+    }
+
+    public Cliente(Integer id, String nome, String email, String telefone) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
