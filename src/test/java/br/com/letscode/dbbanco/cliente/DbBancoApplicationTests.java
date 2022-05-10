@@ -1,4 +1,4 @@
-package br.com.letscode.dbbanco;
+package br.com.letscode.dbbanco.cliente;
 
 import br.com.letscode.dbbanco.controller.ClienteController;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;

@@ -26,7 +26,7 @@ public class TransacaoController {
         this.transacaoService = transacaoService;
     }
 
-    /*@PostMapping("/saque")
+    @PostMapping("/saque")
     public ResponseEntity saque(@Valid @RequestBody SaqueRequestDTO saqueRequest) {
         transacaoService.sacar(saqueRequest.getNumeroConta(), saqueRequest.getSenha(), saqueRequest.getValor());
 
@@ -56,6 +56,6 @@ public class TransacaoController {
 
         ResponseEntity response = new ResponseEntity("Transferência relizada com sucesso!", HttpStatus.OK);
         return response;
-    }*/
+    }
 
 }
