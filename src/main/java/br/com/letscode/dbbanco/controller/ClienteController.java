@@ -32,7 +32,7 @@ public class ClienteController {
     }
 
     @PostMapping("novo")
-    public ResponseEntity<String> salvarCliente(@Valid @RequestBody Cliente cliente){
+    public ResponseEntity<String> salvarCliente(@ModelAttribute @Valid @RequestBody Cliente cliente){
         this.clienteService.salvarCliente(cliente);
         return new ResponseEntity<>("Cliente cadastrado com sucesso", HttpStatus.CREATED);
     }
