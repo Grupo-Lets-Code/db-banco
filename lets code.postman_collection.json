@@ -1,27 +1,22 @@
 {
 	"info": {
-		"_postman_id": "6cfe0f3d-9fa5-41d6-ae9e-f86adfe5928b",
+		"_postman_id": "fc20b438-6b85-4c24-9ad1-04f0326a080c",
 		"name": "lets code",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Obter Cliente",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "c342f51f-3d73-4dfd-bf75-7df174aab690"
+					}
+				},
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/clientes/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"clientes",
-						"1"
-					]
-				}
+				"url": "http://localhost:8080/clientes/1"
 			},
 			"response": []
 		},
@@ -30,18 +25,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/contas/cliente-2",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"contas",
-						"cliente-2"
-					]
-				}
+				"url": "http://localhost:8080/contas/cliente-2"
 			},
 			"response": []
 		},
@@ -59,18 +43,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/clientes/novo",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"clientes",
-						"novo"
-					]
-				}
+				"url": "http://localhost:8080/clientes/novo"
 			},
 			"response": []
 		},
@@ -88,18 +61,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/clientes/novo-pj",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"clientes",
-						"novo-pj"
-					]
-				}
+				"url": "http://localhost:8080/clientes/novo-pj"
 			},
 			"response": []
 		},
@@ -117,18 +79,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/clientes/novo-pf",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"clientes",
-						"novo-pf"
-					]
-				}
+				"url": "http://localhost:8080/clientes/novo-pf"
 			},
 			"response": []
 		},
@@ -139,25 +90,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"dataAbertura\": \"2012-04-23T18:25:43.511Z\",\r\n    \"saldo\": 100.00,\r\n    \"agencia\": 202,\r\n    \"senha\": 123456,\r\n    \"tipoCliente\": \"PESSOA_JURIDICA\",\r\n    \"tipoConta\": \"CONTA_CORRENTE\",\r\n    \"cliente\": {\r\n        \"id\": 1\r\n    }\r\n}",
+					"raw": "{\r\n    \"dataAbertura\": \"2012-04-23T18:25:43.511Z\",\r\n    \"saldo\": 100.00,\r\n    \"agencia\": 202,\r\n    \"senha\": 123456,\r\n    \"tipoCliente\": \"PESSOA_JURIDICA\",\r\n    \"tipoConta\": \"CONTA_CORRENTE\",\r\n    \"cliente\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Allan Lopreti\",\r\n        \"email\": \"lopreti@email.com\",\r\n        \"telefone\": \"(11)99999-9999\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/contas/novo",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"contas",
-						"novo"
-					]
-				}
+				"url": "http://localhost:8080/contas/novo"
 			},
 			"response": []
 		},
@@ -175,18 +115,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/transacao/saque",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"transacao",
-						"saque"
-					]
-				}
+				"url": "http://localhost:8080/transacao/saque"
 			},
 			"response": []
 		},
@@ -204,18 +133,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/transacao/transferencia",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"transacao",
-						"transferencia"
-					]
-				}
+				"url": "http://localhost:8080/transacao/transferencia"
 			},
 			"response": []
 		},
@@ -233,18 +151,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/transacao/depositoInvestimento",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"transacao",
-						"depositoInvestimento"
-					]
-				}
+				"url": "http://localhost:8080/transacao/depositoInvestimento"
 			},
 			"response": []
 		},
@@ -262,18 +169,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8080/transacao/deposito",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"transacao",
-						"deposito"
-					]
-				}
+				"url": "http://localhost:8080/transacao/deposito"
 			},
 			"response": []
 		}
