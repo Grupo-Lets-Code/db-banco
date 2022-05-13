@@ -14,6 +14,7 @@ import br.com.letscode.dbbanco.repository.ClienteRepository;
 import net.bytebuddy.asm.Advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,11 @@ import java.util.List;
 @Service
 public class ClienteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
+    @Autowired
     private final ClienteRepository clienteRepository;
+    @Autowired
     private final ClientePFRepository clientePFRepository;
+    @Autowired
     private final ClientePJRepository clientePJRepository;
 
     public ClienteService(ClienteRepository clienteRepository,
@@ -40,7 +44,7 @@ public class ClienteService {
     public Cliente salvarCliente(Cliente cliente){
         if(!this.clienteRepository.existsById(cliente.getId())){
             LOGGER.info("Requisição de Novo Cliente Aceita");
-            return this.clienteRepository.save(cliente);
+            return clienteRepository.save(cliente);
         } else {
             LOGGER.warn("Cliente já Existe na Base de Dados");
             LOGGER.error("Não Foi possivel realizar a Requisição de novo Cliente");
@@ -53,7 +57,6 @@ public class ClienteService {
             LOGGER.error("Cliente Pessoa Física já cadastrado");
             throw new ClienteJaCadastradoException();
         }
-
         if (!this.clienteRepository.existsById(clientePF.getCliente().getId())) {
             LOGGER.error("Cliente base não encontrado");
             throw new ClienteNaoEncontradoException();
