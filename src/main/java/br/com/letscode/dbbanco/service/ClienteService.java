@@ -42,7 +42,7 @@ public class ClienteService {
     }
 
     public Cliente salvarCliente(Cliente cliente){
-        if(!this.clienteRepository.existsById(cliente.getId())){
+        if(!!this.clienteRepository.existsById(cliente.getId())){
             LOGGER.info("Requisição de Novo Cliente Aceita");
             return clienteRepository.save(cliente);
         } else {
