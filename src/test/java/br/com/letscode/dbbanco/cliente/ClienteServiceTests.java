@@ -37,17 +37,4 @@ public class ClienteServiceTests {
         Assertions.assertEquals(clienteSalvo.getCPF(), clientePF.getCPF());
     }
 
-    @Test
-    public void salvarClienteTesteInteg() {
-        Cliente cliente = new Cliente("Teste", "test@gmail.com", "(11) 90099-0040");
-
-        ClientePF clientePF = new ClientePF("123.123.123-56", LocalDate.of(1999, 12, 12), cliente);
-
-        clienteService.salvarCliente(cliente);
-        ClientePF clienteSalvo = clienteService.salvarClientePF(clientePF);
-
-        Assertions.assertNotNull(clienteSalvo.getId());
-        Assertions.assertEquals(clienteSalvo.getCPF(), clientePF.getCPF());
-    }
-
 }
