@@ -38,6 +38,13 @@ public class ClientePJ {
         this.cliente = cliente;
     }
 
+    public ClientePJ(Integer id, String CNPJ, LocalDate dataDeAbertura, Cliente cliente) {
+        this.id = id;
+        this.CNPJ = CNPJ;
+        this.dataDeAbertura = dataDeAbertura;
+        this.cliente = cliente;
+    }
+
     @Override
     public String toString() {
         return cliente.toString() +

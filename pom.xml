@@ -106,6 +106,15 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.2</version>
+                <configuration>
+                    <excludes>
+                        <exclude>br/com/letscode/dbbanco/controller/**</exclude>
+                        <exclude>br/com/letscode/dbbanco/exception/**</exclude>
+                        <exclude>br/com/letscode/dbbanco/listener/**</exclude>
+                        <exclude>br/com/letscode/dbbanco/entities/conta/TipoConta.java</exclude>
+                        <exclude>br/com/letscode/dbbanco/DbBancoApplication.java</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -119,25 +128,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                    </execution>
-                    <execution>
-                        <id>jacoco-check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>PACKAGE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>0.9</minimum>                                  </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

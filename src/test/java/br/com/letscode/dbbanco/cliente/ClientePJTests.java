@@ -30,7 +30,7 @@ import java.time.LocalDate;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-class ClienteTests {
+class ClientePJTests {
 
     @InjectMocks
     private ClienteService clienteService;
@@ -53,28 +53,16 @@ class ClienteTests {
         closeable.close();
     }
 
-    /*@Test
-    void clienteRepetido() {
-        Exception exception = Assertions.assertThrows(ClienteDuplicadoException.class, () -> {
-            Cliente clienteSalvar = new Cliente("Teste", "test@gmail.com", "(11) 90099-0040");
-            Cliente clienteRetorno = new Cliente(0,"Teste", "test@gmail.com", "(11) 90099-0040");
-            clienteRepository.save(clienteSalvar);
-            clienteService.salvarCliente(clienteSalvar);
-            clienteService.salvarCliente(clienteRetorno);
-        });
-        Assertions.assertEquals("Cliente Já Existe", exception.getMessage());
-    }*/
-
     @Test
-    void salvarClienteTeste() {
-        Cliente clienteSalvar = new Cliente("Teste", "test@gmail.com", "(11) 90099-0040");
-        Cliente clienteRetorno = new Cliente(0,"Teste", "test@gmail.com", "(11) 90099-0040");
-        Mockito.when(clienteRepository.save(clienteSalvar))
-                .thenReturn(clienteRetorno);
+    public void salvarClientePJTeste(){
+        Cliente cliente = new Cliente("Teste2", "test2@gmail.com", "(11) 90099-0040");
+        ClientePJ clientePJ = new ClientePJ("11.222.333/0001-44", LocalDate.of(1999, 12, 12), cliente);
+        ClientePJ clientePJRetorno = new ClientePJ(0, "11.222.333/0001-44", LocalDate.of(1999, 12, 12), cliente);
 
-        Assertions.assertEquals(clienteRepository.save(clienteSalvar).getNome(), clienteRetorno.getNome());
-        Assertions.assertEquals(clienteRetorno.getId(), 0);
-        Assertions.assertEquals(clienteRepository.save(clienteSalvar).getEmail(), clienteRetorno.getEmail());
+
+        clienteService.salvarCliente(cliente);
+        Mockito.when(clientePJRepository.save(clientePJ))
+                .thenReturn(clientePJRetorno);
+        Assertions.assertNotNull(clientePJRetorno.getId());
     }
-
 }

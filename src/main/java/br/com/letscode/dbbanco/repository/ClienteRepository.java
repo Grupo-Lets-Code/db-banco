@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     @Override
     Optional<Cliente> findById(Integer integer);
+    Optional<Cliente> findByEmail(String email);
 }

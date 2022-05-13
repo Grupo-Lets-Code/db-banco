@@ -3,6 +3,7 @@ package br.com.letscode.dbbanco.cliente;
 import br.com.letscode.dbbanco.entities.cliente.Cliente;
 import br.com.letscode.dbbanco.entities.cliente.ClientePF;
 import br.com.letscode.dbbanco.entities.cliente.ClientePJ;
+import br.com.letscode.dbbanco.exception.ClienteDuplicadoException;
 import br.com.letscode.dbbanco.repository.ClientePFRepository;
 import br.com.letscode.dbbanco.repository.ClienteRepository;
 import br.com.letscode.dbbanco.service.ClienteService;
@@ -50,5 +51,16 @@ public class ClienteServiceTests {
         Assertions.assertNotNull(clienteSalvo.getId());
         Assertions.assertEquals(clienteSalvo.getCNPJ(), clientePJ.getCNPJ());
     }
+
+    /*@Test
+    public void clienteRepetido() {
+        Exception exception = Assertions.assertThrows(ClienteDuplicadoException.class, () -> {
+            Cliente clienteSalvar = new Cliente("Teste", "test@gmail.com", "(11) 90099-0040");
+            Cliente clienteRetorno = new Cliente(0,"Teste", "test@gmail.com", "(11) 90099-0040");
+            clienteService.salvarCliente(clienteSalvar);
+            clienteService.salvarCliente(clienteRetorno);
+        });
+        Assertions.assertEquals("Cliente Já Existe", exception.getMessage());
+    }*/
 
 }

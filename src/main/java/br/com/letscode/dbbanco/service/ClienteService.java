@@ -42,13 +42,13 @@ public class ClienteService {
     }
 
     public Cliente salvarCliente(Cliente cliente){
-        if(!!this.clienteRepository.existsById(cliente.getId())){
-            LOGGER.info("Requisição de Novo Cliente Aceita");
-            return clienteRepository.save(cliente);
-        } else {
+        if (this.clienteRepository.existsById(cliente.getId())) {
             LOGGER.warn("Cliente já Existe na Base de Dados");
             LOGGER.error("Não Foi possivel realizar a Requisição de novo Cliente");
             throw new ClienteDuplicadoException();
+        } else {
+            LOGGER.info("Requisição de Novo Cliente Aceita");
+            return clienteRepository.save(cliente);
         }
     }
 

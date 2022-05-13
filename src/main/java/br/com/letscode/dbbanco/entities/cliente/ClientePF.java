@@ -40,6 +40,13 @@ public class ClientePF {
         this.cliente = cliente;
     }
 
+    public ClientePF(Integer id, String CPF, LocalDate dataNascimento, Cliente cliente) {
+        this.id = id;
+        this.CPF = CPF;
+        this.dataNascimento = dataNascimento;
+        this.cliente = cliente;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
